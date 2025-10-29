@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("NutriLink.API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+af47b11058237162f420285b52991693688ebaad")]
 [assembly: System.Reflection.AssemblyProductAttribute("NutriLink.API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("NutriLink.API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
