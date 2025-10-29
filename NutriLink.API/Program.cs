@@ -23,19 +23,4 @@ app.MapGet("/test/connection", async (AppDbContext db) =>
     return Results.Ok(new { databaseConnected = canConnect });
 });
 
-//CRUD Recipe model
-app.MapGet("/api/recipes", async (AppDbContext db) => await db.Recipes.ToListAsync());
-
-app.MapGet("/api/recipes/{id}", async (int id, AppDbContext db) =>
-    await db.Recipes.FindAsync(id) is Recipe recipe
-        ? Results.Ok(recipe)
-        : Results.NotFound());
-
-app.MapPost("/api/recipes", async (Recipe recipe, AppDbContext db) =>
-{
-    db.Recipes.Add(recipe);
-    await db.SaveChangesAsync();
-    return Results.Created($"/api/recipes/{recipe.Id}", recipe);
-}
-);
 app.Run();
