@@ -7,12 +7,13 @@ public class AppDbContext : DbContext
     public DbSet<Recipe> Recipes => Set<Recipe>();
     public DbSet<User> Users => Set<User>();
     public DbSet<Category> Categories => Set<Category>();
+    public DbSet<Ingredient> Ingredients => Set<Ingredient>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
-{
-    modelBuilder.Entity<Recipe>()
-        .HasOne(r => r.Category)
-        .WithMany()
-        .HasForeignKey(r => r.CategoryId);
-}
+    {
+        modelBuilder.Entity<Recipe>()
+            .HasOne(r => r.Category)
+            .WithMany()
+            .HasForeignKey(r => r.CategoryId);
+    }
 }

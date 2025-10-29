@@ -61,6 +61,7 @@ namespace NutriLink.API.Controllers
             user.PhysicalActivity = input.PhysicalActivity;
             user.Job = input.Job;
             user.EnergyRequirement = input.EnergyRequirement;
+            
             await _db.SaveChangesAsync();
             return Ok(user);
         }
