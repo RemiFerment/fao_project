@@ -69,7 +69,6 @@ namespace NutriLink.API.Controllers
 
             _db.Remove(recipe);
             await _db.SaveChangesAsync();
-
             return NoContent();
         }
     }
