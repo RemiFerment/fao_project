@@ -1,8 +1,20 @@
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace NutriLink.API.Models;
 
-public record class Recipe
+public class Recipe
 {
     public int Id { get; set; }
+    [Required,MaxLength(255)]
     public string Title { get; set; } = "";
-    public int Calories { get; set; }
+    [Column(TypeName = "nvarchar(max)")]
+    public string Steps { get; set; } = "";
+
+
+    [Required, Range(1, int.MaxValue)]
+    public int CategoryId { get; set; }
+
+    [ForeignKey(nameof(CategoryId))]
+    public Category Category { get; set; } = default!;
 }
