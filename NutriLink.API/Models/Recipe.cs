@@ -6,7 +6,7 @@ namespace NutriLink.API.Models;
 public class Recipe
 {
     public int Id { get; set; }
-    [Required,MaxLength(255)]
+    [Required, MaxLength(255)]
     public string Title { get; set; } = "";
     [Column(TypeName = "nvarchar(max)")]
     public string Steps { get; set; } = "";
@@ -17,4 +17,6 @@ public class Recipe
 
     [ForeignKey(nameof(CategoryId))]
     public Category Category { get; set; } = default!;
+
+    public ICollection<RecipeIngredient> RecipeIngredients { get; set; } = new List<RecipeIngredient>();
 }
