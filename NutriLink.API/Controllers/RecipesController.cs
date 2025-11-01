@@ -1,3 +1,5 @@
+using System.Diagnostics;
+using System.Runtime.CompilerServices;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using NutriLink.API.Models;
@@ -23,7 +25,11 @@ namespace NutriLink.API.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Recipe>> GetById(int id)
         {
-            var recipe = await _db.Recipes.Include(r => r.Category).FirstOrDefaultAsync(r => r.Id == id);
+            var recipe = await _db.Recipes
+            .Include(r => r.Category)
+            .Include(r => r.RecipeIngredients)
+                .ThenInclude(ri => ri.Ingredient)
+            .FirstOrDefaultAsync(r => r.Id == id);
 
             if (recipe == null) return NotFound(new { message = $"Recipe with ID {id} not found." });
 
@@ -41,6 +47,37 @@ namespace NutriLink.API.Controllers
             _db.Add(recipe);
             await _db.SaveChangesAsync();
             return CreatedAtAction(nameof(GetById), new { id = recipe.Id }, recipe);
+        }
+
+        [HttpPost("{recipeId}/igredients")]
+        public async Task<ActionResult> AddIngredientToRecipe(int recipeId, [FromBody] RecipeIngredient dto)
+        {
+            //the checks before added ingredient to a recipe
+            var recipe = await _db.Recipes.FindAsync(recipeId);
+            if (recipe == null) return NotFound("Recipe Not Found");
+
+            var ingredient = await _db.Ingredients.FindAsync(dto.IngredientId);
+            if (ingredient == null) return NotFound("Ingredient Not Found");
+
+            var checking = await _db.Set<RecipeIngredient>()
+            .FirstOrDefaultAsync(x => x.RecipeId == recipeId && x.IngredientId == dto.IngredientId);
+            if (checking != null) return BadRequest("Ingredient already added to this recipe");
+
+            var recipeIngredient = new RecipeIngredient
+            {
+                RecipeId = recipeId,
+                IngredientId = dto.IngredientId,
+                Quantity = dto.Quantity,
+                Unit = dto.Unit
+            };
+
+            _db.Add(recipeIngredient);
+            await _db.SaveChangesAsync();
+
+            return Ok(new
+            {
+                message = $"Ingredient {ingredient.Name} added to recipe {recipe.Title} with {dto.Quantity} {dto.Unit}"
+            });
         }
 
         [HttpPut("{id}")]
@@ -70,6 +107,21 @@ namespace NutriLink.API.Controllers
             _db.Remove(recipe);
             await _db.SaveChangesAsync();
             return NoContent();
+        }
+
+        [HttpDelete("{recipeId}/ingredients/{ingredientId}")]
+        public async Task<ActionResult> RemoveIngredientFromRecipe(int recipeId, int ingredientId)
+        {
+            var recipeIngredient = await _db.Set<RecipeIngredient>()
+            .FirstOrDefaultAsync(r => r.IngredientId == ingredientId && r.RecipeId == recipeId);
+            if (recipeIngredient == null) return NotFound("This ingredient is not linked to this recipe.");
+
+            _db.Remove(recipeIngredient);
+            await _db.SaveChangesAsync();
+            return Ok(new
+            {
+                message = "This ingredient was remove from the recipe"
+            });
         }
     }
 }

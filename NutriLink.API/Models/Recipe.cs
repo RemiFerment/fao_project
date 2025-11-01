@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace NutriLink.API.Models;
 
@@ -17,6 +18,6 @@ public class Recipe
 
     [ForeignKey(nameof(CategoryId))]
     public Category Category { get; set; } = default!;
-
+    [JsonIgnore]
     public ICollection<RecipeIngredient> RecipeIngredients { get; set; } = new List<RecipeIngredient>();
 }

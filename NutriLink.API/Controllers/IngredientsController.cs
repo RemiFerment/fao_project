@@ -34,6 +34,8 @@ namespace NutriLink.API.Controllers
         public async Task<ActionResult<Ingredient>> Create([FromBody] Ingredient ingredient)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
+            var check = await _db.Set<Ingredient>().FirstOrDefaultAsync(i => i.Name == ingredient.Name);
+            if (check != null) return BadRequest(new { message = "Ingredient already exists." });
 
             _db.Add(ingredient);
             await _db.SaveChangesAsync();
