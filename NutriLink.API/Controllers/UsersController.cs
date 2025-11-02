@@ -56,12 +56,8 @@ namespace NutriLink.API.Controllers
             user.LastName = input.LastName;
             user.Gender = input.Gender;
             user.BirthDate = input.BirthDate;
-            user.Size = input.Size;
-            user.Weight = input.Weight;
-            user.PhysicalActivity = input.PhysicalActivity;
-            user.Job = input.Job;
-            user.EnergyRequirement = input.EnergyRequirement;
             
+
             await _db.SaveChangesAsync();
             return Ok(user);
         }

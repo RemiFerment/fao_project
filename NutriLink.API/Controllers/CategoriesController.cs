@@ -14,6 +14,9 @@ namespace NutriLink.API.Controllers
             _db = db;
         }
 
+        ///<summary>
+        /// Get all categories.
+        /// </summary>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Category>>> GetAll()
         {
@@ -21,6 +24,9 @@ namespace NutriLink.API.Controllers
             return Ok(categories);
         }
 
+        ///<summary> 
+        ///Get a category by ID.
+        ///</summary>
         [HttpGet("{id}")]
         public async Task<ActionResult<Category>> GetById(int id)
         {
@@ -30,6 +36,9 @@ namespace NutriLink.API.Controllers
             return Ok(category);
         }
 
+        ///<summary> 
+        ///Create a new category.
+        ///</summary>
         [HttpPost]
         public async Task<ActionResult<Category>> Create([FromBody] Category category)
         {
@@ -40,6 +49,9 @@ namespace NutriLink.API.Controllers
             return CreatedAtAction(nameof(GetById), new { id = category.Id }, category);
         }
 
+        ///<summary>
+        /// Update an existing category.
+        /// </summary>
         [HttpPut("{id}")]
         public async Task<ActionResult<Category>> Update(int id, [FromBody] Category input)
         {
@@ -54,6 +66,9 @@ namespace NutriLink.API.Controllers
             return Ok(category);
         }
 
+        ///<summary>
+        /// Delete a category by ID.
+        /// </summary>
         [HttpDelete("{id}")]
         public async Task<ActionResult<Category>> Delete(int id)
         {

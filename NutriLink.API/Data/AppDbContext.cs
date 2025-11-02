@@ -1,3 +1,5 @@
+namespace NutriLink.API.Data;
+
 using Microsoft.EntityFrameworkCore;
 using NutriLink.API.Models;
 
@@ -6,9 +8,18 @@ public class AppDbContext : DbContext
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
     public DbSet<Recipe> Recipes => Set<Recipe>();
     public DbSet<User> Users => Set<User>();
+    public DbSet<UserProfile> UsersProfile => Set<UserProfile>();
     public DbSet<Category> Categories => Set<Category>();
     public DbSet<Ingredient> Ingredients => Set<Ingredient>();
     public DbSet<Role> Roles => Set<Role>();
+    public DbSet<RecipeIngredient> RecipeIngredients => Set<RecipeIngredient>();
+    public DbSet<AchievementTypeMeasurement> AchievementTypeMeasurements => Set<AchievementTypeMeasurement>();
+    public DbSet<AchievementTypePhoto> AchievementTypePhotos => Set<AchievementTypePhoto>();
+    public DbSet<AchievementTypeWeight> AchievementTypeWeights => Set<AchievementTypeWeight>();
+    public DbSet<Achievement> Achievements => Set<Achievement>();
+    public DbSet<MealDay> MealDays => Set<MealDay>();
+    public DbSet<SnackDay> SnackDays => Set<SnackDay>();
+    public DbSet<Message> Messages => Set<Message>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -17,18 +28,76 @@ public class AppDbContext : DbContext
             .WithMany()
             .HasForeignKey(r => r.CategoryId);
 
+        modelBuilder.Entity<User>()
+            .HasOne(u => u.UserProfile)
+            .WithMany()
+            .HasForeignKey(u => u.UserProfileId);
+        modelBuilder.Entity<User>()
+            .HasOne(u => u.Role)
+            .WithMany()
+            .HasForeignKey(u => u.RoleId);
+
         modelBuilder.Entity<RecipeIngredient>()
             .HasKey(ri => new { ri.RecipeId, ri.IngredientId });
-
         modelBuilder.Entity<RecipeIngredient>()
             .HasOne(ri => ri.Recipe)
             .WithMany(r => r.RecipeIngredients)
             .HasForeignKey(ri => ri.RecipeId);
-
         modelBuilder.Entity<RecipeIngredient>()
             .HasOne(ri => ri.Ingredient)
             .WithMany(i => i.RecipeIngredients)
             .HasForeignKey(ri => ri.IngredientId);
+
+        modelBuilder.Entity<MealDay>()
+            .HasOne(md => md.User)
+            .WithMany()
+            .HasForeignKey(md => md.UserId);
+        modelBuilder.Entity<MealDay>()
+            .HasOne(md => md.Coach)
+            .WithMany()
+            .HasForeignKey(md => md.CoachId);
+        modelBuilder.Entity<MealDay>()
+            .HasOne(md => md.Breakfast)
+            .WithMany()
+            .HasForeignKey(md => md.BreakfastId);
+        modelBuilder.Entity<MealDay>()
+            .HasOne(md => md.Lunch)
+            .WithMany()
+            .HasForeignKey(md => md.LunchId);
+        modelBuilder.Entity<MealDay>()
+            .HasOne(md => md.Dinner)
+            .WithMany()
+            .HasForeignKey(md => md.DinnerId);
+
+        modelBuilder.Entity<SnackDay>()
+            .HasOne(sd => sd.User)
+            .WithMany()
+            .HasForeignKey(sd => sd.UserId);
+        modelBuilder.Entity<SnackDay>()
+            .HasOne(sd => sd.Snack)
+            .WithMany()
+            .HasForeignKey(sd => sd.SnackId);
+
+        modelBuilder.Entity<Message>()
+            .HasOne(m => m.Sender)
+            .WithMany()
+            .HasForeignKey(m => m.SenderId)
+            .OnDelete(DeleteBehavior.NoAction);
+        modelBuilder.Entity<Message>()
+            .HasOne(m => m.Receiver)
+            .WithMany()
+            .HasForeignKey(m => m.ReceiverId)
+            .OnDelete(DeleteBehavior.NoAction);
+
+        modelBuilder.Entity<Achievement>()
+            .HasOne(a => a.User)
+            .WithMany()
+            .HasForeignKey(a => a.UserId);
+        modelBuilder.Entity<Achievement>()
+            .HasOne(a => a.AchievementType)
+            .WithMany()
+            .HasForeignKey(a => a.AchievementTypeId);
+
 
     }
 }
