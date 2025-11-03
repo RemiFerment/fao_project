@@ -105,6 +105,25 @@ namespace NutriLink.API.Controllers
             var recipe = await _db.Recipes.FindAsync(id);
             if (recipe == null) return NotFound();
 
+            var mealDaysWithRecipe = await _db.MealDays
+                .Where(md => md.BreakfastId == id || md.LunchId == id || md.DinnerId == id)
+                .ToListAsync();
+
+            foreach (var mealDay in mealDaysWithRecipe)
+            {
+                if (mealDay.BreakfastId == id) mealDay.BreakfastId = null;
+                if (mealDay.LunchId == id) mealDay.LunchId = null;
+                if (mealDay.DinnerId == id) mealDay.DinnerId = null;
+            }
+
+            var snackDaysWithRecipe = await _db.SnackDays
+                .Where(sd => sd.SnackId == id)
+                .ToListAsync();
+            foreach (var snackDay in snackDaysWithRecipe)
+            {
+                _db.SnackDays.Remove(snackDay);
+            }
+
             _db.Remove(recipe);
             await _db.SaveChangesAsync();
             return NoContent();

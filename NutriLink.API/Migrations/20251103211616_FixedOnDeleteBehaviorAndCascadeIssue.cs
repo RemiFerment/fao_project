@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace NutriLink.API.Migrations
 {
     /// <inheritdoc />
-    public partial class FirstAdd : Migration
+    public partial class FixedOnDeleteBehaviorAndCascadeIssue : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -69,7 +69,7 @@ namespace NutriLink.API.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "UsersProfile",
+                name: "UserProfiles",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -82,7 +82,7 @@ namespace NutriLink.API.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UsersProfile", x => x.Id);
+                    table.PrimaryKey("PK_UserProfiles", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -132,10 +132,11 @@ namespace NutriLink.API.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Users_UsersProfile_UserProfileId",
+                        name: "FK_Users_UserProfiles_UserProfileId",
                         column: x => x.UserProfileId,
-                        principalTable: "UsersProfile",
-                        principalColumn: "Id");
+                        principalTable: "UserProfiles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -227,7 +228,8 @@ namespace NutriLink.API.Migrations
                         name: "FK_MealDays_Users_CoachId",
                         column: x => x.CoachId,
                         principalTable: "Users",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.SetNull);
                     table.ForeignKey(
                         name: "FK_MealDays_Users_UserId",
                         column: x => x.UserId,
@@ -278,14 +280,12 @@ namespace NutriLink.API.Migrations
                         name: "FK_SnackDays_Recipes_SnackId",
                         column: x => x.SnackId,
                         principalTable: "Recipes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_SnackDays_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(
@@ -401,7 +401,7 @@ namespace NutriLink.API.Migrations
                 name: "Roles");
 
             migrationBuilder.DropTable(
-                name: "UsersProfile");
+                name: "UserProfiles");
         }
     }
 }

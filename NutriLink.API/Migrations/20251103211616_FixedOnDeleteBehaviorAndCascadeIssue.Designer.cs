@@ -12,8 +12,8 @@ using NutriLink.API.Data;
 namespace NutriLink.API.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20251102152305_FirstAdd")]
-    partial class FirstAdd
+    [Migration("20251103211616_FixedOnDeleteBehaviorAndCascadeIssue")]
+    partial class FixedOnDeleteBehaviorAndCascadeIssue
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -355,7 +355,7 @@ namespace NutriLink.API.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("UsersProfile");
+                    b.ToTable("UserProfiles");
                 });
 
             modelBuilder.Entity("NutriLink.API.Models.AchievementTypeMeasurement", b =>
@@ -415,23 +415,28 @@ namespace NutriLink.API.Migrations
                 {
                     b.HasOne("NutriLink.API.Models.Recipe", "Breakfast")
                         .WithMany()
-                        .HasForeignKey("BreakfastId");
+                        .HasForeignKey("BreakfastId")
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("NutriLink.API.Models.User", "Coach")
                         .WithMany()
-                        .HasForeignKey("CoachId");
+                        .HasForeignKey("CoachId")
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.HasOne("NutriLink.API.Models.Recipe", "Dinner")
                         .WithMany()
-                        .HasForeignKey("DinnerId");
+                        .HasForeignKey("DinnerId")
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("NutriLink.API.Models.Recipe", "Lunch")
                         .WithMany()
-                        .HasForeignKey("LunchId");
+                        .HasForeignKey("LunchId")
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("NutriLink.API.Models.User", "User")
                         .WithMany()
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.Navigation("Breakfast");
 
@@ -496,13 +501,13 @@ namespace NutriLink.API.Migrations
                     b.HasOne("NutriLink.API.Models.Recipe", "Snack")
                         .WithMany()
                         .HasForeignKey("SnackId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("NutriLink.API.Models.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Snack");
@@ -520,7 +525,8 @@ namespace NutriLink.API.Migrations
 
                     b.HasOne("NutriLink.API.Models.UserProfile", "UserProfile")
                         .WithMany()
-                        .HasForeignKey("UserProfileId");
+                        .HasForeignKey("UserProfileId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("Role");
 

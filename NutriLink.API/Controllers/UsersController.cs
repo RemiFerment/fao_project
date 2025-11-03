@@ -147,6 +147,16 @@ namespace NutriLink.API.Controllers
                     _db.Remove(userProfile);
                 }
             }
+            var mealDays = _db.MealDays.Where(md => md.UserId == id);
+            if (mealDays.Any())
+            {
+                _db.RemoveRange(mealDays);
+            }
+            var snackDays = _db.SnackDays.Where(sd => sd.UserId == id);
+            if (snackDays.Any())
+            {
+                _db.RemoveRange(snackDays);
+            }
             _db.Remove(user);
             await _db.SaveChangesAsync();
             return NoContent();

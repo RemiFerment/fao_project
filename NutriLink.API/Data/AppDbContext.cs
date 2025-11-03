@@ -54,32 +54,39 @@ public class AppDbContext : DbContext
         modelBuilder.Entity<MealDay>()
             .HasOne(md => md.User)
             .WithMany()
-            .HasForeignKey(md => md.UserId);
+            .HasForeignKey(md => md.UserId)
+            .OnDelete(DeleteBehavior.NoAction);
         modelBuilder.Entity<MealDay>()
             .HasOne(md => md.Coach)
             .WithMany()
-            .HasForeignKey(md => md.CoachId);
+            .HasForeignKey(md => md.CoachId)
+            .OnDelete(DeleteBehavior.SetNull);
         modelBuilder.Entity<MealDay>()
             .HasOne(md => md.Breakfast)
             .WithMany()
-            .HasForeignKey(md => md.BreakfastId);
+            .HasForeignKey(md => md.BreakfastId)
+            .OnDelete(DeleteBehavior.NoAction);
         modelBuilder.Entity<MealDay>()
             .HasOne(md => md.Lunch)
             .WithMany()
-            .HasForeignKey(md => md.LunchId);
+            .HasForeignKey(md => md.LunchId)
+            .OnDelete(DeleteBehavior.NoAction);
         modelBuilder.Entity<MealDay>()
             .HasOne(md => md.Dinner)
             .WithMany()
-            .HasForeignKey(md => md.DinnerId);
+            .HasForeignKey(md => md.DinnerId)
+            .OnDelete(DeleteBehavior.NoAction);
 
         modelBuilder.Entity<SnackDay>()
             .HasOne(sd => sd.User)
             .WithMany()
-            .HasForeignKey(sd => sd.UserId);
+            .HasForeignKey(sd => sd.UserId)
+            .OnDelete(DeleteBehavior.NoAction);
         modelBuilder.Entity<SnackDay>()
             .HasOne(sd => sd.Snack)
             .WithMany()
-            .HasForeignKey(sd => sd.SnackId);
+            .HasForeignKey(sd => sd.SnackId)
+            .OnDelete(DeleteBehavior.NoAction);
 
         modelBuilder.Entity<Message>()
             .HasOne(m => m.Sender)
@@ -95,11 +102,13 @@ public class AppDbContext : DbContext
         modelBuilder.Entity<Achievement>()
             .HasOne(a => a.User)
             .WithMany()
-            .HasForeignKey(a => a.UserId);
+            .HasForeignKey(a => a.UserId)
+            .OnDelete(DeleteBehavior.Cascade);
         modelBuilder.Entity<Achievement>()
             .HasOne(a => a.AchievementType)
             .WithMany()
-            .HasForeignKey(a => a.AchievementTypeId);
+            .HasForeignKey(a => a.AchievementTypeId)
+            .OnDelete(DeleteBehavior.Cascade);
 
 
     }

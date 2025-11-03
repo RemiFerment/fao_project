@@ -412,23 +412,28 @@ namespace NutriLink.API.Migrations
                 {
                     b.HasOne("NutriLink.API.Models.Recipe", "Breakfast")
                         .WithMany()
-                        .HasForeignKey("BreakfastId");
+                        .HasForeignKey("BreakfastId")
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("NutriLink.API.Models.User", "Coach")
                         .WithMany()
-                        .HasForeignKey("CoachId");
+                        .HasForeignKey("CoachId")
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.HasOne("NutriLink.API.Models.Recipe", "Dinner")
                         .WithMany()
-                        .HasForeignKey("DinnerId");
+                        .HasForeignKey("DinnerId")
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("NutriLink.API.Models.Recipe", "Lunch")
                         .WithMany()
-                        .HasForeignKey("LunchId");
+                        .HasForeignKey("LunchId")
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("NutriLink.API.Models.User", "User")
                         .WithMany()
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.Navigation("Breakfast");
 
@@ -493,13 +498,13 @@ namespace NutriLink.API.Migrations
                     b.HasOne("NutriLink.API.Models.Recipe", "Snack")
                         .WithMany()
                         .HasForeignKey("SnackId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("NutriLink.API.Models.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Snack");
