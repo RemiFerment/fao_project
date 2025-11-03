@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using NutriLink.API.Data;
 using NutriLink.API.Models;
 
 namespace NutriLink.API.Controllers
