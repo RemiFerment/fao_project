@@ -8,7 +8,7 @@ public class AppDbContext : DbContext
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
     public DbSet<Recipe> Recipes => Set<Recipe>();
     public DbSet<User> Users => Set<User>();
-    public DbSet<UserProfile> UsersProfile => Set<UserProfile>();
+    public DbSet<UserProfile> UserProfiles => Set<UserProfile>();
     public DbSet<Category> Categories => Set<Category>();
     public DbSet<Ingredient> Ingredients => Set<Ingredient>();
     public DbSet<Role> Roles => Set<Role>();
@@ -31,7 +31,8 @@ public class AppDbContext : DbContext
         modelBuilder.Entity<User>()
             .HasOne(u => u.UserProfile)
             .WithMany()
-            .HasForeignKey(u => u.UserProfileId);
+            .HasForeignKey(u => u.UserProfileId)
+            .OnDelete(DeleteBehavior.Cascade);
         modelBuilder.Entity<User>()
             .HasOne(u => u.Role)
             .WithMany()
@@ -42,11 +43,13 @@ public class AppDbContext : DbContext
         modelBuilder.Entity<RecipeIngredient>()
             .HasOne(ri => ri.Recipe)
             .WithMany(r => r.RecipeIngredients)
-            .HasForeignKey(ri => ri.RecipeId);
+            .HasForeignKey(ri => ri.RecipeId)
+            .OnDelete(DeleteBehavior.Cascade);
         modelBuilder.Entity<RecipeIngredient>()
             .HasOne(ri => ri.Ingredient)
             .WithMany(i => i.RecipeIngredients)
-            .HasForeignKey(ri => ri.IngredientId);
+            .HasForeignKey(ri => ri.IngredientId)
+            .OnDelete(DeleteBehavior.Cascade);
 
         modelBuilder.Entity<MealDay>()
             .HasOne(md => md.User)

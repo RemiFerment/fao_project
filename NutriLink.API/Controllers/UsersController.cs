@@ -34,7 +34,7 @@ namespace NutriLink.API.Controllers
         [HttpGet("profile/{id}")]
         public async Task<ActionResult<UserProfile>> GetUserProfile(int id)
         {
-            var userProfile = await _db.UsersProfile.FindAsync(id);
+            var userProfile = await _db.UserProfiles.FindAsync(id);
             if (userProfile == null) return NotFound();
 
             return Ok(userProfile);
@@ -49,21 +49,21 @@ namespace NutriLink.API.Controllers
             await _db.SaveChangesAsync();
             return CreatedAtAction(nameof(GetById), new { id = user.Id }, user);
         }
-        [HttpPost]
+        [HttpPost("profile")]
         public async Task<ActionResult<UserProfile>> CreateUserProfile([FromBody] UserProfile userProfile)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
             _db.Add(userProfile);
             await _db.SaveChangesAsync();
-            return CreatedAtAction(nameof(GetById), new { id = userProfile.Id }, userProfile);
+            return CreatedAtAction(nameof(GetUserProfile), new { id = userProfile.Id }, userProfile);
         }
 
         [HttpPost("{userId}/assign-profile/{profileId}")]
         public async Task<ActionResult> AssignUserProfile(int userId, int profileId)
         {
             var user = await _db.Users.FindAsync(userId);
-            var profile = await _db.UsersProfile.FindAsync(profileId);
+            var profile = await _db.UserProfiles.FindAsync(profileId);
 
             if (user == null || profile == null)
             {
@@ -71,6 +71,23 @@ namespace NutriLink.API.Controllers
             }
 
             user.UserProfileId = profileId;
+            await _db.SaveChangesAsync();
+
+            return NoContent();
+        }
+
+        [HttpPost("{userId}/assign-role/{roleId}")]
+        public async Task<ActionResult> AssignUserRole(int userId, int roleId)
+        {
+            var user = await _db.Users.FindAsync(userId);
+            var role = await _db.Roles.FindAsync(roleId);
+
+            if (user == null || role == null)
+            {
+                return NotFound();
+            }
+
+            user.RoleId = roleId;
             await _db.SaveChangesAsync();
 
             return NoContent();
@@ -97,13 +114,14 @@ namespace NutriLink.API.Controllers
             await _db.SaveChangesAsync();
             return Ok(user);
         }
+
         [HttpPut("profile/{id}")]
         public async Task<ActionResult<UserProfile>> UpdateProfile(int id, [FromBody] UserProfile input)
         {
             if (id != input.Id) return BadRequest(new { message = "ID in route and the body don't match." });
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
-            var userProfile = await _db.UsersProfile.FindAsync(id);
+            var userProfile = await _db.UserProfiles.FindAsync(id);
             if (userProfile == null) return NotFound();
 
             userProfile.Job = input.Job;
@@ -123,7 +141,7 @@ namespace NutriLink.API.Controllers
             if (user == null) return NotFound();
             if (user.UserProfileId != null)
             {
-                var userProfile = await _db.UsersProfile.FindAsync(user.UserProfileId);
+                var userProfile = await _db.UserProfiles.FindAsync(user.UserProfileId);
                 if (userProfile != null)
                 {
                     _db.Remove(userProfile);
