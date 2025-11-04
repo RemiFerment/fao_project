@@ -16,52 +16,76 @@ namespace NutriLink.API.Controllers
             _db = db;
         }
 
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<User>>> GetAll()
+        [HttpGet("{uuid}")]
+        public async Task<ActionResult> GetById(Guid uuid)
         {
-            var users = await _db.Users.ToListAsync();
-            return Ok(users);
-        }
-
-        [HttpGet("{id}")]
-        public async Task<ActionResult<User>> GetById(int id)
-        {
-            var user = await _db.Users.FindAsync(id);
+            var user = await _db.Users.FirstOrDefaultAsync(u => u.UUID == uuid.ToString());
             if (user == null) return NotFound();
 
-            return Ok(user);
+            var dto = new ReadUserDTO
+            {
+                Email = user.Email,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Gender = user.Gender,
+                RoleName = (await _db.Roles.FindAsync(user.RoleId))?.Name ?? string.Empty
+            };
+
+            return Ok(dto);
         }
 
-        [HttpGet("profile/{id}")]
-        public async Task<ActionResult<UserProfile>> GetUserProfile(int id)
+
+        [HttpPost("register")]
+        public async Task<ActionResult> Register([FromBody] RegisterDTO dto)
         {
-            var userProfile = await _db.UserProfiles.FindAsync(id);
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+            if (string.IsNullOrWhiteSpace(dto.PlainPassword)) return BadRequest(new { message = "Password is required." });
+
+            var passwordHasher = new PasswordHasher<User>();
+            var role = await _db.Roles.FirstOrDefaultAsync(r => r.Id == dto.RoleId);
+            if (role == null) return BadRequest("Role don't exist.");
+            var existingUser = await _db.Users.FirstOrDefaultAsync(u => u.Email == dto.Email);
+            if (existingUser != null) return Conflict(new { message = "Email is already in use." });
+            var user = new User
+            {
+                UUID = Guid.NewGuid().ToString(),
+                Email = dto.Email,
+                FirstName = dto.FirstName,
+                LastName = dto.LastName,
+                Gender = dto.Gender,
+                BirthDate = dto.BirthDate,
+                RoleId = dto.RoleId,
+                Role = role
+            };
+            user.PasswordHash = passwordHasher.HashPassword(user, dto.PlainPassword);
+
+            _db.Users.Add(user);
+            await _db.SaveChangesAsync();
+
+            var ReadUser = new ReadUserDTO
+            {
+                Email = user.Email,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Gender = user.Gender,
+                RoleName = role.Name
+            };
+
+            return CreatedAtAction(nameof(GetById), new { uuid = user.UUID.ToString() }, ReadUser);
+        }
+
+        [HttpGet("{uuid}/profile")]
+        public async Task<ActionResult> GetUserProfile(Guid uuid)
+        {
+            var user = await _db.Users.FirstOrDefaultAsync(u => u.UUID == uuid.ToString());
+            if (user == null || user.UserProfileId == null) return NotFound();
+            var userProfile = await _db.UserProfiles.FindAsync(user.UserProfileId);
             if (userProfile == null) return NotFound();
 
             return Ok(userProfile);
         }
-
-        [HttpPost("register")]
-        public async Task<ActionResult<User>> Register([FromBody] User user)
-        {
-            if (!ModelState.IsValid) return BadRequest(ModelState);
-            if (string.IsNullOrWhiteSpace(user.PasswordHash)) return BadRequest(new { message = "Password is required." });
-
-            var passwordHasher = new PasswordHasher<User>();
-            user.PasswordHash = passwordHasher.HashPassword(user, user.PasswordHash);
-
-            user.UUID = Guid.NewGuid().ToString();
-            var Role = await _db.Roles.FirstOrDefaultAsync(r => r.Id == user.RoleId);
-            if (Role == null) return BadRequest("Role don't exist.");
-
-            user.Role = Role;
-
-            _db.Users.Add(user);
-            await _db.SaveChangesAsync();
-            return CreatedAtAction(nameof(GetById), new { id = user.Id }, user);
-        }
         [HttpPost("profile")]
-        public async Task<ActionResult<UserProfile>> CreateUserProfile([FromBody] UserProfile userProfile)
+        public async Task<ActionResult> CreateUserProfile([FromBody] UserProfile userProfile)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
