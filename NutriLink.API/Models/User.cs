@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace NutriLink.API.Models;
 
@@ -13,9 +14,11 @@ public class User
     public string Gender { get; set; } = "";
     public DateOnly BirthDate { get; set; }
     public int? UserProfileId { get; set; }
+    [JsonIgnore]
     [ForeignKey(nameof(UserProfileId))]
     public UserProfile? UserProfile { get; set; } = default!;
     public int RoleId { get; set; }
+    [JsonIgnore]
     [ForeignKey(nameof(RoleId))]
     public Role Role { get; set; } = default!;
 }

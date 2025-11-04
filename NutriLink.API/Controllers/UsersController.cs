@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using NutriLink.API.Data;
@@ -40,12 +41,22 @@ namespace NutriLink.API.Controllers
             return Ok(userProfile);
         }
 
-        [HttpPost]
-        public async Task<ActionResult<User>> Create([FromBody] User user)
+        [HttpPost("register")]
+        public async Task<ActionResult<User>> Register([FromBody] User user)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
+            if (string.IsNullOrWhiteSpace(user.PasswordHash)) return BadRequest(new { message = "Password is required." });
 
-            _db.Add(user);
+            var passwordHasher = new PasswordHasher<User>();
+            user.PasswordHash = passwordHasher.HashPassword(user, user.PasswordHash);
+
+            user.UUID = Guid.NewGuid().ToString();
+            var Role = await _db.Roles.FirstOrDefaultAsync(r => r.Id == user.RoleId);
+            if (Role == null) return BadRequest("Role don't exist.");
+
+            user.Role = Role;
+
+            _db.Users.Add(user);
             await _db.SaveChangesAsync();
             return CreatedAtAction(nameof(GetById), new { id = user.Id }, user);
         }
