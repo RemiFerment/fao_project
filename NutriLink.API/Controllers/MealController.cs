@@ -41,16 +41,18 @@ public class MealController : ControllerBase
         return Ok(mealDay);
     }
 
-    [HttpPost("mealdays/{userId}/{date}/{mealType}")]
-    public async Task<IActionResult> UpdateMealDay(int userId, DateOnly date, string mealType, [FromBody] MealDay mealDay)
+    [HttpPost("{uuid}/mealdays/{date}/{mealType}")]
+    [Authorize("SameUser")]
+    public async Task<IActionResult> UpdateMealDay(string uuid, DateOnly date, string mealType, [FromBody] MealDay mealDay)
     {
         if (mealDay == null)
             return BadRequest("MealDay data is required.");
-
+        var user = await _context.Users.FirstOrDefaultAsync(u => u.UUID == uuid);
+        if (user == null) return NotFound("User not found.");
         mealType = mealType.Trim().ToLower();
 
         var existingMealDay = await _context.MealDays
-            .FirstOrDefaultAsync(md => md.UserId == userId && md.Date == date);
+            .FirstOrDefaultAsync(md => md.UserId == user.Id && md.Date == date);
 
         if (existingMealDay != null)
         {
@@ -73,7 +75,7 @@ public class MealController : ControllerBase
             return Ok(existingMealDay);
         }
 
-        mealDay.UserId = userId;
+        mealDay.UserId = user.Id;
         mealDay.Date = date;
 
         switch (mealType)
@@ -97,14 +99,18 @@ public class MealController : ControllerBase
         _context.MealDays.Add(mealDay);
         await _context.SaveChangesAsync();
 
-        return CreatedAtAction(nameof(GetMealDay), new { userId, date }, mealDay);
+        return CreatedAtAction(nameof(GetMealDay), new { user.Id, date }, mealDay);
     }
 
-    [HttpDelete("mealdays/{userId}/{date}/{mealType}")]
-    public async Task<IActionResult> DeleteMealFromMealDay(int userId, DateOnly date, string mealType)
+    [HttpDelete("{uuid}/mealdays/{date}/{mealType}")]
+    [Authorize("SameUser")]
+    public async Task<IActionResult> DeleteMealFromMealDay(string uuid, DateOnly date, string mealType)
     {
+        var user = await _context.Users.FirstOrDefaultAsync(u => u.UUID == uuid);
+        if (user == null) return NotFound("User not found.");
+
         var mealDay = await _context.MealDays
-            .FirstOrDefaultAsync(md => md.UserId == userId && md.Date == date);
+            .FirstOrDefaultAsync(md => md.UserId == user.Id && md.Date == date);
 
         if (mealDay == null)
         {
@@ -132,19 +138,23 @@ public class MealController : ControllerBase
         return NoContent();
     }
 
-    [HttpGet("snackday/{userId}")]
-    public async Task<ActionResult> GetSnackDayFromDate(int userId, [FromQuery] DateOnly date)
+    [HttpGet("{uuid}/snackday")]
+    public async Task<ActionResult> GetSnackDayFromDate(string uuid, [FromQuery] DateOnly date)
     {
-        var snackDay = await _context.SnackDays
-            .Include(sd => sd.Snack)
-            .FirstOrDefaultAsync(sd => sd.UserId == userId && sd.Date == date);
+        var user = await _context.Users.FirstOrDefaultAsync(u => u.UUID == uuid);
+        if (user == null) return NotFound("User not found.");
 
-        if (snackDay == null)
+        var snackDays = await _context.SnackDays
+            .Include(sd => sd.Snack)
+            .Where(sd => sd.UserId == user.Id && sd.Date == date)
+            .ToListAsync();
+
+        if (snackDays == null || snackDays.Count == 0)
         {
             return NotFound();
         }
 
-        return Ok(snackDay);
+        return Ok(snackDays);
     }
 
     [HttpPost("snackday")]
@@ -160,8 +170,8 @@ public class MealController : ControllerBase
         return CreatedAtAction(nameof(GetSnackDayFromDate), new { snackDay.UserId, snackDay.Date }, snackDay);
     }
 
-    [HttpPatch("snack_day/{id}")]
-    public async Task<ActionResult> ModifySnackDay(int id, [FromBody] SnackDay input)
+    [HttpPatch("{uuid}/snack_day/{id}")]
+    public async Task<ActionResult> ModifySnackDay(string uuid, int id, [FromBody] SnackDay input)
     {
         if (!ModelState.IsValid) return BadRequest(ModelState);
         if (input.Id != id) return BadRequest("ID mismatch.");
