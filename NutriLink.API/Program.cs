@@ -6,6 +6,8 @@ using NutriLink.API.Data;
 using Microsoft.OpenApi.Models;
 using System.Security.Claims;
 using NutriLink.API.Models;
+using Microsoft.AspNetCore.Authorization;
+using NutriLink.API.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -85,6 +87,9 @@ builder.Services.AddAuthorization(options =>
             return role == "ROLE_COACH" || role == "ROLE_ADMIN" || userUuid == routeUuid;
         }));
 });
+
+builder.Services.AddSingleton<IAuthorizationHandler, AdminBypassHandler>();
+
 
 var app = builder.Build();
 app.UseSwagger();

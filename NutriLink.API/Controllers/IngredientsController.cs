@@ -25,6 +25,7 @@ namespace NutriLink.API.Controllers
         }
 
         [HttpGet("{id}")]
+        [Authorize]
         public async Task<ActionResult<Ingredient>> GetById(int id)
         {
             var ingredient = await _db.Ingredients.FindAsync(id);
@@ -34,6 +35,7 @@ namespace NutriLink.API.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "ROLE_COACH")]
         public async Task<ActionResult<Ingredient>> Create([FromBody] Ingredient ingredient)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
@@ -46,6 +48,7 @@ namespace NutriLink.API.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Roles = "ROLE_COACH")]
         public async Task<ActionResult<Ingredient>> Update(int id, [FromBody] Ingredient input)
         {
             if (id != input.Id) return BadRequest(new { message = "ID in route and the body don't match." });
@@ -60,6 +63,7 @@ namespace NutriLink.API.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "ROLE_COACH")]
         public async Task<ActionResult<Ingredient>> Delete(int id)
         {
             var ingredient = await _db.Ingredients.FindAsync(id);
