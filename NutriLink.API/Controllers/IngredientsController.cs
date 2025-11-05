@@ -17,7 +17,7 @@ namespace NutriLink.API.Controllers
         }
 
         [HttpGet]
-        [AllowAnonymous]
+        [Authorize]
         public async Task<ActionResult<IEnumerable<Ingredient>>> GetAll()
         {
             var ingredients = await _db.Ingredients.ToListAsync();

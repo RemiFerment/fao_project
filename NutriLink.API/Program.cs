@@ -82,7 +82,7 @@ builder.Services.AddAuthorization(options =>
             var routeUuid = (context.Resource as HttpContext)
                 ?.Request.RouteValues["uuid"]?.ToString();
 
-            return role == "ROLE_ADMIN" || userUuid == routeUuid;
+            return role == "ROLE_COACH" || role == "ROLE_ADMIN" || userUuid == routeUuid;
         }));
 });
 
