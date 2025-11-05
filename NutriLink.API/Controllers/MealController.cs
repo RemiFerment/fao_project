@@ -1,5 +1,6 @@
 namespace NutriLink.API.Controllers;
 
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using NutriLink.API.Data;
@@ -20,14 +21,17 @@ public class MealController : ControllerBase
     /// <param name="userId"></param>
     /// <param name="date"></param>
     /// </summary>
-    [HttpGet("mealdays/{userId}")]
-    public async Task<IActionResult> GetMealDay(int userId, [FromQuery] DateOnly date)
+    [HttpGet("{uuid}/mealdays")]
+    [Authorize("SameUser")]
+    public async Task<IActionResult> GetMealDay(string uuid, [FromQuery] DateOnly date)
     {
+        var user = await _context.Users.FirstOrDefaultAsync(u => u.UUID == uuid);
+        if (user == null) return NotFound("User not found.");
         var mealDay = await _context.MealDays
             .Include(md => md.Breakfast)
             .Include(md => md.Lunch)
             .Include(md => md.Dinner)
-            .FirstOrDefaultAsync(md => md.UserId == userId && md.Date == date);
+            .FirstOrDefaultAsync(md => md.UserId == user.Id && md.Date == date);
 
         if (mealDay == null)
         {

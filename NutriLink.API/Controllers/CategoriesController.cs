@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using NutriLink.API.Data;
@@ -19,6 +20,7 @@ namespace NutriLink.API.Controllers
         /// Get all categories.
         /// </summary>
         [HttpGet]
+        [Authorize]
         public async Task<ActionResult<IEnumerable<Category>>> GetAll()
         {
             var categories = await _db.Categories.ToListAsync();
@@ -29,6 +31,7 @@ namespace NutriLink.API.Controllers
         ///Get a category by ID.
         ///</summary>
         [HttpGet("{id}")]
+        [Authorize]
         public async Task<ActionResult<Category>> GetById(int id)
         {
             var category = await _db.Categories.FindAsync(id);
@@ -40,6 +43,7 @@ namespace NutriLink.API.Controllers
         ///<summary> 
         ///Create a new category.
         ///</summary>
+        [Authorize(Roles = "ROLE_ADMIN")]
         [HttpPost]
         public async Task<ActionResult<Category>> Create([FromBody] Category category)
         {
@@ -53,6 +57,7 @@ namespace NutriLink.API.Controllers
         ///<summary>
         /// Update an existing category.
         /// </summary>
+        [Authorize(Roles = "ROLE_ADMIN")]
         [HttpPut("{id}")]
         public async Task<ActionResult<Category>> Update(int id, [FromBody] Category input)
         {
@@ -70,6 +75,7 @@ namespace NutriLink.API.Controllers
         ///<summary>
         /// Delete a category by ID.
         /// </summary>
+        [Authorize(Roles = "ROLE_ADMIN")]
         [HttpDelete("{id}")]
         public async Task<ActionResult<Category>> Delete(int id)
         {

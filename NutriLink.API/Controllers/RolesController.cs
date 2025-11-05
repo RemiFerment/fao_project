@@ -1,3 +1,5 @@
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using NutriLink.API.Data;
@@ -15,13 +17,6 @@ namespace NutriLink.API.Controllers
             _db = db;
         }
 
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Role>>> GetAll()
-        {
-            var roles = await _db.Roles.ToListAsync();
-            return Ok(roles);
-        }
-
         [HttpGet("{id}")]
         public async Task<ActionResult<Role>> GetById(int id)
         {
@@ -32,6 +27,7 @@ namespace NutriLink.API.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<Role>> Create([FromBody] Role role)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);

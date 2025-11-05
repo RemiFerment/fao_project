@@ -1,15 +1,15 @@
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
-using NutriLink.API.Data;
+using Microsoft.EntityFrameworkCore;
 using NutriLink.API.Models;
+using NutriLink.API.Data;
+using NutriLink.API.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace NutriLink.API.Controllers
 {
     [ApiController]
-    [Route("/api/[controller]")]
+    [Route("api/[controller]")]
     public class AuthController : ControllerBase
     {
         private readonly AppDbContext _context;
@@ -20,42 +20,21 @@ namespace NutriLink.API.Controllers
             _config = config;
         }
 
-        [HttpGet("login")]
-        public IActionResult Login([FromBody] LoginModel model)
+        [HttpPost("login")]
+        public async Task<IActionResult> Login([FromBody] LoginDTO login)
         {
-            var user = _context.Users.FirstOrDefault(u => u.Email == model.Email);
-            if (user == null) return Unauthorized("Invalid credentials.");
-
-            var passwordHasher = new PasswordHasher<User>();
-            var result = passwordHasher.VerifyHashedPassword(user, user.PasswordHash, model.Password);
-            if (result == PasswordVerificationResult.Failed) return Unauthorized("Invalid credentials.");
-
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var key = System.Text.Encoding.ASCII.GetBytes(_config["AppSettings:Token"] ?? throw new InvalidOperationException("AppSettings:Token is not configured."));
-            var tokenDescriptor = new SecurityTokenDescriptor
+            var user = await _context.Users.Include(u => u.Role).FirstOrDefaultAsync(u => u.Email == login.Email);
+            if (user == null) return BadRequest("Invalid credentials.");
+            var passwordHandler = new PasswordHasher<User>();
+            var checkPassword = passwordHandler.VerifyHashedPassword(user, user.PasswordHash, login.PlainPassword);
+            if (checkPassword == PasswordVerificationResult.Success)
             {
-                Subject = new ClaimsIdentity(new[]
-                {
-                    new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                    new Claim(ClaimTypes.Name, user.Email),
-                    new Claim(ClaimTypes.Role, user.Role.Name)
-                }),
-                Expires = DateTime.UtcNow.AddHours(2),
-                SigningCredentials = new SigningCredentials(
-                new SymmetricSecurityKey(key),
+                var jwtServices = new JWTServices(_config);
+                var token = jwtServices.GenerateJwtToken(user.UUID, user.Role.Name);
+                return Ok(new { Token = token });
+            }
 
-                SecurityAlgorithms.HmacSha256Signature
-                )
-            };
-            var token = tokenHandler.CreateToken(tokenDescriptor);
-            return Ok(new { token = tokenHandler.WriteToken(token) });
-        }
-
-
-        public class LoginModel
-        {
-            public string Email { get; set; } = string.Empty;
-            public string Password { get; set; } = string.Empty;
+            return BadRequest("Invalid credentials.");
         }
     }
 }

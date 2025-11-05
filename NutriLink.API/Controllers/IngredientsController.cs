@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using NutriLink.API.Data;
@@ -16,6 +17,7 @@ namespace NutriLink.API.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<Ingredient>>> GetAll()
         {
             var ingredients = await _db.Ingredients.ToListAsync();
