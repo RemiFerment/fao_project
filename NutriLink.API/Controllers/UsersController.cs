@@ -18,7 +18,7 @@ namespace NutriLink.API.Controllers
         }
 
         [HttpGet("{uuid}")]
-        [Authorize(Roles = "ROLE_ADMIN,ROLE_COACH")]
+        [Authorize(Roles = "ROLE_COACH")]
         public async Task<ActionResult> GetById(Guid uuid)
         {
             var user = await _db.Users.FirstOrDefaultAsync(u => u.UUID == uuid.ToString());
@@ -38,7 +38,7 @@ namespace NutriLink.API.Controllers
 
 
         [HttpPost("register")]
-        [Authorize(Roles = "ROLE_ADMIN,ROLE_COACH")]
+        [Authorize(Roles = "ROLE_COACH")]
         public async Task<ActionResult> Register([FromBody] RegisterDTO dto)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
@@ -78,7 +78,7 @@ namespace NutriLink.API.Controllers
         }
 
         [HttpGet("{uuid}/profile")]
-        [Authorize(Roles = "ROLE_ADMIN,ROLE_COACH")]
+        [Authorize(Roles = "ROLE_COACH")]
         public async Task<ActionResult> GetUserProfile(Guid uuid)
         {
             var user = await _db.Users.FirstOrDefaultAsync(u => u.UUID == uuid.ToString());
@@ -89,7 +89,7 @@ namespace NutriLink.API.Controllers
             return Ok(userProfile);
         }
         [HttpPost("profile")]
-        [Authorize(Roles = "ROLE_ADMIN,ROLE_COACH")]
+        [Authorize(Policy = "SameUser")]
         public async Task<ActionResult> CreateUserProfile([FromBody] UserProfile userProfile)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
@@ -100,7 +100,7 @@ namespace NutriLink.API.Controllers
         }
 
         [HttpPost("{userId}/assign-profile/{profileId}")]
-        [Authorize(Roles = "ROLE_ADMIN,ROLE_COACH")]
+        [Authorize(Roles = "ROLE_COACH")]
         public async Task<ActionResult> AssignUserProfile(int userId, int profileId)
         {
             var user = await _db.Users.FindAsync(userId);
@@ -136,7 +136,7 @@ namespace NutriLink.API.Controllers
         }
 
         [HttpPut("{id}")]
-        [Authorize(Roles = "ROLE_ADMIN,ROLE_COACH")]
+        [Authorize(Roles = "ROLE_COACH")]
         public async Task<ActionResult<User>> Update(int id, [FromBody] User input)
         {
             if (id != input.Id) return BadRequest(new { message = "ID in route and the body don't match." });
@@ -159,7 +159,7 @@ namespace NutriLink.API.Controllers
         }
 
         [HttpPut("profile/{id}")]
-        [Authorize(Roles = "ROLE_ADMIN,ROLE_COACH")]
+        [Authorize(Roles = "ROLE_COACH")]
         public async Task<ActionResult<UserProfile>> UpdateProfile(int id, [FromBody] UserProfile input)
         {
             if (id != input.Id) return BadRequest(new { message = "ID in route and the body don't match." });
@@ -179,7 +179,7 @@ namespace NutriLink.API.Controllers
         }
 
         [HttpDelete("{id}")]
-        [Authorize(Roles = "ROLE_ADMIN,ROLE_COACH")]
+        [Authorize(Roles = "ROLE_COACH")]
         public async Task<ActionResult<User>> Delete(int id)
         {
             var user = await _db.Users.FindAsync(id);
