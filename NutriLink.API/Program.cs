@@ -89,6 +89,7 @@ builder.Services.AddAuthorization(options =>
 });
 
 builder.Services.AddSingleton<IAuthorizationHandler, AdminBypassHandler>();
+builder.Services.AddScoped<UserService>();
 
 
 var app = builder.Build();
