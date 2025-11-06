@@ -18,6 +18,7 @@ namespace NutriLink.API.Controllers
         }
 
         [HttpGet("{id}")]
+        [Authorize(Roles = "ROLE_ADMIN")]
         public async Task<ActionResult<Role>> GetById(int id)
         {
             var role = await _db.Roles.FindAsync(id);
@@ -27,7 +28,7 @@ namespace NutriLink.API.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "ROLE_ADMIN")]
         public async Task<ActionResult<Role>> Create([FromBody] Role role)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
@@ -38,6 +39,7 @@ namespace NutriLink.API.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Roles = "ROLE_ADMIN")]
         public async Task<ActionResult<Role>> Update(int id, [FromBody] Role input)
         {
             if (id != input.Id) return BadRequest(new { message = "ID in route and the body don't match." });
@@ -52,6 +54,7 @@ namespace NutriLink.API.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "ROLE_ADMIN")]
         public async Task<ActionResult<Role>> Delete(int id)
         {
             var role = await _db.Roles.FindAsync(id);

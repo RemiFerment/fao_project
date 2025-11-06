@@ -39,7 +39,7 @@ namespace NutriLink.API.Controllers
         }
 
         [HttpPost]
-        [Authorize("ROLE_COACH")]
+        [Authorize(Roles = "ROLE_COACH")]
         public async Task<ActionResult<Recipe>> Create([FromBody] Recipe recipe)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
@@ -53,7 +53,7 @@ namespace NutriLink.API.Controllers
         }
 
         [HttpPost("{recipeId}/igredients")]
-        [Authorize("ROLE_COACH")]
+        [Authorize(Roles = "ROLE_COACH")]
         public async Task<ActionResult> AddIngredientToRecipe(int recipeId, [FromBody] RecipeIngredient dto)
         {
             //the checks before added ingredient to a recipe
@@ -85,7 +85,7 @@ namespace NutriLink.API.Controllers
         }
 
         [HttpPut("{id}")]
-        [Authorize("ROLE_COACH")]
+        [Authorize(Roles = "ROLE_COACH")]
         public async Task<ActionResult> Update(int id, [FromBody] Recipe input)
         {
             if (id != input.Id) return BadRequest(new { message = "ID in route and body don't match." });
@@ -104,7 +104,7 @@ namespace NutriLink.API.Controllers
         }
 
         [HttpDelete("{id}")]
-        [Authorize("ROLE_COACH")]
+        [Authorize(Roles = "ROLE_COACH")]
         public async Task<ActionResult> Delete(int id)
         {
             var recipe = await _db.Recipes.FindAsync(id);
@@ -135,7 +135,7 @@ namespace NutriLink.API.Controllers
         }
 
         [HttpDelete("{recipeId}/ingredients/{ingredientId}")]
-        [Authorize("ROLE_COACH")]
+        [Authorize(Roles = "ROLE_COACH")]
         public async Task<ActionResult> RemoveIngredientFromRecipe(int recipeId, int ingredientId)
         {
             var recipeIngredient = await _db.Set<RecipeIngredient>()
