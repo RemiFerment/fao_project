@@ -6,6 +6,8 @@ using NutriLink.API.Services;
 
 namespace NutriLink.API.Controllers;
 
+[ApiController]
+[Route("/api/[controller]")]
 public class AchievementController : ControllerBase
 {
     private readonly AppDbContext _context;
@@ -29,4 +31,5 @@ public class AchievementController : ControllerBase
         if (achievements == null || achievements.Count == 0) return NotFound(new { message = "No achievements found for this user." });
         return Ok(achievements);
     }
+    // [HttpGet("types")]
 }

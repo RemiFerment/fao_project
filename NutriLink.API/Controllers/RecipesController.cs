@@ -40,16 +40,23 @@ namespace NutriLink.API.Controllers
 
         [HttpPost]
         [Authorize(Roles = "ROLE_COACH")]
-        public async Task<ActionResult<Recipe>> Create([FromBody] Recipe recipe)
+        public async Task<ActionResult<Recipe>> Create([FromBody] RecipeSendDTO recipe)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
-            var categoryExist = await _db.Categories.AnyAsync(c => c.Id == recipe.CategoryId);
-            if (!categoryExist) return BadRequest(new { message = "Invalid Category" });
+            var category = await _db.Categories.FindAsync(recipe.CategoryId);
+            if (category == null) return NotFound(new { message = "Invalid Category" });
+            var newRecipe = new Recipe
+            {
+                Title = recipe.Title,
+                Steps = recipe.Steps,
+                CategoryId = recipe.CategoryId,
+                Category = category
+            };
 
-            _db.Add(recipe);
+            _db.Recipes.Add(newRecipe);
             await _db.SaveChangesAsync();
-            return CreatedAtAction(nameof(GetById), new { id = recipe.Id }, recipe);
+            return CreatedAtAction(nameof(GetById), new { id = recipe.Id }, newRecipe);
         }
 
         [HttpPost("{recipeId}/igredients")]
@@ -86,7 +93,7 @@ namespace NutriLink.API.Controllers
 
         [HttpPut("{id}")]
         [Authorize(Roles = "ROLE_COACH")]
-        public async Task<ActionResult> Update(int id, [FromBody] Recipe input)
+        public async Task<ActionResult> Update(int id, [FromBody] RecipeSendDTO input)
         {
             if (id != input.Id) return BadRequest(new { message = "ID in route and body don't match." });
 
@@ -97,7 +104,7 @@ namespace NutriLink.API.Controllers
 
             recipe.Title = input.Title;
             recipe.Steps = input.Steps;
-            recipe.Category = input.Category;
+            recipe.CategoryId = input.CategoryId;
 
             await _db.SaveChangesAsync();
             return Ok(recipe);
@@ -129,7 +136,7 @@ namespace NutriLink.API.Controllers
                 _db.SnackDays.Remove(snackDay);
             }
 
-            _db.Remove(recipe);
+            _db.Recipes.Remove(recipe);
             await _db.SaveChangesAsync();
             return NoContent();
         }
@@ -144,10 +151,7 @@ namespace NutriLink.API.Controllers
 
             _db.Remove(recipeIngredient);
             await _db.SaveChangesAsync();
-            return Ok(new
-            {
-                message = "This ingredient was remove from the recipe"
-            });
+            return Ok(new { message = "This ingredient was remove from the recipe" });
         }
     }
 }

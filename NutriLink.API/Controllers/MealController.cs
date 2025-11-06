@@ -37,16 +37,12 @@ public class MealController : ControllerBase
             .Include(md => md.Dinner)
             .FirstOrDefaultAsync(md => md.UserId == user.Id && md.Date == date);
 
-        if (mealDay == null)
-        {
-            return NotFound("Meal not found for the specified date.");
-        }
+        if (mealDay == null) return NotFound("Meal not found for the specified date.");
 
-        var mealDayDTO = new MealDayDTO
+        var mealDayDTO = new MealReadDTO
         {
             Id = mealDay.Id,
-            UserUUID = user.UUID,
-            Date = mealDay.Date,
+            Date = date,
             BreakfastId = mealDay.BreakfastId,
             LunchId = mealDay.LunchId,
             DinnerId = mealDay.DinnerId
@@ -57,35 +53,38 @@ public class MealController : ControllerBase
 
     [HttpPost("{uuid}/meal-days/{date}/{mealType}")]
     [Authorize("SameUser")]
-    public async Task<IActionResult> UpdateMealDay(string uuid, DateOnly date, string mealType, [FromBody] MealDayDTO mealDayDTO)
+    public async Task<IActionResult> UpdateMealDay(string uuid, DateOnly date, string mealType, [FromBody] MealSendDTO mealDayDTO)
     {
         if (!ModelState.IsValid) return BadRequest(ModelState);
         if (mealDayDTO == null) return BadRequest("MealDay data is required.");
+
         var user = await _userService.GetByUuidAsync(uuid);
         if (user == null) return NotFound("User not found.");
 
         mealType = mealType.Trim().ToLower();
 
-        var existingMealDay = await _context.MealDays
-            .FirstOrDefaultAsync(md => md.UserId == user.Id && md.Date == date);
+        var recipe = await _context.Recipes.FindAsync(mealDayDTO.RecipeId);
+        if (recipe == null) return NotFound("Recipe not found.");
+
+        var existingMealDay = await _context.MealDays.FirstOrDefaultAsync(md => md.UserId == user.Id && md.Date == date);
 
         if (existingMealDay != null)
         {
             switch (mealType)
             {
                 case "breakfast":
-                    existingMealDay.BreakfastId = mealDayDTO.BreakfastId;
-                    existingMealDay.Breakfast = await _context.Recipes.FindAsync(mealDayDTO.BreakfastId);
+                    existingMealDay.BreakfastId = mealDayDTO.RecipeId;
+                    existingMealDay.Breakfast = await _context.Recipes.FindAsync(mealDayDTO.RecipeId);
                     break;
 
                 case "lunch":
-                    existingMealDay.LunchId = mealDayDTO.LunchId;
-                    existingMealDay.Lunch = await _context.Recipes.FindAsync(mealDayDTO.LunchId);
+                    existingMealDay.LunchId = mealDayDTO.RecipeId;
+                    existingMealDay.Lunch = await _context.Recipes.FindAsync(mealDayDTO.RecipeId);
                     break;
 
                 case "dinner":
-                    existingMealDay.DinnerId = mealDayDTO.DinnerId;
-                    existingMealDay.Dinner = await _context.Recipes.FindAsync(mealDayDTO.DinnerId);
+                    existingMealDay.DinnerId = mealDayDTO.RecipeId;
+                    existingMealDay.Dinner = await _context.Recipes.FindAsync(mealDayDTO.RecipeId);
                     break;
 
                 default:
@@ -94,10 +93,9 @@ public class MealController : ControllerBase
 
             await _context.SaveChangesAsync();
 
-            var updatedDTO = new MealDayDTO
+            var updatedDTO = new MealReadDTO
             {
                 Id = existingMealDay.Id,
-                UserUUID = user.UUID,
                 Date = existingMealDay.Date,
                 BreakfastId = existingMealDay.BreakfastId,
                 LunchId = existingMealDay.LunchId,
@@ -107,38 +105,45 @@ public class MealController : ControllerBase
             return Ok(updatedDTO);
         }
 
-
-        switch (mealType)
-        {
-            case "breakfast":
-                mealDayDTO.LunchId = null;
-                mealDayDTO.DinnerId = null;
-                break;
-            case "lunch":
-                mealDayDTO.BreakfastId = null;
-                mealDayDTO.DinnerId = null;
-                break;
-            case "dinner":
-                mealDayDTO.BreakfastId = null;
-                mealDayDTO.LunchId = null;
-                break;
-            default:
-                return BadRequest("Invalid meal type. Use 'breakfast', 'lunch', or 'dinner'.");
-        }
-
         var mealDay = new MealDay
         {
             Date = date,
             UserId = user.Id,
-            BreakfastId = mealDayDTO.BreakfastId,
-            LunchId = mealDayDTO.LunchId,
-            DinnerId = mealDayDTO.DinnerId
+            User = user
         };
+        switch (mealType)
+        {
+            case "breakfast":
+                mealDay.BreakfastId = mealDayDTO.RecipeId;
+                mealDay.Breakfast = recipe;
+                break;
+
+            case "lunch":
+                mealDay.LunchId = mealDayDTO.RecipeId;
+                mealDay.Lunch = recipe;
+                break;
+
+            case "dinner":
+                mealDay.DinnerId = mealDayDTO.RecipeId;
+                mealDay.Dinner = recipe;
+                break;
+
+            default:
+                return BadRequest("Invalid meal type. Use 'breakfast', 'lunch', or 'dinner'.");
+        }
 
         _context.MealDays.Add(mealDay);
         await _context.SaveChangesAsync();
+        var mealDayDTOResult = new MealReadDTO
+        {
+            Id = mealDay.Id,
+            Date = mealDay.Date,
+            BreakfastId = mealDay.BreakfastId,
+            LunchId = mealDay.LunchId,
+            DinnerId = mealDay.DinnerId
+        };
 
-        return CreatedAtAction(nameof(GetMealDay), new { user.UUID, date }, mealDayDTO);
+        return CreatedAtAction(nameof(GetMealDay), new { user.UUID, date }, mealDayDTOResult);
     }
 
     [HttpDelete("{uuid}/meal-days/{date}/{mealType}")]

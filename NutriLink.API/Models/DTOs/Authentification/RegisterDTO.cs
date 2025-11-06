@@ -8,5 +8,4 @@ public class RegisterDTO
     public string LastName { get; set; } = string.Empty;
     public string Gender { get; set; } = string.Empty;
     public DateOnly BirthDate { get; set; }
-    public int RoleId { get; set; }
 }

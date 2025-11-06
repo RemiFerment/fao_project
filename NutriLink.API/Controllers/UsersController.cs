@@ -45,7 +45,7 @@ namespace NutriLink.API.Controllers
             if (string.IsNullOrWhiteSpace(dto.PlainPassword)) return BadRequest(new { message = "Password is required." });
 
             var passwordHasher = new PasswordHasher<User>();
-            var role = await _db.Roles.FirstOrDefaultAsync(r => r.Id == dto.RoleId);
+            var role = await _db.Roles.FirstOrDefaultAsync(r => r.Id == 1);
             if (role == null) return BadRequest("Role don't exist.");
             var existingUser = await _db.Users.FirstOrDefaultAsync(u => u.Email == dto.Email);
             if (existingUser != null) return Conflict(new { message = "Email is already in use." });
@@ -57,7 +57,7 @@ namespace NutriLink.API.Controllers
                 LastName = dto.LastName,
                 Gender = dto.Gender,
                 BirthDate = dto.BirthDate,
-                RoleId = dto.RoleId,
+                RoleId = 1,
                 Role = role
             };
             user.PasswordHash = passwordHasher.HashPassword(user, dto.PlainPassword);
