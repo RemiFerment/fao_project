@@ -20,6 +20,10 @@ namespace NutriLink.API.Controllers
         public async Task<ActionResult<IEnumerable<Recipe>>> GetAll()
         {
             var recipes = await _db.Recipes.Include(r => r.Category).ToListAsync();
+            if (recipes == null || recipes.Count == 0)
+            {
+                return NotFound(new { message = "No recipes found." });
+            }
             return Ok(recipes);
         }
 
