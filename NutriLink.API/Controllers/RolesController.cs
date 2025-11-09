@@ -38,11 +38,10 @@ namespace NutriLink.API.Controllers
             return CreatedAtAction(nameof(GetById), new { id = role.Id }, role);
         }
 
-        [HttpPut("{id}")]
+        [HttpPatch("{id}")]
         [Authorize(Roles = "ROLE_ADMIN")]
         public async Task<ActionResult<Role>> Update(int id, [FromBody] Role input)
         {
-            if (id != input.Id) return BadRequest(new { message = "ID in route and the body don't match." });
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
             var role = await _db.Roles.FindAsync(id);

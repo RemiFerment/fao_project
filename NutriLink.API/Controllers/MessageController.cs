@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -20,10 +21,11 @@ public class MessageController : ControllerBase
         _userService = userService;
     }
 
-    [HttpGet("{uuid}/to/{receiverUuid}")]
+    [HttpGet("to/{receiverUuid}")]
     [Authorize(Policy = "SameUser")]
-    public async Task<ActionResult<IEnumerable<MessageDTO>>> GetMyMessages(string uuid, string receiverUuid)
+    public async Task<ActionResult<IEnumerable<MessageDTO>>> GetMyMessages(string receiverUuid)
     {
+        var uuid = _userService.GetUUIDByClaims(User);
         var senderId = await _userService.GetIdByUuidAsync(uuid);
         if (senderId == null) return NotFound(new { message = "User not found." });
 
@@ -49,20 +51,21 @@ public class MessageController : ControllerBase
             Content = m.Content
         });
 
-        return Ok(messageDtos);
+        return Ok(messageDtos.ToList());
     }
 
 
-    [HttpPost("{uuid}/to/{recieverUuid}")]
+    [HttpPost("send")]
     [Authorize(Policy = "SameUser")]
-    public async Task<ActionResult<MessageDTO>> SendMessage(string uuid, string recieverUuid, [FromBody] MessageDTO messageDto)
+    public async Task<ActionResult<MessageDTO>> SendMessage([FromBody] MessageSendDTO messageDto)
     {
         if (!ModelState.IsValid) return BadRequest(ModelState);
-        if (uuid == recieverUuid) return BadRequest(new { message = "Cannot send message to oneself." });
+        var uuid = _userService.GetUUIDByClaims(User);
+        if (uuid == messageDto.ReceiverUuid) return BadRequest(new { message = "Cannot send message to oneself." });
         var sender = await _userService.GetByUuidAsync(uuid);
         if (sender == null) return NotFound(new { message = "Sender not found." });
 
-        var receiver = await _userService.GetByUuidAsync(recieverUuid);
+        var receiver = await _userService.GetByUuidAsync(messageDto.ReceiverUuid);
         if (receiver == null) return NotFound(new { message = "Recipient not found." });
         if (receiver.UUID != messageDto.ReceiverUuid) return BadRequest(new { message = "Receiver UUID mismatch." });
 
@@ -84,19 +87,19 @@ public class MessageController : ControllerBase
         return CreatedAtAction(nameof(GetMyMessages), new { uuid = sender.UUID, receiverUuid = receiver.UUID }, messageDto);
     }
 
-    [HttpPatch("{uuid}/messages/{messageId}/read")]
+    [HttpPatch("/is-Read")]
     [Authorize(Policy = "SameUser")]
-    public async Task<ActionResult> MarkMessageAsRead(string uuid, int messageId, [FromBody] MessageIsReadDTO dto)
+    public async Task<ActionResult> MarkMessageAsRead([FromBody] MessageIsReadDTO dto)
     {
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
 
-        var user = await _userService.GetByUuidAsync(uuid);
+        var user = await _userService.GetByUuidAsync(_userService.GetUUIDByClaims(User));
         if (user == null)
             return NotFound(new { message = "User not found." });
 
         var message = await _context.Messages
-            .FirstOrDefaultAsync(m => m.Id == messageId && (m.ReceiverId == user.Id || m.SenderId == user.Id));
+            .FirstOrDefaultAsync(m => m.Id == dto.Id && (m.ReceiverId == user.Id || m.SenderId == user.Id));
 
         if (message == null)
             return NotFound(new { message = "Message not found or access denied." });

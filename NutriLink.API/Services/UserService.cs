@@ -30,5 +30,9 @@ namespace NutriLink.API.Services
                 .Select(u => (int?)u.Id)
                 .FirstOrDefaultAsync();
         }
+        public string GetUUIDByClaims(System.Security.Claims.ClaimsPrincipal user)
+        {
+            return user.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)!.Value;
+        }
     }
 }

@@ -43,12 +43,14 @@ namespace NutriLink.API.Controllers
         ///<summary> 
         ///Create a new category.
         ///</summary>
-        [Authorize(Roles = "ROLE_ADMIN")]
+        [Authorize(Roles = "ROLE_COACH")]
         [HttpPost]
         public async Task<ActionResult<Category>> Create([FromBody] Category category)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
-
+            var existingCategory = await _db.Categories
+                .FirstOrDefaultAsync(c => c.Name.ToLower() == category.Name.ToLower());
+            if (existingCategory != null) return Conflict(new { message = "A category with the same name already exists." });
             _db.Add(category);
             await _db.SaveChangesAsync();
             return CreatedAtAction(nameof(GetById), new { id = category.Id }, category);
@@ -57,17 +59,18 @@ namespace NutriLink.API.Controllers
         ///<summary>
         /// Update an existing category.
         /// </summary>
-        [Authorize(Roles = "ROLE_ADMIN")]
-        [HttpPut("{id}")]
-        public async Task<ActionResult<Category>> Update(int id, [FromBody] Category input)
+        [Authorize(Roles = "ROLE_COACH")]
+        [HttpPatch("/update")]
+        public async Task<ActionResult<Category>> Update([FromBody] Category input)
         {
-            if (id != input.Id) return BadRequest(new { message = "ID in route and the body don't match." });
             if (!ModelState.IsValid) return BadRequest(ModelState);
-
-            var category = await _db.Categories.FindAsync(id);
-            if (category == null) return NotFound();
+            var category = await _db.Categories.FindAsync(input.Id);
+            if (category == null) return NotFound("Category not found.");
 
             category.Name = input.Name;
+            var existingCategory = await _db.Categories
+                .FirstOrDefaultAsync(c => c.Name.ToLower() == input.Name.ToLower() && c.Id != input.Id);
+            if (existingCategory != null) return Conflict(new { message = "A category with the same name already exists." });
             await _db.SaveChangesAsync();
             return Ok(category);
         }
@@ -75,7 +78,7 @@ namespace NutriLink.API.Controllers
         ///<summary>
         /// Delete a category by ID.
         /// </summary>
-        [Authorize(Roles = "ROLE_ADMIN")]
+        [Authorize(Roles = "ROLE_COACH")]
         [HttpDelete("{id}")]
         public async Task<ActionResult<Category>> Delete(int id)
         {

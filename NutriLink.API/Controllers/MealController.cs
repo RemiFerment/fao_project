@@ -183,7 +183,7 @@ public class MealController : ControllerBase
         return NoContent();
     }
 
-    [HttpGet("{uuid}/snack-days")]
+    [HttpGet("{uuid}/snack")]
     public async Task<ActionResult> GetSnackDayFromDate(string uuid, [FromQuery] DateOnly date)
     {
         var user = await _userService.GetByUuidAsync(uuid);
@@ -207,7 +207,7 @@ public class MealController : ControllerBase
         return Ok(snackDayDTOs);
     }
 
-    [HttpPost("snack-days")]
+    [HttpPost("snack/add")]
     public async Task<ActionResult> AddSnackDay([FromBody] SnackDayDTO snackDayDTO)
     {
         var user = await _userService.GetByUuidAsync(snackDayDTO.UserUUID);
@@ -232,16 +232,15 @@ public class MealController : ControllerBase
         return CreatedAtAction(nameof(GetSnackDayFromDate), new { user.UUID, snackDay.Date }, snackDayDTO);
     }
 
-    [HttpPatch("{uuid}/snack-days/{id}")]
+    [HttpPatch("{uuid}/snack/modify")]
     [Authorize("SameUser")]
-    public async Task<ActionResult> ModifySnackDay(string uuid, int id, [FromBody] SnackDayDTO input)
+    public async Task<ActionResult> ModifySnackDay(string uuid, [FromBody] SnackDayDTO input)
     {
         if (!ModelState.IsValid) return BadRequest(ModelState);
         var user = await _userService.GetByUuidAsync(uuid);
         if (user == null) return NotFound("User not found.");
-        if (input.Id != id) return BadRequest("ID mismatch.");
 
-        var snack = await _context.SnackDays.FindAsync(id);
+        var snack = await _context.SnackDays.FindAsync(input.SnackId);
         if (snack == null) return NotFound();
 
         snack.SnackId = input.SnackId;
@@ -255,7 +254,7 @@ public class MealController : ControllerBase
         return Ok(snack);
     }
 
-    [HttpDelete("{uuid}/snack-days/{id}")]
+    [HttpDelete("{uuid}/snack/remove/{id}")]
     [Authorize("SameUser")]
     public async Task<ActionResult> DeleteSnackDay(string uuid, int id)
     {

@@ -5,7 +5,7 @@ namespace NutriLink.API.Models;
 public class SnackDay
 {
     public int Id { get; set; }
-    public DateOnly Date;
+    public DateOnly Date { get; set; }
     public int UserId { get; set; }
     [ForeignKey(nameof(UserId))]
     public User User { get; set; } = default!;

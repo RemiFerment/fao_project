@@ -17,34 +17,56 @@ namespace NutriLink.API.Controllers
         }
         [HttpGet]
         [Authorize]
-        public async Task<ActionResult<IEnumerable<Recipe>>> GetAll()
+        public async Task<ActionResult<IEnumerable<RecipeSendDTO>>> GetAll()
         {
             var recipes = await _db.Recipes.Include(r => r.Category).ToListAsync();
             if (recipes == null || recipes.Count == 0)
             {
                 return NotFound(new { message = "No recipes found." });
             }
-            return Ok(recipes);
+            var recipeDTOs = recipes.Select(r => new RecipeSendDTO
+            {
+                Id = r.Id,
+                Title = r.Title,
+                Steps = r.Steps,
+                CategoryId = r.CategoryId
+            }).ToList();
+            return Ok(recipeDTOs);
         }
 
         [HttpGet("{id}")]
         [Authorize]
-        public async Task<ActionResult<Recipe>> GetById(int id)
+        public async Task<ActionResult<FullRecipeDTO>> GetById(int id)
         {
-            var recipe = await _db.Recipes
-            .Include(r => r.Category)
-            .Include(r => r.RecipeIngredients)
-                .ThenInclude(ri => ri.Ingredient)
-            .FirstOrDefaultAsync(r => r.Id == id);
-
+            var recipe = await _db.Recipes.FindAsync(id);
             if (recipe == null) return NotFound(new { message = $"Recipe with ID {id} not found." });
+            var category = await _db.Categories.FindAsync(recipe.CategoryId);
+            var ingredients = _db.Set<RecipeIngredient>()
+                .Where(ri => ri.RecipeId == recipe.Id)
+                .Include(ri => ri.Ingredient)
+                .Select(ri => new FullRecipeIngredientDTO
+                {
+                    IngredientId = ri.IngredientId,
+                    IngredientName = ri.Ingredient.Name,
+                    Quantity = ri.Quantity,
+                    Unit = ri.Unit
+                }).ToList();
+            var recipeDTO = new FullRecipeDTO
+            {
+                Id = recipe.Id,
+                Title = recipe.Title,
+                Steps = recipe.Steps,
+                CategoryName = category!.Name,
+                Ingredients = ingredients
+            };
 
-            return Ok(recipe);
+
+            return Ok(recipeDTO);
         }
 
         [HttpPost]
         [Authorize(Roles = "ROLE_COACH")]
-        public async Task<ActionResult<Recipe>> Create([FromBody] RecipeSendDTO recipe)
+        public async Task<ActionResult<RecipeSendDTO>> Create([FromBody] RecipeSendDTO recipe)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
@@ -63,25 +85,27 @@ namespace NutriLink.API.Controllers
             return CreatedAtAction(nameof(GetById), new { id = recipe.Id }, newRecipe);
         }
 
-        [HttpPost("{recipeId}/igredients")]
+        [HttpPost("add-ingredient")]
         [Authorize(Roles = "ROLE_COACH")]
-        public async Task<ActionResult> AddIngredientToRecipe(int recipeId, [FromBody] RecipeIngredient dto)
+        public async Task<ActionResult> AddIngredientToRecipe([FromBody] RecipeIngredientDTO dto)
         {
             //the checks before added ingredient to a recipe
-            var recipe = await _db.Recipes.FindAsync(recipeId);
+            var recipe = await _db.Recipes.FindAsync(dto.RecipeId);
             if (recipe == null) return NotFound("Recipe Not Found");
 
             var ingredient = await _db.Ingredients.FindAsync(dto.IngredientId);
             if (ingredient == null) return NotFound("Ingredient Not Found");
 
             var checking = await _db.Set<RecipeIngredient>()
-            .FirstOrDefaultAsync(x => x.RecipeId == recipeId && x.IngredientId == dto.IngredientId);
+            .FirstOrDefaultAsync(c => c.RecipeId == dto.RecipeId && c.IngredientId == dto.IngredientId);
             if (checking != null) return BadRequest("Ingredient already added to this recipe");
 
             var recipeIngredient = new RecipeIngredient
             {
-                RecipeId = recipeId,
+                RecipeId = dto.RecipeId,
+                Recipe = recipe,
                 IngredientId = dto.IngredientId,
+                Ingredient = ingredient,
                 Quantity = dto.Quantity,
                 Unit = dto.Unit
             };
@@ -95,15 +119,14 @@ namespace NutriLink.API.Controllers
             });
         }
 
-        [HttpPut("{id}")]
+        [HttpPatch("update")]
         [Authorize(Roles = "ROLE_COACH")]
-        public async Task<ActionResult> Update(int id, [FromBody] RecipeSendDTO input)
+        public async Task<ActionResult> Update([FromBody] RecipeSendDTO input)
         {
-            if (id != input.Id) return BadRequest(new { message = "ID in route and body don't match." });
 
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
-            var recipe = await _db.Recipes.FindAsync(id);
+            var recipe = await _db.Recipes.FindAsync(input.Id);
             if (recipe == null) return NotFound();
 
             recipe.Title = input.Title;
@@ -145,7 +168,7 @@ namespace NutriLink.API.Controllers
             return NoContent();
         }
 
-        [HttpDelete("{recipeId}/ingredients/{ingredientId}")]
+        [HttpDelete("ingredients/remove")]
         [Authorize(Roles = "ROLE_COACH")]
         public async Task<ActionResult> RemoveIngredientFromRecipe(int recipeId, int ingredientId)
         {
@@ -156,6 +179,48 @@ namespace NutriLink.API.Controllers
             _db.Remove(recipeIngredient);
             await _db.SaveChangesAsync();
             return Ok(new { message = "This ingredient was remove from the recipe" });
+        }
+
+        [HttpPost("ingredients/update")]
+        [Authorize(Roles = "ROLE_COACH")]
+        public async Task<ActionResult> UpdateIngredientInRecipe([FromBody] RecipeIngredientUpdateDTO dto)
+        {
+            var recipeIngredient = await _db.RecipeIngredients
+            .FirstOrDefaultAsync(ri => ri.RecipeId == dto.RecipeId && ri.IngredientId == dto.IngredientId);
+            if (recipeIngredient == null) return NotFound("This ingredient link to recipe does not exist.");
+
+            _db.Remove(recipeIngredient);
+
+            var newIngredient = await _db.Ingredients.FindAsync(dto.NewIngredientId);
+            if (newIngredient == null) return NotFound("New ingredient not found.");
+
+            var recipe = await _db.Recipes.FindAsync(dto.RecipeId);
+
+            var existingLink = await _db.RecipeIngredients
+            .FirstOrDefaultAsync(ri => ri.RecipeId == dto.RecipeId && ri.IngredientId == dto.NewIngredientId);
+            if (existingLink != null) return BadRequest("This ingredient is already linked to the recipe.");
+
+            if (dto.Quantity <= 0) return BadRequest("Quantity must be greater than zero.");
+
+            if (string.IsNullOrEmpty(dto.Unit)) return BadRequest("Unit must be provided.");
+
+            var newRecipeIngredient = new RecipeIngredient
+            {
+                RecipeId = dto.RecipeId,
+                Recipe = recipe!,
+                IngredientId = dto.NewIngredientId,
+                Ingredient = newIngredient,
+                Quantity = dto.Quantity,
+                Unit = dto.Unit
+            };
+
+            _db.RecipeIngredients.Add(newRecipeIngredient);
+            await _db.SaveChangesAsync();
+
+            return Ok(new
+            {
+                message = $"Ingredient {newIngredient.Name} added to recipe {recipe!.Title} with {dto.Quantity} {dto.Unit}"
+            });
         }
     }
 }

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using NutriLink.API.Data;
 using NutriLink.API.Models;
+using NutriLink.API.Services;
 
 namespace NutriLink.API.Controllers
 {
@@ -12,9 +13,11 @@ namespace NutriLink.API.Controllers
     public class UsersController : ControllerBase
     {
         private readonly AppDbContext _db;
-        public UsersController(AppDbContext db)
+        private readonly UserService _userService;
+        public UsersController(AppDbContext db, UserService userService)
         {
             _db = db;
+            _userService = userService;
         }
 
         [HttpGet("{uuid}")]
@@ -88,33 +91,28 @@ namespace NutriLink.API.Controllers
 
             return Ok(userProfile);
         }
-        [HttpPost("profile")]
-        [Authorize(Policy = "SameUser")]
-        public async Task<ActionResult> CreateUserProfile([FromBody] UserProfile userProfile)
+        [HttpPost("set-profile")]
+        [Authorize(Roles = "ROLE_COACH")]
+        public async Task<ActionResult> CreateUserProfile([FromBody] UserProfileDTO userProfile)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
+            var userConcerned = await _db.Users.FirstOrDefaultAsync(u => u.UUID == userProfile.Uuid.ToString());
+            if (userConcerned == null) return NotFound(new { message = "User not found." });
 
-            _db.Add(userProfile);
-            await _db.SaveChangesAsync();
-            return CreatedAtAction(nameof(GetUserProfile), new { id = userProfile.Id }, userProfile);
-        }
-
-        [HttpPost("{userId}/assign-profile/{profileId}")]
-        [Authorize(Roles = "ROLE_COACH")]
-        public async Task<ActionResult> AssignUserProfile(int userId, int profileId)
-        {
-            var user = await _db.Users.FindAsync(userId);
-            var profile = await _db.UserProfiles.FindAsync(profileId);
-
-            if (user == null || profile == null)
+            var newUserProfile = new UserProfile
             {
-                return NotFound();
-            }
-
-            user.UserProfileId = profileId;
+                Job = userProfile.Job,
+                EnergyRequirement = userProfile.EnergyRequirement,
+                Weight = userProfile.Weight,
+                Size = userProfile.Size,
+                PhysicalActivity = userProfile.PhysicalActivity
+            };
+            _db.UserProfiles.Add(newUserProfile);
             await _db.SaveChangesAsync();
+            userConcerned.UserProfileId = newUserProfile.Id;
+            await _db.SaveChangesAsync();
+            return Ok("User profile created successfully.");
 
-            return NoContent();
         }
 
         [HttpPost("{userId}/assign-role/{roleId}")]
@@ -124,48 +122,56 @@ namespace NutriLink.API.Controllers
             var user = await _db.Users.FindAsync(userId);
             var role = await _db.Roles.FindAsync(roleId);
 
-            if (user == null || role == null)
-            {
-                return NotFound();
-            }
+            if (user == null || role == null) { return NotFound("User or Role not found."); }
+            if (user.Role.Name == "ROLE_ADMIN") { return BadRequest("Cannot change role of an Admin user."); }
+            if (role.Name == "ROLE_ADMIN") { return BadRequest("Cannot assign Admin role through this endpoint."); }
 
             user.RoleId = roleId;
             await _db.SaveChangesAsync();
 
-            return NoContent();
+            return Ok("Role assigned successfully.");
         }
 
-        [HttpPut("{id}")]
+        /// <summary>
+        /// Update user information (except password).
+        /// </summary>
+        [HttpPatch("update/{uuidUser}")]
         [Authorize(Roles = "ROLE_COACH")]
-        public async Task<ActionResult<User>> Update(int id, [FromBody] User input)
+        public async Task<ActionResult<User>> Update(string uuidUser, [FromBody] RegisterDTO input)
         {
-            if (id != input.Id) return BadRequest(new { message = "ID in route and the body don't match." });
             if (!ModelState.IsValid) return BadRequest(ModelState);
+            var user = await _userService.GetByUuidAsync(uuidUser);
+            if (user == null) return NotFound("User not found.");
 
-            var user = await _db.Users.FindAsync(id);
-            if (user == null) return NotFound();
-
-            user.UUID = input.UUID;
             user.Email = input.Email;
-            user.PasswordHash = input.PasswordHash;
             user.FirstName = input.FirstName;
             user.LastName = input.LastName;
             user.Gender = input.Gender;
             user.BirthDate = input.BirthDate;
 
+            var readUser = new ReadUserDTO
+            {
+                Email = user.Email,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Gender = user.Gender,
+                RoleName = (await _db.Roles.FindAsync(user.RoleId))?.Name ?? string.Empty
+            };
 
             await _db.SaveChangesAsync();
-            return Ok(user);
+            return Ok(readUser);
         }
 
-        [HttpPut("profile/{id}")]
+        [HttpPatch("profile/{userUuid}")]
         [Authorize(Roles = "ROLE_COACH")]
-        public async Task<ActionResult<UserProfile>> UpdateProfile(int id, [FromBody] UserProfile input)
+        public async Task<ActionResult<UserProfile>> UpdateProfile(string userUuid, [FromBody] UserProfileDTO input)
         {
-            if (id != input.Id) return BadRequest(new { message = "ID in route and the body don't match." });
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
-            var userProfile = await _db.UserProfiles.FindAsync(id);
+            var user = await _db.Users.FirstOrDefaultAsync(u => u.UUID == userUuid);
+            if (user == null || user.UserProfileId == null) return NotFound("User or UserProfile not found.");
+
+            var userProfile = await _db.UserProfiles.FindAsync(user.UserProfileId);
             if (userProfile == null) return NotFound();
 
             userProfile.Job = input.Job;
@@ -175,15 +181,19 @@ namespace NutriLink.API.Controllers
             userProfile.PhysicalActivity = input.PhysicalActivity;
 
             await _db.SaveChangesAsync();
-            return Ok(userProfile);
+            return Ok("User profile updated successfully.");
         }
 
         [HttpDelete("{id}")]
-        [Authorize(Roles = "ROLE_COACH")]
+        [Authorize(Roles = "ROLE_ADMIN")]
         public async Task<ActionResult<User>> Delete(int id)
         {
             var user = await _db.Users.FindAsync(id);
             if (user == null) return NotFound();
+            if (user.Role.Name == "ROLE_ADMIN")
+            {
+                return BadRequest("Cannot delete an Admin user.");
+            }
             if (user.UserProfileId != null)
             {
                 var userProfile = await _db.UserProfiles.FindAsync(user.UserProfileId);
@@ -201,6 +211,11 @@ namespace NutriLink.API.Controllers
             if (snackDays.Any())
             {
                 _db.RemoveRange(snackDays);
+            }
+            var achievements = _db.Achievements.Where(a => a.UserId == id);
+            if (achievements.Any())
+            {
+                _db.RemoveRange(achievements);
             }
             _db.Remove(user);
             await _db.SaveChangesAsync();

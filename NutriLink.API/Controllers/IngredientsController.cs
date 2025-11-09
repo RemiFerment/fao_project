@@ -47,15 +47,16 @@ namespace NutriLink.API.Controllers
             return CreatedAtAction(nameof(GetById), new { id = ingredient.Id }, ingredient);
         }
 
-        [HttpPut("{id}")]
+        [HttpPatch("update")]
         [Authorize(Roles = "ROLE_COACH")]
-        public async Task<ActionResult<Ingredient>> Update(int id, [FromBody] Ingredient input)
+        public async Task<ActionResult<Ingredient>> Update([FromBody] Ingredient input)
         {
-            if (id != input.Id) return BadRequest(new { message = "ID in route and the body don't match." });
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
-            var ingredient = await _db.Ingredients.FindAsync(id);
+            var ingredient = await _db.Ingredients.FindAsync(input.Id);
             if (ingredient == null) return NotFound();
+            var check = await _db.Set<Ingredient>().FirstOrDefaultAsync(i => i.Name == input.Name && i.Id != input.Id);
+            if (check != null) return Conflict(new { message = "Another ingredient with the same name already exists." });
 
             ingredient.Name = input.Name;
             await _db.SaveChangesAsync();
