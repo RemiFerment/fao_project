@@ -1,0 +1,14 @@
+{
+  "profiles": {
+    "Fao.FullApp": {
+      "commandName": "Executable",
+      "workingDirectory": "./",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "launchBrowser": true,
+      "executablePath": "dotnet",
+      "commandLineArgs": "run --project ./NutriLink.API & dotnet run --project ./Fao.Front-End"
+    }
+  }
+}

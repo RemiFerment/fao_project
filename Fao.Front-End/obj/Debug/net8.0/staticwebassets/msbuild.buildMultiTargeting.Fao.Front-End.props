@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\Fao.Front-End.props" />
+</Project>
