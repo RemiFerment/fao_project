@@ -72,6 +72,16 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 
+
+});
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowBlazor",
+        policy => policy
+            .WithOrigins("https://localhost:7248", "http://localhost:5011", "http://192.168.1.5:5011") // your frontend URLs
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+    );
 });
 
 builder.Services.AddAuthorization(options =>
@@ -96,7 +106,7 @@ builder.Services.AddScoped<UserService>();
 var app = builder.Build();
 app.UseSwagger();
 app.UseSwaggerUI();
-
+app.UseCors("AllowBlazor");
 app.UseAuthentication();
 app.UseAuthorization();
 

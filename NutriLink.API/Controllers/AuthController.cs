@@ -31,9 +31,10 @@ namespace NutriLink.API.Controllers
             {
                 var jwtServices = new JWTServices(_config);
                 var token = jwtServices.GenerateJwtToken(user.UUID, user.Role.Name);
+                Console.WriteLine(token);
                 return Ok(new { Token = token });
             }
-
+            Console.WriteLine("Password verification failed. Password : " + checkPassword.ToString() + " for user " + user.Email);
             return BadRequest("Invalid credentials.");
         }
     }

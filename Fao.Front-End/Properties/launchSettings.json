@@ -13,7 +13,7 @@
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,
-      "applicationUrl": "http://localhost:5011",
+      "applicationUrl": "http://192.168.1.5:5011",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
@@ -33,16 +33,6 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
-    },
-    "Fao.FullApp": {
-      "commandName": "Executable",
-      "workingDirectory": "./",
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      },
-      "launchBrowser": true,
-      "executablePath": "dotnet",
-      "commandLineArgs": "run --project ../NutriLink.API & dotnet run --project ./Fao.Front-End"
     }
   }
 }

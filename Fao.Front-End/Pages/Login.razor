@@ -1,0 +1,32 @@
+@page "/login"
+@using Fao.Front_End.Services
+
+<PageTitle>Connexion</PageTitle>
+
+<div style="max-width: 400px; margin: auto; padding-top: 50px;">
+    <h2 class="text-center mb-4">Se connecter</h2>
+
+    <EditForm Model="@loginData" OnValidSubmit="HandleLogin">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+
+        <!-- Email -->
+        <div class="form-outline mb-4">
+            <InputText type="email" @bind-Value="loginData.Email" class="form-control" placeholder="Adresse e-mail" />
+        </div>
+
+        <!-- Password -->
+        <div class="form-outline mb-4">
+            <InputText type="password" @bind-Value="loginData.PlainPassword" class="form-control"
+                placeholder="Mot de passe" />
+        </div>
+
+        <!-- Submit -->
+        <button type="submit" class="btn btn-primary btn-block mb-4">Se connecter</button>
+    </EditForm>
+
+    @if (!string.IsNullOrEmpty(ErrorMessage))
+    {
+        <div class="alert alert-danger mt-3">@ErrorMessage</div>
+    }
+</div>
