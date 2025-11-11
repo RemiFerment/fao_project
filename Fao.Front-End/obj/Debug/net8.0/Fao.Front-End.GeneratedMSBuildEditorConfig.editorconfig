@@ -26,12 +26,20 @@ build_property._RazorSourceGeneratorDebug =
 build_metadata.AdditionalFiles.TargetPath = QXBwLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/FERMENT_Remi/Documents/Projet/fao_project/Fao.Front-End/Layout/NavBar.razor]
-build_metadata.AdditionalFiles.TargetPath = TGF5b3V0XE5hdkJhci5yYXpvcg==
-build_metadata.AdditionalFiles.CssScope = 
-
 [C:/Users/FERMENT_Remi/Documents/Projet/fao_project/Fao.Front-End/Pages/Login.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTG9naW4ucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/FERMENT_Remi/Documents/Projet/fao_project/Fao.Front-End/Pages/Logout.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTG9nb3V0LnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/FERMENT_Remi/Documents/Projet/fao_project/Fao.Front-End/Pages/RedirectToLogin.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUmVkaXJlY3RUb0xvZ2luLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/FERMENT_Remi/Documents/Projet/fao_project/Fao.Front-End/Pages/Test.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVGVzdC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/FERMENT_Remi/Documents/Projet/fao_project/Fao.Front-End/_Imports.razor]
@@ -41,6 +49,10 @@ build_metadata.AdditionalFiles.CssScope =
 [C:/Users/FERMENT_Remi/Documents/Projet/fao_project/Fao.Front-End/Layout/MainLayout.razor]
 build_metadata.AdditionalFiles.TargetPath = TGF5b3V0XE1haW5MYXlvdXQucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = b-8rlg52xiqw
+
+[C:/Users/FERMENT_Remi/Documents/Projet/fao_project/Fao.Front-End/Layout/NavBar.razor]
+build_metadata.AdditionalFiles.TargetPath = TGF5b3V0XE5hdkJhci5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = b-559golpq1i
 
 [C:/Users/FERMENT_Remi/Documents/Projet/fao_project/Fao.Front-End/Layout/NavMenu.razor]
 build_metadata.AdditionalFiles.TargetPath = TGF5b3V0XE5hdk1lbnUucmF6b3I=

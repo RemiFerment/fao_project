@@ -12,6 +12,7 @@ C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\bin\Debug\net8.
 C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\bin\Debug\net8.0\wwwroot\_framework\icudt_EFIGS.dat
 C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\bin\Debug\net8.0\wwwroot\_framework\icudt_no_CJK.dat
 C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\bin\Debug\net8.0\wwwroot\_framework\Microsoft.AspNetCore.Authorization.wasm
+C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\bin\Debug\net8.0\wwwroot\_framework\Microsoft.AspNetCore.Components.Authorization.wasm
 C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\bin\Debug\net8.0\wwwroot\_framework\Microsoft.AspNetCore.Components.Forms.wasm
 C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\bin\Debug\net8.0\wwwroot\_framework\Microsoft.AspNetCore.Components.wasm
 C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\bin\Debug\net8.0\wwwroot\_framework\Microsoft.AspNetCore.Components.Web.wasm
@@ -32,6 +33,10 @@ C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\bin\Debug\net8.
 C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\bin\Debug\net8.0\wwwroot\_framework\Microsoft.Extensions.Logging.wasm
 C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\bin\Debug\net8.0\wwwroot\_framework\Microsoft.Extensions.Options.wasm
 C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\bin\Debug\net8.0\wwwroot\_framework\Microsoft.Extensions.Primitives.wasm
+C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\bin\Debug\net8.0\wwwroot\_framework\Microsoft.IdentityModel.Abstractions.wasm
+C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\bin\Debug\net8.0\wwwroot\_framework\Microsoft.IdentityModel.JsonWebTokens.wasm
+C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\bin\Debug\net8.0\wwwroot\_framework\Microsoft.IdentityModel.Logging.wasm
+C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\bin\Debug\net8.0\wwwroot\_framework\Microsoft.IdentityModel.Tokens.wasm
 C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\bin\Debug\net8.0\wwwroot\_framework\Microsoft.JSInterop.wasm
 C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\bin\Debug\net8.0\wwwroot\_framework\Microsoft.JSInterop.WebAssembly.wasm
 C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\bin\Debug\net8.0\wwwroot\_framework\Microsoft.VisualBasic.Core.wasm
@@ -77,6 +82,7 @@ C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\bin\Debug\net8.
 C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\bin\Debug\net8.0\wwwroot\_framework\System.Globalization.Calendars.wasm
 C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\bin\Debug\net8.0\wwwroot\_framework\System.Globalization.Extensions.wasm
 C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\bin\Debug\net8.0\wwwroot\_framework\System.Globalization.wasm
+C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\bin\Debug\net8.0\wwwroot\_framework\System.IdentityModel.Tokens.Jwt.wasm
 C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\bin\Debug\net8.0\wwwroot\_framework\System.IO.Compression.Brotli.wasm
 C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\bin\Debug\net8.0\wwwroot\_framework\System.IO.Compression.FileSystem.wasm
 C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\bin\Debug\net8.0\wwwroot\_framework\System.IO.Compression.wasm
@@ -231,6 +237,7 @@ C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\bin\Debug\net8.
 C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\bin\Debug\net8.0\wwwroot\_framework\System.Net.ServicePoint.wasm.gz
 C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\bin\Debug\net8.0\wwwroot\_framework\Microsoft.Extensions.FileSystemGlobbing.wasm.gz
 C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\bin\Debug\net8.0\wwwroot\_framework\System.Security.Cryptography.Encoding.wasm.gz
+C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\bin\Debug\net8.0\wwwroot\_framework\Microsoft.IdentityModel.Abstractions.wasm.gz
 C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\bin\Debug\net8.0\wwwroot\_framework\System.Security.AccessControl.wasm.gz
 C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\bin\Debug\net8.0\wwwroot\_framework\System.Threading.Overlapped.wasm.gz
 C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\bin\Debug\net8.0\wwwroot\_framework\System.Private.Xml.Linq.wasm.gz
@@ -266,6 +273,7 @@ C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\bin\Debug\net8.
 C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\bin\Debug\net8.0\wwwroot\_framework\System.Diagnostics.Process.wasm.gz
 C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\bin\Debug\net8.0\wwwroot\_framework\System.Security.Claims.wasm.gz
 C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\bin\Debug\net8.0\wwwroot\_framework\System.Xml.XPath.wasm.gz
+C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\bin\Debug\net8.0\wwwroot\_framework\Microsoft.AspNetCore.Components.Authorization.wasm.gz
 C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\bin\Debug\net8.0\wwwroot\_framework\System.IO.FileSystem.Watcher.wasm.gz
 C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\bin\Debug\net8.0\wwwroot\_framework\Microsoft.AspNetCore.Components.Web.wasm.gz
 C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\bin\Debug\net8.0\wwwroot\_framework\System.Net.HttpListener.wasm.gz
@@ -281,6 +289,7 @@ C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\bin\Debug\net8.
 C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\bin\Debug\net8.0\wwwroot\_framework\icudt_CJK.dat.gz
 C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\bin\Debug\net8.0\wwwroot\_framework\System.Runtime.Serialization.Xml.wasm.gz
 C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\bin\Debug\net8.0\wwwroot\_framework\System.Net.NetworkInformation.wasm.gz
+C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\bin\Debug\net8.0\wwwroot\_framework\System.IdentityModel.Tokens.Jwt.wasm.gz
 C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\bin\Debug\net8.0\wwwroot\_framework\System.Reflection.TypeExtensions.wasm.gz
 C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\bin\Debug\net8.0\wwwroot\_framework\Microsoft.Win32.Primitives.wasm.gz
 C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\bin\Debug\net8.0\wwwroot\_framework\System.Resources.ResourceManager.wasm.gz
@@ -307,6 +316,7 @@ C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\bin\Debug\net8.
 C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\bin\Debug\net8.0\wwwroot\_framework\System.Security.Principal.Windows.wasm.gz
 C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\bin\Debug\net8.0\wwwroot\_framework\System.IO.UnmanagedMemoryStream.wasm.gz
 C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\bin\Debug\net8.0\wwwroot\_framework\System.Diagnostics.Tracing.wasm.gz
+C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\bin\Debug\net8.0\wwwroot\_framework\Microsoft.IdentityModel.Tokens.wasm.gz
 C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\bin\Debug\net8.0\wwwroot\_framework\System.Diagnostics.Debug.wasm.gz
 C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\bin\Debug\net8.0\wwwroot\_framework\System.Linq.Parallel.wasm.gz
 C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\bin\Debug\net8.0\wwwroot\_framework\Microsoft.AspNetCore.Components.Forms.wasm.gz
@@ -335,6 +345,7 @@ C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\bin\Debug\net8.
 C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\bin\Debug\net8.0\wwwroot\_framework\System.Drawing.Primitives.wasm.gz
 C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\bin\Debug\net8.0\wwwroot\_framework\System.Threading.Tasks.Parallel.wasm.gz
 C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\bin\Debug\net8.0\wwwroot\_framework\System.Text.Encoding.CodePages.wasm.gz
+C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\bin\Debug\net8.0\wwwroot\_framework\Microsoft.IdentityModel.Logging.wasm.gz
 C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\bin\Debug\net8.0\wwwroot\_framework\System.Security.Cryptography.Algorithms.wasm.gz
 C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\bin\Debug\net8.0\wwwroot\_framework\System.Xml.XPath.XDocument.wasm.gz
 C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\bin\Debug\net8.0\wwwroot\_framework\Microsoft.AspNetCore.Components.wasm.gz
@@ -394,6 +405,7 @@ C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\bin\Debug\net8.
 C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\bin\Debug\net8.0\wwwroot\_framework\WindowsBase.wasm.gz
 C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\bin\Debug\net8.0\wwwroot\_framework\System.Transactions.wasm.gz
 C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\bin\Debug\net8.0\wwwroot\_framework\Microsoft.Extensions.FileProviders.Physical.wasm.gz
+C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\bin\Debug\net8.0\wwwroot\_framework\Microsoft.IdentityModel.JsonWebTokens.wasm.gz
 C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\bin\Debug\net8.0\wwwroot\_framework\System.Console.wasm.gz
 C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\bin\Debug\net8.0\wwwroot\_framework\System.Globalization.Extensions.wasm.gz
 C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\bin\Debug\net8.0\wwwroot\_framework\System.Net.Http.wasm.gz
@@ -413,6 +425,7 @@ C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\bin\Debug\net8.
 C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\bin\Debug\net8.0\Fao.Front-End.pdb
 C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\bin\Debug\net8.0\Microsoft.AspNetCore.Authorization.dll
 C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\bin\Debug\net8.0\Microsoft.AspNetCore.Components.dll
+C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\bin\Debug\net8.0\Microsoft.AspNetCore.Components.Authorization.dll
 C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\bin\Debug\net8.0\Microsoft.AspNetCore.Components.Forms.dll
 C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\bin\Debug\net8.0\Microsoft.AspNetCore.Components.Web.dll
 C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\bin\Debug\net8.0\Microsoft.AspNetCore.Components.WebAssembly.dll
@@ -431,8 +444,13 @@ C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\bin\Debug\net8.
 C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\bin\Debug\net8.0\Microsoft.Extensions.Logging.Abstractions.dll
 C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\bin\Debug\net8.0\Microsoft.Extensions.Options.dll
 C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\bin\Debug\net8.0\Microsoft.Extensions.Primitives.dll
+C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\bin\Debug\net8.0\Microsoft.IdentityModel.Abstractions.dll
+C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\bin\Debug\net8.0\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\bin\Debug\net8.0\Microsoft.IdentityModel.Logging.dll
+C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\bin\Debug\net8.0\Microsoft.IdentityModel.Tokens.dll
 C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\bin\Debug\net8.0\Microsoft.JSInterop.dll
 C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\bin\Debug\net8.0\Microsoft.JSInterop.WebAssembly.dll
+C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\bin\Debug\net8.0\System.IdentityModel.Tokens.Jwt.dll
 C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\bin\Debug\net8.0\System.IO.Pipelines.dll
 C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\bin\Debug\net8.0\Microsoft.CSharp.dll
 C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\bin\Debug\net8.0\Microsoft.VisualBasic.Core.dll
@@ -620,6 +638,7 @@ C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\obj\Debug\net8.
 C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\obj\Debug\net8.0\Fao.Front-End.sourcelink.json
 C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\obj\Debug\net8.0\webcil\Microsoft.AspNetCore.Authorization.wasm
 C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\obj\Debug\net8.0\webcil\Microsoft.AspNetCore.Components.wasm
+C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\obj\Debug\net8.0\webcil\Microsoft.AspNetCore.Components.Authorization.wasm
 C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\obj\Debug\net8.0\webcil\Microsoft.AspNetCore.Components.Forms.wasm
 C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\obj\Debug\net8.0\webcil\Microsoft.AspNetCore.Components.Web.wasm
 C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\obj\Debug\net8.0\webcil\Microsoft.AspNetCore.Components.WebAssembly.wasm
@@ -638,8 +657,13 @@ C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\obj\Debug\net8.
 C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\obj\Debug\net8.0\webcil\Microsoft.Extensions.Logging.Abstractions.wasm
 C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\obj\Debug\net8.0\webcil\Microsoft.Extensions.Options.wasm
 C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\obj\Debug\net8.0\webcil\Microsoft.Extensions.Primitives.wasm
+C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\obj\Debug\net8.0\webcil\Microsoft.IdentityModel.Abstractions.wasm
+C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\obj\Debug\net8.0\webcil\Microsoft.IdentityModel.JsonWebTokens.wasm
+C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\obj\Debug\net8.0\webcil\Microsoft.IdentityModel.Logging.wasm
+C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\obj\Debug\net8.0\webcil\Microsoft.IdentityModel.Tokens.wasm
 C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\obj\Debug\net8.0\webcil\Microsoft.JSInterop.wasm
 C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\obj\Debug\net8.0\webcil\Microsoft.JSInterop.WebAssembly.wasm
+C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\obj\Debug\net8.0\webcil\System.IdentityModel.Tokens.Jwt.wasm
 C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\obj\Debug\net8.0\webcil\System.IO.Pipelines.wasm
 C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\obj\Debug\net8.0\webcil\Microsoft.CSharp.wasm
 C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\obj\Debug\net8.0\webcil\Microsoft.VisualBasic.Core.wasm
@@ -820,12 +844,14 @@ C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\obj\Debug\net8.
 C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\obj\Debug\net8.0\staticwebassets\msbuild.buildTransitive.Fao.Front-End.props
 C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\obj\Debug\net8.0\staticwebassets.pack.json
 C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\obj\Debug\net8.0\scopedcss\Layout\MainLayout.razor.rz.scp.css
+C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\obj\Debug\net8.0\scopedcss\Layout\NavBar.razor.rz.scp.css
 C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\obj\Debug\net8.0\scopedcss\Layout\NavMenu.razor.rz.scp.css
 C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\obj\Debug\net8.0\scopedcss\bundle\Fao.Front-End.styles.css
 C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\obj\Debug\net8.0\scopedcss\projectbundle\Fao.Front-End.bundle.scp.css
 C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\obj\Debug\net8.0\compressed\0pudjfrx8t.gz
 C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\obj\Debug\net8.0\compressed\1x9hug7md0.gz
 C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\obj\Debug\net8.0\compressed\n6x0xj3weg.gz
+C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\obj\Debug\net8.0\compressed\cb8k1j25uh.gz
 C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\obj\Debug\net8.0\compressed\izq8z3419c.gz
 C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\obj\Debug\net8.0\compressed\cc7biwvvov.gz
 C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\obj\Debug\net8.0\compressed\v1id0pp3nr.gz
@@ -844,8 +870,13 @@ C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\obj\Debug\net8.
 C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\obj\Debug\net8.0\compressed\f7dqov2v39.gz
 C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\obj\Debug\net8.0\compressed\p2a8sg2341.gz
 C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\obj\Debug\net8.0\compressed\m9wzzml5xx.gz
+C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\obj\Debug\net8.0\compressed\4cdfrlyj9a.gz
+C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\obj\Debug\net8.0\compressed\y362ef0q83.gz
+C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\obj\Debug\net8.0\compressed\mnq1wrhhxn.gz
+C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\obj\Debug\net8.0\compressed\ih66ipwgz2.gz
 C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\obj\Debug\net8.0\compressed\opdtiefc1h.gz
 C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\obj\Debug\net8.0\compressed\vjlqjhgszm.gz
+C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\obj\Debug\net8.0\compressed\dom6uuejyu.gz
 C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\obj\Debug\net8.0\compressed\0hxqfl7qf7.gz
 C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\obj\Debug\net8.0\compressed\1ohe7t6urz.gz
 C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\obj\Debug\net8.0\compressed\0ngxcif0fw.gz

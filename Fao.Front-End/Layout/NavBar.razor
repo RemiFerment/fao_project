@@ -1,0 +1,57 @@
+﻿@inherits LayoutComponentBase
+@using Microsoft.AspNetCore.Components.Authorization
+<AuthorizeView>
+    <Authorized>
+        <div class="d-block d-md-none fixed-bottom bg-light border-top shadow-sm">
+            <nav class="nav justify-content-around py-2">
+                <div class="d-flex flex-column align-items-center">
+                    <i class="bi bi-calendar2-week fs-3"></i>
+                    <a class="nav-link text-secondary" href="@planningLink">Planning</a>
+                </div>
+                <div class="d-flex flex-column align-items-center">
+                    <i class="bi bi-trophy fs-3"></i>
+                    <a class="nav-link text-secondary" href="@achievementsLink">Progrès</a>
+                </div>
+                <div class="d-flex flex-column align-items-center">
+                    <i class="bi bi-chat-left-dots fs-3"></i>
+                    <a class="nav-link text-secondary" href="@ChatLink">Ma coach</a>
+                </div>
+            </nav>
+        </div>
+
+        <div class="d-none d-md-flex flex-column bg-light border-end vh-100 fixed-start p-3" style="width: 220px;">
+            <nav class="nav d-flex flex-column text-start h-100">
+                <div>
+                    <a class="nav-link my-3 d-flex align-items-center navButton" href="@planningLink">
+                        <i class="bi bi-calendar2-week fs-4"></i>
+                        <span class="ms-2">Planning</span>
+                    </a>
+                    <a class="nav-link my-3 d-flex align-items-center navButton" href="@achievementsLink">
+                        <i class="bi bi-trophy fs-4"></i>
+                        <span class="ms-2">Progrès</span>
+                    </a>
+                    <a class="nav-link my-3 d-flex align-items-center navButton" href="@ChatLink">
+                        <i class="bi bi-chat-left-dots fs-4"></i>
+                        <span class="ms-2">Ma coach</span>
+                    </a>
+                </div>
+
+                <div class="mt-auto">
+                    <a class="nav-link my-3 d-flex align-items-center navButton" href="@logoutLink">
+                        <i class="bi bi-box-arrow-right fs-4"></i>
+                        <span class="ms-2">Se déconnecter</span>
+                    </a>
+                </div>
+            </nav>
+        </div>
+    </Authorized>
+    <NotAuthorized>
+    </NotAuthorized>
+</AuthorizeView>
+
+@code {
+    private string planningLink = "/";
+    private string achievementsLink = "/achievements";
+    private string ChatLink = "/chat";
+    private string logoutLink = "/logout";
+}

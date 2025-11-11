@@ -1,12 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "TYyfup4kbBo=",
+  "dgSpecHash": "RDFZ2Zy8xVM=",
   "success": true,
   "projectFilePath": "C:\\Users\\FERMENT_Remi\\Documents\\Projet\\fao_project\\Fao.Front-End\\Fao.Front-End.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\FERMENT_Remi\\.nuget\\packages\\microsoft.aspnetcore.authorization\\8.0.21\\microsoft.aspnetcore.authorization.8.0.21.nupkg.sha512",
     "C:\\Users\\FERMENT_Remi\\.nuget\\packages\\microsoft.aspnetcore.components\\8.0.21\\microsoft.aspnetcore.components.8.0.21.nupkg.sha512",
     "C:\\Users\\FERMENT_Remi\\.nuget\\packages\\microsoft.aspnetcore.components.analyzers\\8.0.21\\microsoft.aspnetcore.components.analyzers.8.0.21.nupkg.sha512",
+    "C:\\Users\\FERMENT_Remi\\.nuget\\packages\\microsoft.aspnetcore.components.authorization\\8.0.10\\microsoft.aspnetcore.components.authorization.8.0.10.nupkg.sha512",
     "C:\\Users\\FERMENT_Remi\\.nuget\\packages\\microsoft.aspnetcore.components.forms\\8.0.21\\microsoft.aspnetcore.components.forms.8.0.21.nupkg.sha512",
     "C:\\Users\\FERMENT_Remi\\.nuget\\packages\\microsoft.aspnetcore.components.web\\8.0.21\\microsoft.aspnetcore.components.web.8.0.21.nupkg.sha512",
     "C:\\Users\\FERMENT_Remi\\.nuget\\packages\\microsoft.aspnetcore.components.webassembly\\8.0.21\\microsoft.aspnetcore.components.webassembly.8.0.21.nupkg.sha512",

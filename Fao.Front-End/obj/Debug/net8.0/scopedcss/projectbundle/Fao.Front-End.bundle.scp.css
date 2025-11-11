@@ -76,6 +76,20 @@ main[b-8rlg52xiqw] {
         padding-right: 1.5rem !important;
     }
 }
+/* /Layout/NavBar.razor.rz.scp.css */
+
+
+.navButton[b-559golpq1i] {
+    color: var(--bs-secondary);   
+    transition: background-color 0.3s ease;
+    border-radius: 10px;
+}
+
+.navButton:hover[b-559golpq1i] {
+    background-color: #dfdfdf;
+    color: rgb(58, 58, 58);
+    cursor: pointer;
+}
 /* /Layout/NavMenu.razor.rz.scp.css */
 .navbar-toggler[b-cn0n6k28ox] {
     background-color: rgba(255, 255, 255, 0.1);
