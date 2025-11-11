@@ -25,7 +25,7 @@ public partial class Login : ComponentBase
             {
                 Console.WriteLine($"✅ Token: {token}");
                 await AuthStateProvider.MarkUserAsAuthenticatedAsync(token);
-                Nav.NavigateTo("/test",true);
+                Nav.NavigateTo("/planning",true);
             }
             else
             {

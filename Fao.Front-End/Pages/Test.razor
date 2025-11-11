@@ -3,16 +3,23 @@
 @using System.Security.Claims
 @using Microsoft.AspNetCore.Authorization
 @inject AuthService AuthService
+@inject MealService MealService
 @inject IJSRuntime JS
 
+
+
+
 <PageTitle>Test Page</PageTitle>
-<h2>uuid = @uuid</h2>
+<h2>Test = @(Meal == null ? "Chargement..." : Meal)</h2>
 
 @code {
+    private string? Meal;
 
-    private string? uuid = string.Empty;
     protected override async Task OnInitializedAsync()
     {
-        uuid = await AuthService.GetUUIDFromToken();
+        string? uuid = await AuthService.GetUUIDFromToken();
+        var result = await MealService.GetMealOverviewAsync(mealDate: DateTime.Now);
+        var test = await MealService.GetRecipeOverviewAsync(result?.LunchId);
+        Meal = test?.Title;
     }
 }

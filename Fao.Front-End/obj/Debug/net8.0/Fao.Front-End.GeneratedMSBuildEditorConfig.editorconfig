@@ -26,6 +26,26 @@ build_property._RazorSourceGeneratorDebug =
 build_metadata.AdditionalFiles.TargetPath = QXBwLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/FERMENT_Remi/Documents/Projet/fao_project/Fao.Front-End/Components/Meal/MealOverview.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xNZWFsXE1lYWxPdmVydmlldy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/FERMENT_Remi/Documents/Projet/fao_project/Fao.Front-End/Components/Planning/PlanningDay.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQbGFubmluZ1xQbGFubmluZ0RheS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/FERMENT_Remi/Documents/Projet/fao_project/Fao.Front-End/Components/Planning/WeekPlanning.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQbGFubmluZ1xXZWVrUGxhbm5pbmcucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/FERMENT_Remi/Documents/Projet/fao_project/Fao.Front-End/Pages/Achievement.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWNoaWV2ZW1lbnQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/FERMENT_Remi/Documents/Projet/fao_project/Fao.Front-End/Pages/Chat.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ2hhdC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/FERMENT_Remi/Documents/Projet/fao_project/Fao.Front-End/Pages/Login.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTG9naW4ucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
@@ -54,6 +74,6 @@ build_metadata.AdditionalFiles.CssScope = b-8rlg52xiqw
 build_metadata.AdditionalFiles.TargetPath = TGF5b3V0XE5hdkJhci5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = b-559golpq1i
 
-[C:/Users/FERMENT_Remi/Documents/Projet/fao_project/Fao.Front-End/Layout/NavMenu.razor]
-build_metadata.AdditionalFiles.TargetPath = TGF5b3V0XE5hdk1lbnUucmF6b3I=
-build_metadata.AdditionalFiles.CssScope = b-cn0n6k28ox
+[C:/Users/FERMENT_Remi/Documents/Projet/fao_project/Fao.Front-End/Pages/Planning.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUGxhbm5pbmcucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = b-15tezhxnmq

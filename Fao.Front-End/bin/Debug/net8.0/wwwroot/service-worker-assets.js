@@ -41,7 +41,7 @@
       "url": "_framework\/blazor.webassembly.js"
     },
     {
-      "hash": "sha256-aY5ug+EEyBg1+z91koRWG0ApWosLmGdqbBpLObHrfMw=",
+      "hash": "sha256-OeG8Vy2AINEXH3Mrdd8G\/Oaou1\/UAfbOLqVaSpA4tGM=",
       "url": "Fao.Front-End.styles.css"
     },
     {
@@ -869,17 +869,17 @@
       "url": "_framework\/icudt_no_CJK.dat"
     },
     {
-      "hash": "sha256-AGm52ITc1bYVKVY0ecEpo1RGBy9k+kKYF\/v\/iKQsNrs=",
+      "hash": "sha256-CHAVmlqUa07quPZoEfl2YWVQNZKwUvu7tPU2rZKn8d8=",
       "url": "_framework\/Fao.Front-End.wasm"
     },
     {
-      "hash": "sha256-bh88k4S3+OvaApX4IkpCKsNlVVMc92X53yypqoDnn6Q=",
+      "hash": "sha256-H5svMEGxdkWkOuIvTu4jHnFSlTwZyXICwUBLYwtjbb4=",
       "url": "_framework\/Fao.Front-End.pdb"
     },
     {
-      "hash": "sha256-Sy5wrO58IE5ft1zKEp\/rYHJC0CXj6JcIy27Ht5Q6WQY=",
+      "hash": "sha256-kgCUI53Z3rqVxxiydT3PXNy7uVBy5Y\/fHGytRRc1BjE=",
       "url": "_framework\/blazor.boot.json"
     }
   ],
-  "version": "3Um4IMId"
+  "version": "0+ptyE5W"
 };

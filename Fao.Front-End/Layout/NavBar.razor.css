@@ -1,7 +1,5 @@
-
-
 .navButton {
-    color: var(--bs-secondary);   
+    color: var(--bs-secondary);
     transition: background-color 0.3s ease;
     border-radius: 10px;
 }
@@ -10,4 +8,11 @@
     background-color: #dfdfdf;
     color: rgb(58, 58, 58);
     cursor: pointer;
+}
+
+.navButtonActive {
+    border-radius: 10px;
+    background-color: #dfdfdf;
+    color: rgb(58, 58, 58);
+    cursor: initial;
 }
