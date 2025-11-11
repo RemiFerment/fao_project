@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Fao.Front-End")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0ebebaddef7827dacea1e999b11a78a78ddb74ab")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+efb83b1c4722fbdba29dd23f0b76668dafa1bfe2")]
 [assembly: System.Reflection.AssemblyProductAttribute("Fao.Front-End")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Fao.Front-End")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
