@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using Fao.Front_End.Models;
 using Fao.Front_End.Services;
 using Microsoft.AspNetCore.Components;
@@ -69,13 +70,22 @@ namespace Fao.Front_End.Components.Meal
                 NavigationManager.NavigateTo($"/planning/meal?date={MealDate.Value:yyyy-MM-dd}&type={MealTypeFilter}");
             }
         }
-    }
 
+        public async Task DeleteMeal(DateTime? mealDate, string mealType)
+        {
+            if (mealDate.HasValue)
+            {
+                await MealService.RemoveRecipeFromMealDayAsync(mealDate.Value, mealType);
+                await DisplayMeal();
+            }
+        }
+
+
+    }
     public enum MealTypeEnum
     {
         Breakfast,
         Lunch,
         Dinner
     }
-
 }

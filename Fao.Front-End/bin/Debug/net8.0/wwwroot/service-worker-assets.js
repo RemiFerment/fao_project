@@ -877,17 +877,17 @@
       "url": "_framework\/icudt_no_CJK.dat"
     },
     {
-      "hash": "sha256-lLvZ+PG+OMKgOVCIgEobiC7CawWu2tOaf9x1HL5UgH0=",
+      "hash": "sha256-4+UDQ+haEns7+f5u+wA8o0EBMN5mXT3p6B61DUBOulA=",
       "url": "_framework\/Fao.Front-End.wasm"
     },
     {
-      "hash": "sha256-4ObJH0ECerYjd\/AoqnW3igUwWBwDIP4jPZvJ+0Q1I20=",
+      "hash": "sha256-I1cE\/hOM4qb509xnvkF5LRG0P6RJg9GBRen4YqnoU7M=",
       "url": "_framework\/Fao.Front-End.pdb"
     },
     {
-      "hash": "sha256-BWEylvkuddl\/SCbobIngUfXc9ddXzX81H3Pmdc8ytv0=",
+      "hash": "sha256-EEqbXPuo1JuP2YD6c7HMcHuyuBHLLeH59q5YCtJj23c=",
       "url": "_framework\/blazor.boot.json"
     }
   ],
-  "version": "kcUp+y2+"
+  "version": "UYwxnebd"
 };

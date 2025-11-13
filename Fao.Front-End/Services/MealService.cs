@@ -100,4 +100,21 @@ public class MealService
         var response = await _httpClient.SendAsync(requestMessage);
         return response.IsSuccessStatusCode;
     }
+
+    public async Task<bool> RemoveRecipeFromMealDayAsync(DateTime mealDate, string mealType)
+    {
+        var uuid = await _authService.GetUUIDFromToken();
+        if (uuid == null) return false;
+
+        mealType = mealType.ToLower();
+        string date = mealDate.ToString("yyyy-MM-dd");
+
+        var requestMessage = new HttpRequestMessage(HttpMethod.Delete, $"api/Meal/{uuid}/meal-days/{date}/{mealType}");
+
+        var token = await _authService.GetToken();
+        requestMessage.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+        var response = await _httpClient.SendAsync(requestMessage);
+        return response.IsSuccessStatusCode;
+    }
 }
