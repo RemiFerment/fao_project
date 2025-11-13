@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "yLYL53pqJ2gGDT1jfFsXcaUkHgEPE6Qv1LpNIRJrF1Q=",
+  "Hash": "KqZ09X3wL8sfinooTyHzo9nBKAx5CCSkZLI4e+dnttg=",
   "Source": "Fao.Front-End",
   "BasePath": "/",
   "Mode": "Root",
@@ -395,6 +395,25 @@
       "CopyToOutputDirectory": "PreserveNewest",
       "CopyToPublishDirectory": "Never",
       "OriginalItemSpec": "C:\\Users\\FERMENT_Remi\\Documents\\Projet\\fao_project\\Fao.Front-End\\obj\\Debug\\net8.0\\webcil\\Microsoft.AspNetCore.Metadata.wasm"
+    },
+    {
+      "Identity": "C:\\Users\\FERMENT_Remi\\Documents\\Projet\\fao_project\\Fao.Front-End\\bin\\Debug\\net8.0\\wwwroot\\_framework\\Microsoft.AspNetCore.WebUtilities.wasm",
+      "SourceId": "Fao.Front-End",
+      "SourceType": "Computed",
+      "ContentRoot": "C:\\Users\\FERMENT_Remi\\Documents\\Projet\\fao_project\\Fao.Front-End\\bin\\Debug\\net8.0\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "_framework/Microsoft.AspNetCore.WebUtilities.wasm",
+      "AssetKind": "Build",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "WasmResource",
+      "AssetTraitValue": "runtime",
+      "CopyToOutputDirectory": "PreserveNewest",
+      "CopyToPublishDirectory": "Never",
+      "OriginalItemSpec": "C:\\Users\\FERMENT_Remi\\Documents\\Projet\\fao_project\\Fao.Front-End\\obj\\Debug\\net8.0\\webcil\\Microsoft.AspNetCore.WebUtilities.wasm"
     },
     {
       "Identity": "C:\\Users\\FERMENT_Remi\\Documents\\Projet\\fao_project\\Fao.Front-End\\bin\\Debug\\net8.0\\wwwroot\\_framework\\Microsoft.CSharp.wasm",
@@ -794,6 +813,25 @@
       "CopyToOutputDirectory": "PreserveNewest",
       "CopyToPublishDirectory": "Never",
       "OriginalItemSpec": "C:\\Users\\FERMENT_Remi\\Documents\\Projet\\fao_project\\Fao.Front-End\\obj\\Debug\\net8.0\\webcil\\Microsoft.JSInterop.WebAssembly.wasm"
+    },
+    {
+      "Identity": "C:\\Users\\FERMENT_Remi\\Documents\\Projet\\fao_project\\Fao.Front-End\\bin\\Debug\\net8.0\\wwwroot\\_framework\\Microsoft.Net.Http.Headers.wasm",
+      "SourceId": "Fao.Front-End",
+      "SourceType": "Computed",
+      "ContentRoot": "C:\\Users\\FERMENT_Remi\\Documents\\Projet\\fao_project\\Fao.Front-End\\bin\\Debug\\net8.0\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "_framework/Microsoft.Net.Http.Headers.wasm",
+      "AssetKind": "Build",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "WasmResource",
+      "AssetTraitValue": "runtime",
+      "CopyToOutputDirectory": "PreserveNewest",
+      "CopyToPublishDirectory": "Never",
+      "OriginalItemSpec": "C:\\Users\\FERMENT_Remi\\Documents\\Projet\\fao_project\\Fao.Front-End\\obj\\Debug\\net8.0\\webcil\\Microsoft.Net.Http.Headers.wasm"
     },
     {
       "Identity": "C:\\Users\\FERMENT_Remi\\Documents\\Projet\\fao_project\\Fao.Front-End\\bin\\Debug\\net8.0\\wwwroot\\_framework\\Microsoft.VisualBasic.Core.wasm",
@@ -6325,6 +6363,25 @@
       "OriginalItemSpec": "C:\\Users\\FERMENT_Remi\\Documents\\Projet\\fao_project\\Fao.Front-End\\bin\\Debug\\net8.0\\wwwroot\\_framework\\System.Runtime.CompilerServices.VisualC.wasm"
     },
     {
+      "Identity": "C:\\Users\\FERMENT_Remi\\Documents\\Projet\\fao_project\\Fao.Front-End\\obj\\Debug\\net8.0\\compressed\\kttju8sgfg.gz",
+      "SourceId": "Fao.Front-End",
+      "SourceType": "Computed",
+      "ContentRoot": "C:\\Users\\FERMENT_Remi\\Documents\\Projet\\fao_project\\Fao.Front-End\\bin\\Debug\\net8.0\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "_framework/Microsoft.Net.Http.Headers.wasm.gz",
+      "AssetKind": "Build",
+      "AssetMode": "All",
+      "AssetRole": "Alternative",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "C:\\Users\\FERMENT_Remi\\Documents\\Projet\\fao_project\\Fao.Front-End\\bin\\Debug\\net8.0\\wwwroot\\_framework\\Microsoft.Net.Http.Headers.wasm",
+      "AssetTraitName": "Content-Encoding",
+      "AssetTraitValue": "gzip",
+      "CopyToOutputDirectory": "PreserveNewest",
+      "CopyToPublishDirectory": "Never",
+      "OriginalItemSpec": "C:\\Users\\FERMENT_Remi\\Documents\\Projet\\fao_project\\Fao.Front-End\\bin\\Debug\\net8.0\\wwwroot\\_framework\\Microsoft.Net.Http.Headers.wasm"
+    },
+    {
       "Identity": "C:\\Users\\FERMENT_Remi\\Documents\\Projet\\fao_project\\Fao.Front-End\\obj\\Debug\\net8.0\\compressed\\kw7aflu0w4.gz",
       "SourceId": "Fao.Front-End",
       "SourceType": "Computed",
@@ -6969,6 +7026,25 @@
       "CopyToOutputDirectory": "PreserveNewest",
       "CopyToPublishDirectory": "Never",
       "OriginalItemSpec": "C:\\Users\\FERMENT_Remi\\Documents\\Projet\\fao_project\\Fao.Front-End\\bin\\Debug\\net8.0\\wwwroot\\_framework\\System.Private.DataContractSerialization.wasm"
+    },
+    {
+      "Identity": "C:\\Users\\FERMENT_Remi\\Documents\\Projet\\fao_project\\Fao.Front-End\\obj\\Debug\\net8.0\\compressed\\ps7c5x3kvb.gz",
+      "SourceId": "Fao.Front-End",
+      "SourceType": "Computed",
+      "ContentRoot": "C:\\Users\\FERMENT_Remi\\Documents\\Projet\\fao_project\\Fao.Front-End\\bin\\Debug\\net8.0\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "_framework/Microsoft.AspNetCore.WebUtilities.wasm.gz",
+      "AssetKind": "Build",
+      "AssetMode": "All",
+      "AssetRole": "Alternative",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "C:\\Users\\FERMENT_Remi\\Documents\\Projet\\fao_project\\Fao.Front-End\\bin\\Debug\\net8.0\\wwwroot\\_framework\\Microsoft.AspNetCore.WebUtilities.wasm",
+      "AssetTraitName": "Content-Encoding",
+      "AssetTraitValue": "gzip",
+      "CopyToOutputDirectory": "PreserveNewest",
+      "CopyToPublishDirectory": "Never",
+      "OriginalItemSpec": "C:\\Users\\FERMENT_Remi\\Documents\\Projet\\fao_project\\Fao.Front-End\\bin\\Debug\\net8.0\\wwwroot\\_framework\\Microsoft.AspNetCore.WebUtilities.wasm"
     },
     {
       "Identity": "C:\\Users\\FERMENT_Remi\\Documents\\Projet\\fao_project\\Fao.Front-End\\obj\\Debug\\net8.0\\compressed\\q2shfscuyt.gz",

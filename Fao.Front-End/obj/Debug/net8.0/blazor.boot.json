@@ -1,7 +1,7 @@
 {
   "mainAssemblyName": "Fao.Front-End",
   "resources": {
-    "hash": "sha256-GVXXPcdEy6eefNaYvMpLoQa6ccJgoJOYXFqSbbo5Mac=",
+    "hash": "sha256-Zb5xUFVRh3j4eID7XQ04o7mLWtmjvRwhJXPemYjqN8o=",
     "jsModuleNative": {
       "dotnet.native.8.0.21.uget029e24.js": "sha256-9Fzd5We95Rp03dEKIAbYjPDR3eWyLbmjMlYStvxyiok="
     },
@@ -24,6 +24,7 @@
       "Microsoft.AspNetCore.Components.Web.wasm": "sha256-kONd+fcYLAO5dwjXlcPuWSOJ2BCRmpR0SM6GvjXS3x4=",
       "Microsoft.AspNetCore.Components.WebAssembly.wasm": "sha256-ubT4tBprWJ76nPIxXWupNgG3kH+iv6zJ1WJSorfcVSA=",
       "Microsoft.AspNetCore.Metadata.wasm": "sha256-KmZ0uzXLIvv3+YtUF1Yyr5dvhzXiqCT93043u0cCnJA=",
+      "Microsoft.AspNetCore.WebUtilities.wasm": "sha256-YCpj1LNQpMxfSKDSryT0Eyy1Pwf6AvZTW/6KRcrb+Ns=",
       "Microsoft.Extensions.Configuration.wasm": "sha256-UDGEQR7J3WTfzYMgOzxVIBwFQtKEeJvO8UgrWagypdE=",
       "Microsoft.Extensions.Configuration.Abstractions.wasm": "sha256-yNdqbqDWGiJo943D7LPak5xryCBEsNH0wtdiuU1R9VE=",
       "Microsoft.Extensions.Configuration.Binder.wasm": "sha256-fNNlyyW44y8Gp6dvOtsvHoVNzpT8lrKmPleg5CDhRAo=",
@@ -44,6 +45,7 @@
       "Microsoft.IdentityModel.Tokens.wasm": "sha256-zgY3UgtLKKE9RGVKTT8kosMW8AZPHIRdzjrjmmXnP0Y=",
       "Microsoft.JSInterop.wasm": "sha256-swhTDwzMkRtEP7KgZvcuVy1WbQMFsASKekPTeH/rPVI=",
       "Microsoft.JSInterop.WebAssembly.wasm": "sha256-PbHGoNAYqyOHjH5UNPj5Zh5TGQLL89zj0yL5ocLKaFk=",
+      "Microsoft.Net.Http.Headers.wasm": "sha256-fSuHnrMTJeC1iF0NPMQqmTs/PfWeybXQ76ddgEDTxFk=",
       "System.IdentityModel.Tokens.Jwt.wasm": "sha256-9lLWyzABPpLPi7qPLshQwejv1whcaMUKm+OzLpVT7XQ=",
       "System.IO.Pipelines.wasm": "sha256-JqVBy6SV+3qk+IK3VJiyIDt9CsVk6b1/ytTXmrI4mTM=",
       "Microsoft.CSharp.wasm": "sha256-Qxji4BKMsoNCEU7Mg4o8wn42f2aMrKc3++gB9FZQtCM=",
@@ -214,10 +216,10 @@
       "mscorlib.wasm": "sha256-MZJ1V6miMP318lQowft4FPkcszcibPLDTwKj235fSAc=",
       "netstandard.wasm": "sha256-RYAURbR1AHkUZYjKgu+B/i3N3VP4abnAaH+vxwJ8d3c=",
       "System.Private.CoreLib.wasm": "sha256-4YzdATaWUDkUkRpe+hl+T61TaCjRVapVUtqTIai3Gd8=",
-      "Fao.Front-End.wasm": "sha256-tj3NXmenEevpUZoEEmgC6ZeFw2t5cOWIBmiq9DNQv1Q="
+      "Fao.Front-End.wasm": "sha256-ODLAkkuMOWvaGnnJF/sZxKGllJP1FVNYeCMBBjCmrAI="
     },
     "pdb": {
-      "Fao.Front-End.pdb": "sha256-Zs275TllwwKd0cLUH8D/GddB17U6TTA9smt2ukzfUkY="
+      "Fao.Front-End.pdb": "sha256-slVg+dQsVUy9A8a4zDaOTTfkRsXeuqA0+h1C+puPLRc="
     }
   },
   "cacheBootResources": true,

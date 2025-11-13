@@ -25,7 +25,7 @@
       "url": "icon-512.png"
     },
     {
-      "hash": "sha256-AalTih46lhMob1n3jy0tJwglAanACqAnLjJ6nbPJvew=",
+      "hash": "sha256-xonLR51m2aduDq02UtHRXGgAGJvGosH92BUfmcSf57Y=",
       "url": "index.html"
     },
     {
@@ -41,7 +41,7 @@
       "url": "_framework\/blazor.webassembly.js"
     },
     {
-      "hash": "sha256-OeG8Vy2AINEXH3Mrdd8G\/Oaou1\/UAfbOLqVaSpA4tGM=",
+      "hash": "sha256-nKwE10MQi8S+wgVIgGmiDRsfvwqHKefUkwyEV1zqdPg=",
       "url": "Fao.Front-End.styles.css"
     },
     {
@@ -71,6 +71,10 @@
     {
       "hash": "sha256-KmZ0uzXLIvv3+YtUF1Yyr5dvhzXiqCT93043u0cCnJA=",
       "url": "_framework\/Microsoft.AspNetCore.Metadata.wasm"
+    },
+    {
+      "hash": "sha256-YCpj1LNQpMxfSKDSryT0Eyy1Pwf6AvZTW\/6KRcrb+Ns=",
+      "url": "_framework\/Microsoft.AspNetCore.WebUtilities.wasm"
     },
     {
       "hash": "sha256-UDGEQR7J3WTfzYMgOzxVIBwFQtKEeJvO8UgrWagypdE=",
@@ -151,6 +155,10 @@
     {
       "hash": "sha256-PbHGoNAYqyOHjH5UNPj5Zh5TGQLL89zj0yL5ocLKaFk=",
       "url": "_framework\/Microsoft.JSInterop.WebAssembly.wasm"
+    },
+    {
+      "hash": "sha256-fSuHnrMTJeC1iF0NPMQqmTs\/PfWeybXQ76ddgEDTxFk=",
+      "url": "_framework\/Microsoft.Net.Http.Headers.wasm"
     },
     {
       "hash": "sha256-9lLWyzABPpLPi7qPLshQwejv1whcaMUKm+OzLpVT7XQ=",
@@ -869,17 +877,17 @@
       "url": "_framework\/icudt_no_CJK.dat"
     },
     {
-      "hash": "sha256-CHAVmlqUa07quPZoEfl2YWVQNZKwUvu7tPU2rZKn8d8=",
+      "hash": "sha256-lLvZ+PG+OMKgOVCIgEobiC7CawWu2tOaf9x1HL5UgH0=",
       "url": "_framework\/Fao.Front-End.wasm"
     },
     {
-      "hash": "sha256-H5svMEGxdkWkOuIvTu4jHnFSlTwZyXICwUBLYwtjbb4=",
+      "hash": "sha256-4ObJH0ECerYjd\/AoqnW3igUwWBwDIP4jPZvJ+0Q1I20=",
       "url": "_framework\/Fao.Front-End.pdb"
     },
     {
-      "hash": "sha256-kgCUI53Z3rqVxxiydT3PXNy7uVBy5Y\/fHGytRRc1BjE=",
+      "hash": "sha256-BWEylvkuddl\/SCbobIngUfXc9ddXzX81H3Pmdc8ytv0=",
       "url": "_framework\/blazor.boot.json"
     }
   ],
-  "version": "0+ptyE5W"
+  "version": "kcUp+y2+"
 };

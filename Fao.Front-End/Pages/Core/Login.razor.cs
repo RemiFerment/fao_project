@@ -3,7 +3,7 @@ using Microsoft.JSInterop;
 using Fao.Front_End.Services;
 using Fao.Front_End.Models;
 
-namespace Fao.Front_End.Pages;
+namespace Fao.Front_End.Pages.Core;
 
 public partial class Login : ComponentBase
 {
@@ -25,7 +25,7 @@ public partial class Login : ComponentBase
             {
                 Console.WriteLine($"✅ Token: {token}");
                 await AuthStateProvider.MarkUserAsAuthenticatedAsync(token);
-                Nav.NavigateTo("/planning",true);
+                Nav.NavigateTo("/planning", true);
             }
             else
             {

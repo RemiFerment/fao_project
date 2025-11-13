@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "RDFZ2Zy8xVM=",
+  "dgSpecHash": "k3Z5hFECiYQ=",
   "success": true,
   "projectFilePath": "C:\\Users\\FERMENT_Remi\\Documents\\Projet\\fao_project\\Fao.Front-End\\Fao.Front-End.csproj",
   "expectedPackageFiles": [
@@ -13,6 +13,7 @@
     "C:\\Users\\FERMENT_Remi\\.nuget\\packages\\microsoft.aspnetcore.components.webassembly\\8.0.21\\microsoft.aspnetcore.components.webassembly.8.0.21.nupkg.sha512",
     "C:\\Users\\FERMENT_Remi\\.nuget\\packages\\microsoft.aspnetcore.components.webassembly.devserver\\8.0.21\\microsoft.aspnetcore.components.webassembly.devserver.8.0.21.nupkg.sha512",
     "C:\\Users\\FERMENT_Remi\\.nuget\\packages\\microsoft.aspnetcore.metadata\\8.0.21\\microsoft.aspnetcore.metadata.8.0.21.nupkg.sha512",
+    "C:\\Users\\FERMENT_Remi\\.nuget\\packages\\microsoft.aspnetcore.webutilities\\8.0.0\\microsoft.aspnetcore.webutilities.8.0.0.nupkg.sha512",
     "C:\\Users\\FERMENT_Remi\\.nuget\\packages\\microsoft.extensions.configuration\\8.0.0\\microsoft.extensions.configuration.8.0.0.nupkg.sha512",
     "C:\\Users\\FERMENT_Remi\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\8.0.0\\microsoft.extensions.configuration.abstractions.8.0.0.nupkg.sha512",
     "C:\\Users\\FERMENT_Remi\\.nuget\\packages\\microsoft.extensions.configuration.binder\\8.0.2\\microsoft.extensions.configuration.binder.8.0.2.nupkg.sha512",
@@ -33,6 +34,7 @@
     "C:\\Users\\FERMENT_Remi\\.nuget\\packages\\microsoft.identitymodel.tokens\\8.14.0\\microsoft.identitymodel.tokens.8.14.0.nupkg.sha512",
     "C:\\Users\\FERMENT_Remi\\.nuget\\packages\\microsoft.jsinterop\\8.0.21\\microsoft.jsinterop.8.0.21.nupkg.sha512",
     "C:\\Users\\FERMENT_Remi\\.nuget\\packages\\microsoft.jsinterop.webassembly\\8.0.21\\microsoft.jsinterop.webassembly.8.0.21.nupkg.sha512",
+    "C:\\Users\\FERMENT_Remi\\.nuget\\packages\\microsoft.net.http.headers\\8.0.0\\microsoft.net.http.headers.8.0.0.nupkg.sha512",
     "C:\\Users\\FERMENT_Remi\\.nuget\\packages\\microsoft.net.illink.tasks\\8.0.21\\microsoft.net.illink.tasks.8.0.21.nupkg.sha512",
     "C:\\Users\\FERMENT_Remi\\.nuget\\packages\\microsoft.net.sdk.webassembly.pack\\8.0.21\\microsoft.net.sdk.webassembly.pack.8.0.21.nupkg.sha512",
     "C:\\Users\\FERMENT_Remi\\.nuget\\packages\\system.identitymodel.tokens.jwt\\8.14.0\\system.identitymodel.tokens.jwt.8.14.0.nupkg.sha512",

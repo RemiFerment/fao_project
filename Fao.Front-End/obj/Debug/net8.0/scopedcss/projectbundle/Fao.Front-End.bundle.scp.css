@@ -1,3 +1,23 @@
+/* /Components/Meal/RecipeCard.razor.rz.scp.css */
+.about[b-rfulp435vl] {
+    font-size: 0.9em;
+    color: gray;
+}
+
+.recipe-card[b-rfulp435vl] {
+    margin: 10px 0;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    transition: 0.2s ease-in-out;
+    transform: scale(1);
+}
+
+.recipe-card:hover[b-rfulp435vl] {
+    background-color: #f1f1f1;
+    transform: scale(1.01);
+}
 /* /Layout/MainLayout.razor.rz.scp.css */
 .page[b-8rlg52xiqw] {
     position: relative;
@@ -95,4 +115,4 @@ main[b-8rlg52xiqw] {
     color: rgb(58, 58, 58);
     cursor: initial;
 }
-/* /Pages/Planning.razor.rz.scp.css */
+/* /Pages/Planning/Planning.razor.rz.scp.css */

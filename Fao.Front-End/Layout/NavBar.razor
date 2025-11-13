@@ -76,7 +76,7 @@
     private string GetNavLinkClass(string href)
     {
         var relativeUri = NavigationManager.ToBaseRelativePath(NavigationManager.Uri);
-        return relativeUri.Equals(href.TrimStart('/'), StringComparison.OrdinalIgnoreCase)
+        return relativeUri.Contains(href.TrimStart('/'), StringComparison.OrdinalIgnoreCase)
         ? "navButtonActive"
         : string.Empty;
     }

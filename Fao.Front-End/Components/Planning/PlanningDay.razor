@@ -1,0 +1,31 @@
+@* Ici il faut que je récupère les données via l'API et que je montre les repas du matin, midi et soir *@
+@using Fao.Front_End.Components.Meal
+<div class="d-flex flex-column gap-4">
+    <div class="card">
+        <div class="card-header">
+            <h5>Petit déjeuner</h5>
+        </div>
+        <div class="card-body">
+            <MealOverview MealDate=DayDate MealTypeFilter=MealTypeEnum.Breakfast />
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <h5>Déjeuner</h5>
+        </div>
+        <div class="card-body">
+            <MealOverview MealDate=DayDate MealTypeFilter=MealTypeEnum.Lunch />
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <h5>Dinner</h5>
+        </div>
+        <div class="card-body">
+            <MealOverview MealDate=DayDate MealTypeFilter=MealTypeEnum.Dinner />
+        </div>
+    </div>
+
+</div>

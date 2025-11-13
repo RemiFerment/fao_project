@@ -1064,4 +1064,15 @@ C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\obj\Debug\net8.
 C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\obj\Debug\net8.0\refint\Fao.Front-End.dll
 C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\obj\Debug\net8.0\Fao.Front-End.pdb
 C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\obj\Debug\net8.0\ref\Fao.Front-End.dll
-C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\obj\Debug\net8.0\scopedcss\Pages\Planning.razor.rz.scp.css
+C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\obj\Debug\net8.0\scopedcss\Pages\Planning\Planning.razor.rz.scp.css
+C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\obj\Debug\net8.0\scopedcss\Components\Meal\RecipeCard.razor.rz.scp.css
+C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\bin\Debug\net8.0\wwwroot\_framework\Microsoft.AspNetCore.WebUtilities.wasm
+C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\bin\Debug\net8.0\wwwroot\_framework\Microsoft.Net.Http.Headers.wasm
+C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\bin\Debug\net8.0\wwwroot\_framework\Microsoft.Net.Http.Headers.wasm.gz
+C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\bin\Debug\net8.0\wwwroot\_framework\Microsoft.AspNetCore.WebUtilities.wasm.gz
+C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\bin\Debug\net8.0\Microsoft.AspNetCore.WebUtilities.dll
+C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\bin\Debug\net8.0\Microsoft.Net.Http.Headers.dll
+C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\obj\Debug\net8.0\webcil\Microsoft.AspNetCore.WebUtilities.wasm
+C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\obj\Debug\net8.0\webcil\Microsoft.Net.Http.Headers.wasm
+C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\obj\Debug\net8.0\compressed\ps7c5x3kvb.gz
+C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\obj\Debug\net8.0\compressed\kttju8sgfg.gz

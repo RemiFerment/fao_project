@@ -1,0 +1,40 @@
+@page "/planning/meal"
+@attribute [Authorize]
+@using Fao.Front_End.Models
+@using Fao.Front_End.Components.Meal
+@using Microsoft.AspNetCore.Authorization
+
+<div class="card">
+    <div class="card-head text-center py-3">
+        <h4>Ajouter une recette </h4>
+    </div>
+    <div class="body p-5 ">
+        <form @onsubmit="OnSearch">
+            <input @bind=@searchTerm class="form-control" placeholder="Rechercher une recette..." />
+        </form>
+
+        <div class="item">
+            @if (isSubmit && isLoading)
+            {
+                <div class="spinner-border text-secondary justify-self-center mt-3" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            }
+            @if (!isLoading && !Recipes.Any() && isSubmit && !string.IsNullOrWhiteSpace(searchTerm))
+            {
+                <p class="text-center fs-5 mt-5">Aucune recette trouvée pour "@searchTerm".</p>
+            }
+            @if (!isLoading && Recipes.Any() && isSubmit)
+            {
+                <p class="text-center fs-5 mt-5">Recherche pour : "@searchTerm"</p>
+                <div class="d-flex justify-content-center flex-column w-100">
+
+                    @foreach (RecipeOverviewDTO recipe in Recipes)
+                    {
+                        <RecipeCard Title=@recipe.Title RecipeId=recipe.Id CategoryName=@recipe.CategoryName />
+                    }
+                </div>
+            }
+        </div>
+    </div>
+</div>

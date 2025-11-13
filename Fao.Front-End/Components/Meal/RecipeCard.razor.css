@@ -1,0 +1,19 @@
+.about {
+    font-size: 0.9em;
+    color: gray;
+}
+
+.recipe-card {
+    margin: 10px 0;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    transition: 0.2s ease-in-out;
+    transform: scale(1);
+}
+
+.recipe-card:hover {
+    background-color: #f1f1f1;
+    transform: scale(1.01);
+}
