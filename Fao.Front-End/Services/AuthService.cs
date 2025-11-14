@@ -32,4 +32,9 @@ public class AuthService
         return JWTUtilService.GetClaim(token, ClaimTypes.NameIdentifier);
     }
 
+    public async Task<string?> GetToken()
+    {
+        return await _js.InvokeAsync<string>("localStorage.getItem", "jwtToken");
+    }
+
 }

@@ -1,0 +1,35 @@
+@* Ici il faut que je récupère les données via l'API et que je montre les repas du matin, midi et soir *@
+@using Fao.Front_End.Components.Meal
+@using Fao.Front_End.Components.Partials
+<RecipeModal Recipe="@SelectedRecipe" Steps="@StepsList" />
+
+<div class="d-flex flex-column gap-4">
+    <div class="card">
+        <div class="card-header">
+            <h5>Petit déjeuner</h5>
+        </div>
+        <div class="card-body">
+            <MealOverview MealDate=DayDate MealTypeFilter=MealTypeEnum.Breakfast
+                OnRecipeSelected="HandleRecipeSelected" />
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <h5>Déjeuner</h5>
+        </div>
+        <div class="card-body">
+            <MealOverview MealDate=DayDate MealTypeFilter=MealTypeEnum.Lunch OnRecipeSelected="HandleRecipeSelected" />
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <h5>Dîner</h5>
+        </div>
+        <div class="card-body">
+            <MealOverview MealDate=DayDate MealTypeFilter=MealTypeEnum.Dinner OnRecipeSelected="HandleRecipeSelected" />
+        </div>
+    </div>
+
+</div>

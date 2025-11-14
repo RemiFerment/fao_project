@@ -1,0 +1,87 @@
+@using Fao.Front_End.Services
+@using Microsoft.AspNetCore.WebUtilities
+@inject NavigationManager NavigationManager
+@inject HttpClient Http
+
+<div class="d-flex justify-content-around m-2">
+    <button class="btn btn-sm btn-outline-secondary me-2"
+        @onclick="@(() => { currentWeekStart = currentWeekStart.AddDays(-7); selectedDay = currentWeekStart; })">
+        &laquo;
+    </button>
+
+    <div class="text-center">
+        <strong>@currentWeekStart.ToString("dd MMM yyyy")</strong>
+        <span class="small">au @currentWeekStart.AddDays(6).ToString("dd MMM yyyy")</span>
+    </div>
+
+    <button class="btn btn-sm btn-outline-secondary ms-2"
+        @onclick="@(() => { currentWeekStart = currentWeekStart.AddDays(7); selectedDay = selectedDay.AddDays(7); })">
+        &raquo;
+    </button>
+</div>
+
+<div
+    class="d-flex justify-content-md-around justify-content-center p-2 flex-wrap gap-2 align-items-center border rounded bg-white shadow-sm">
+    @for (int i = 0; i < 7; i++)
+    {
+        var day = currentWeekStart.AddDays(i);
+        <div class="d-flex flex-column align-items-center">
+            @day.ToString("ddd")
+            <button
+                class="btn @(day == selectedDay ? "btn-primary" : (day == DateTime.Today ? "btn-secondary" : "btn-outline-secondary")) day-button"
+                style="max-width: 80px; border-radius: 100px;" @onclick="@(() => SelectDay(day))">
+                @day.ToString("dd")
+            </button>
+        </div>
+    }
+</div>
+
+<div class="mt-4">
+    <PlanningDay DayDate="selectedDay" />
+</div>
+
+@code {
+    private DateTime currentWeekStart;
+    private DateTime selectedDay;
+
+    protected override void OnInitialized()
+    {
+        DateTime today = GetDateFromUriOrToday();
+
+        int diff = (7 + (today.DayOfWeek - DayOfWeek.Monday)) % 7;
+        currentWeekStart = today.AddDays(-diff);
+
+        selectedDay = today;
+    }
+
+    private void SelectDay(DateTime day)
+    {
+        selectedDay = day;
+    }
+
+    private DateTime GetDateFromUriOrToday()
+    {
+        try
+        {
+            var uri = new Uri(NavigationManager.Uri);
+            var dict = QueryHelpers.ParseQuery(uri.Query);
+
+            if (dict.TryGetValue("date", out var dateValue))
+            {
+                var dateString = dateValue.ToString();
+
+                if (DateTime.TryParseExact(dateString, "yyyy-MM-dd",
+                System.Globalization.CultureInfo.InvariantCulture,
+                System.Globalization.DateTimeStyles.None,
+                out var parsed)
+                || DateTime.TryParse(dateString, out parsed))
+                {
+                    return parsed;
+                }
+            }
+        }
+        catch { }
+
+        return DateTime.Today;
+    }
+}

@@ -1,0 +1,79 @@
+@page "/planning/recipe-details"
+@using Fao.Front_End.Services
+@using Microsoft.AspNetCore.Components
+@using Fao.Front_End.Models
+@using Microsoft.AspNetCore.WebUtilities
+@using Microsoft.Extensions.Primitives
+@using Microsoft.VisualBasic
+
+<div class="card m-5 shadow">
+    <div class="card-header d-flex justify-content-center">
+        <h2>Détails de la recette</h2>
+    </div>
+    @if (Recipe != null)
+    {
+        <h3>@Recipe.Title</h3>
+        <h4>Catégorie : @Recipe.CategoryName</h4>
+
+        <h5>Ingrédients :</h5>
+        <ul>
+            @foreach (var ingredient in Recipe.Ingredients)
+            {
+                <li>@ingredient.Quantity @ingredient.Unit de @ingredient.IngredientName</li>
+            }
+        </ul>
+
+        <h5>Étapes :</h5>
+        @for (int i = 0; i < stepsList.Count; i++)
+        {
+            <p><strong>Étape @(i + 1):</strong> @stepsList[i]</p>
+        }
+    }
+    else
+    {
+        <p>Aucune recette sélectionnée.</p>
+    }
+
+</div>
+@code {
+    public FullRecipeDTO? Recipe { get; set; }
+    [Inject] private NavigationManager NavigationManager { get; set; } = null!;
+    [Inject] private MealService MealService { get; set; } = null!;
+    private List<string> stepsList = new List<string>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        string? query = new Uri(NavigationManager.Uri).Query;
+        Dictionary<string, StringValues>? queryDict = QueryHelpers.ParseQuery(query);
+
+        int recipeId = 0;
+        if (queryDict.TryGetValue("recipeId", out var recipeIdValue))
+        {
+            int.TryParse(recipeIdValue[0], out recipeId);
+        }
+
+        if (recipeId == 0)
+        {
+            Console.WriteLine("Invalid or missing recipeId query parameter.");
+            return;
+        }
+
+        Recipe = await MealService.GetFullRecipeAsync(recipeId);
+
+        if (Recipe == null)
+        {
+            Console.WriteLine($"No recipe found for ID {recipeId}");
+            return;
+        }
+
+        if (!string.IsNullOrWhiteSpace(Recipe.Steps))
+        {
+            stepsList = Recipe.Steps
+            .Split(',', StringSplitOptions.RemoveEmptyEntries)
+            .Select(s => s.Trim())
+            .Select(s => char.ToUpper(s[0]) + s.Substring(1))
+            .ToList();
+        }
+    }
+
+}

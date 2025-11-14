@@ -1,0 +1,10 @@
+@page "/"
+@inject NavigationManager Nav
+@namespace Fao.Front_End.Pages.Core
+
+@code {
+    protected override void OnInitialized()
+    {
+        Nav.NavigateTo("/login");
+    }
+}
