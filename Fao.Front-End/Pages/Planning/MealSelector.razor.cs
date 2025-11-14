@@ -1,6 +1,7 @@
 using Fao.Front_End.Models;
 using Microsoft.AspNetCore.Components;
 using Fao.Front_End.Services;
+using Microsoft.JSInterop;
 
 namespace Fao.Front_End.Pages.Planning;
 
@@ -13,6 +14,9 @@ public partial class MealSelector : ComponentBase
     [Inject] private MealService MealService { get; set; } = null!;
     [Inject] private NavigationManager NavigationManager { get; set; } = null!;
     private IEnumerable<RecipeOverviewDTO> Recipes = Enumerable.Empty<RecipeOverviewDTO>();
+    public FullRecipeDTO? SelectedRecipe { get; set; } = null;
+    public List<string>? StepsList { get; set; } = null;
+    [Inject] public IJSRuntime JS { get; set; } = default!;
 
     public async Task OnSearch()
     {
@@ -50,5 +54,26 @@ public partial class MealSelector : ComponentBase
         {
             MealDate = DateTime.Today;
         }
+    }
+
+    public async Task HandleRecipeSelected(int recipeId)
+    {
+        if (recipeId <= 0)
+            return;
+
+        SelectedRecipe = await MealService.GetFullRecipeAsync(recipeId);
+
+        StepsList = SelectedRecipe?.Steps?
+            .Split(',', StringSplitOptions.RemoveEmptyEntries)
+            .Select(s => s.Trim())
+            .Select(s => char.ToUpper(s[0]) + s.Substring(1))
+            .ToList();
+
+        await InvokeAsync(StateHasChanged);
+
+        await InvokeAsync(async () =>
+        {
+            await JS.InvokeVoidAsync("showRecipeModal");
+        });
     }
 }

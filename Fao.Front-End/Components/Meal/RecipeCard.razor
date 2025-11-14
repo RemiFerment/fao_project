@@ -1,16 +1,16 @@
 @using Microsoft.AspNetCore.Components
 
-
 <div class="recipe-card d-flex flex-row justify-content-between align-items-center p-3 list-group-item">
  <div class="ml-2">
   <div class="">
    ID : @RecipeId
    <p class="badge rounded-pill text-bg-info text-white">@CategoryName</P>
   </div>
-  <a class="mb-0 fs-3 link-body-emphasis link-offset-2 link-underline-opacity-25 link-underline-opacity-75-hover" href="#">@Title</a>
+  <a class="fs-3 icon-link link-success link-underline-success link-underline-opacity-25 justify-content-start" @onclick="ShowRecipeDetails" style="cursor: pointer;">
+   @Title
+  </a>
  </div>
  <button class="btn btn-outline-primary btn-sm" @onclick="() => SelectRecipe(RecipeId)">
-  Sélectionner @date
+  Sélectionner
  </button>
 </div>
-

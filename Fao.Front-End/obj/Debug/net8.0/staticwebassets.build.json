@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "KqZ09X3wL8sfinooTyHzo9nBKAx5CCSkZLI4e+dnttg=",
+  "Hash": "+rLRwgzNVImFdNxheFqHhT4+jX5q721eosq6ck43UuU=",
   "Source": "Fao.Front-End",
   "BasePath": "/",
   "Mode": "Root",
@@ -8318,6 +8318,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\index.html"
+    },
+    {
+      "Identity": "C:\\Users\\FERMENT_Remi\\Documents\\Projet\\fao_project\\Fao.Front-End\\wwwroot\\js\\modalHelper.js",
+      "SourceId": "Fao.Front-End",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\FERMENT_Remi\\Documents\\Projet\\fao_project\\Fao.Front-End\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "js/modalHelper.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\modalHelper.js"
     },
     {
       "Identity": "C:\\Users\\FERMENT_Remi\\Documents\\Projet\\fao_project\\Fao.Front-End\\wwwroot\\manifest.webmanifest",

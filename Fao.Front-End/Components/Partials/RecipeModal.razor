@@ -1,0 +1,144 @@
+@using Fao.Front_End.Models
+@using Fao.Front_End.Services
+
+<div class="modal fade" id="recipeModal" tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+
+            <!-- Header -->
+            <div class="modal-header bg-light border-bottom">
+                <h1 class="modal-title fs-4 fw-bold d-flex align-items-center gap-2" id="recipeModal" )">
+                    <i class="bi bi-journal-text"></i>
+                    Détail de la recette
+                </h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <!-- Body -->
+            <div class="modal-body px-4 py-3">
+
+                @if (Recipe != null)
+                {
+                    <!-- Title -->
+                    <h2 class="fw-bold mb-1 d-flex align-items-center gap-2">
+                        <i class="bi bi-fork-knife"></i>
+                        @Recipe.Title
+                    </h2>
+                    <p class="text-muted mb-4">
+                        <i class="bi bi-tag"></i>
+                        Catégorie : <strong>@Recipe.CategoryName</strong>
+                    </p>
+
+                    <!-- Ingredients -->
+                    <div class="mb-4">
+
+                        <h5 class="fw-semibold mb-3 d-flex align-items-center gap-2">
+                            <i class="bi bi-basket"></i>
+                            Ingrédients
+                        </h5>
+                        <div class="d-flex align-items-center gap-2">
+                            <h6 class="fw-semibold mb-3 d-flex align-items-center gap-2">
+                                <i class="bi bi-people-fill"></i>
+                                Nombre de personne :
+                            </h6>
+                            <button class="btn btn-sm btn-outline-secondary" @onclick="DecreasePersonCount">
+                                <i class="bi bi-dash-lg"></i>
+                            </button>
+                            <span class="fw-semibold">@personCount</span>
+                            <button class="btn btn-sm btn-outline-secondary" @onclick="IncreasePersonCount">
+                                <i class="bi bi-plus-lg"></i>
+                            </button>
+                        </div>
+
+                        <ul class="list-group">
+                            @foreach (var ingredient in Recipe.Ingredients)
+                            {
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <span>@ingredient.IngredientName</span>
+                                    <span class="fw-semibold">
+                                        @ingredient.Quantity @ingredient.Unit
+                                    </span>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+
+                    <!-- Steps -->
+                    <div>
+                        <h5 class="fw-semibold mb-3 d-flex align-items-center gap-2">
+                            <i class="bi bi-list-ol"></i>
+                            Étapes
+                        </h5>
+
+                        <div class="d-flex flex-column gap-3">
+                            @for (int i = 0; i < Steps?.Count; i++)
+                            {
+                                <div class="border rounded-3 p-3 shadow-sm bg-light">
+                                    <span class="fw-bold d-flex align-items-center gap-2 mb-2">
+                                        <i class="bi bi-geo-alt"></i>
+                                        Étape @(i + 1)
+                                    </span>
+                                    <div class="border-top pt-2">@Steps[i]</div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="alert alert-warning text-center">
+                        Aucune recette sélectionnée.
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@code {
+    [Parameter] public FullRecipeDTO? Recipe { get; set; }
+    [Parameter] public List<string>? Steps { get; set; }
+    private List<double> BaseQuantities = new();
+    private int personCount = 1;
+
+    protected override void OnParametersSet()
+    {
+        if (Recipe != null)
+        {
+            BaseQuantities.Clear();
+            foreach (var ingredient in Recipe.Ingredients)
+            {
+                BaseQuantities.Add(ingredient.Quantity);
+            }
+        }
+    }
+    private void IncreasePersonCount()
+    {
+        personCount++;
+        DisplayIngredientsQuantity();
+    }
+    private void DecreasePersonCount()
+    {
+        if (personCount > 1)
+        {
+            personCount--;
+            DisplayIngredientsQuantity();
+        }
+    }
+
+    private void DisplayIngredientsQuantity()
+    {
+        if (Recipe == null) return;
+
+        for (int i = 0; i < Recipe.Ingredients.Count; i++)
+        {
+            var ingredient = Recipe.Ingredients[i];
+            var baseQty = BaseQuantities[i];
+
+            ingredient.Quantity = baseQty * personCount;
+        }
+    }
+
+}

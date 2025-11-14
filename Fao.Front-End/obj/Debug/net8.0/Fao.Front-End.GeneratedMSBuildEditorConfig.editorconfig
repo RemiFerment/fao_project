@@ -26,10 +26,6 @@ build_property._RazorSourceGeneratorDebug =
 build_metadata.AdditionalFiles.TargetPath = QXBwLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/FERMENT_Remi/Documents/Projet/fao_project/Fao.Front-End/Components/Meal/MealOverview.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xNZWFsXE1lYWxPdmVydmlldy5yYXpvcg==
-build_metadata.AdditionalFiles.CssScope = 
-
 [C:/Users/FERMENT_Remi/Documents/Projet/fao_project/Fao.Front-End/Components/Planning/PlanningDay.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQbGFubmluZ1xQbGFubmluZ0RheS5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
@@ -66,13 +62,25 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUGxhbm5pbmdcTWVhbFNlbGVjdG9yLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/FERMENT_Remi/Documents/Projet/fao_project/Fao.Front-End/Pages/Planning/RecipeDetails.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUGxhbm5pbmdcUmVjaXBlRGV0YWlscy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/FERMENT_Remi/Documents/Projet/fao_project/Fao.Front-End/_Imports.razor]
 build_metadata.AdditionalFiles.TargetPath = X0ltcG9ydHMucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/FERMENT_Remi/Documents/Projet/fao_project/Fao.Front-End/Components/Meal/MealOverview.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xNZWFsXE1lYWxPdmVydmlldy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = b-0eyrsk0t5a
+
 [C:/Users/FERMENT_Remi/Documents/Projet/fao_project/Fao.Front-End/Components/Meal/RecipeCard.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xNZWFsXFJlY2lwZUNhcmQucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = b-rfulp435vl
+
+[C:/Users/FERMENT_Remi/Documents/Projet/fao_project/Fao.Front-End/Components/Partials/RecipeModal.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYXJ0aWFsc1xSZWNpcGVNb2RhbC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = b-9q0em7qpvl
 
 [C:/Users/FERMENT_Remi/Documents/Projet/fao_project/Fao.Front-End/Layout/MainLayout.razor]
 build_metadata.AdditionalFiles.TargetPath = TGF5b3V0XE1haW5MYXlvdXQucmF6b3I=

@@ -1,4 +1,5 @@
 @page "/test"
+@using Fao.Front_End.Models
 @using Fao.Front_End.Services
 @using System.Security.Claims
 @using Microsoft.AspNetCore.Authorization
@@ -10,16 +11,31 @@
 
 
 <PageTitle>Test Page</PageTitle>
-<h2>Test = @(Meal == null ? "Chargement..." : Meal)</h2>
+<h2>Test = @(title == null ? "Chargement..." : title)</h2>
+<h3>Ingredients:</h3>
+<ul>
+    @if (ingredients != null)
+    {
+        @foreach (var ingredient in ingredients)
+        {
+            <li>@ingredient.IngredientName - @ingredient.Quantity @ingredient.Unit</li>
+        }
+    }
+</ul>
+<h3>Steps:</h3>
+<p>@(steps == null ? "Chargement..." : steps)</p>
 
 @code {
-    private string? Meal;
+    private string? title;
+    private string? steps;
+    private List<IngredientDTO>? ingredients = new List<IngredientDTO>();
 
     protected override async Task OnInitializedAsync()
     {
-        string? uuid = await AuthService.GetUUIDFromToken();
-        var result = await MealService.GetMealOverviewAsync(mealDate: DateTime.Now);
-        var test = await MealService.GetRecipeOverviewAsync(result?.LunchId);
-        Meal = test?.Title;
+        var recipe = await MealService.GetFullRecipeAsync(56);
+        steps = recipe?.Steps;
+        title = recipe?.Title;
+        ingredients = recipe?.Ingredients;
+
     }
 }

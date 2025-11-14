@@ -1,0 +1,13 @@
+.meal-card[b-9q0em7qpvl] {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    transition: 0.3s ease-in-out;
+    border-radius: 5px;
+
+    padding: 16px;
+}
+
+.meal-card:hover[b-9q0em7qpvl] {
+    transform: scale(1.05);
+    background-color: #f9f9f9;
+    cursor: pointer;
+}

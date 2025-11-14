@@ -9,16 +9,13 @@ namespace Fao.Front_End.Components.Meal
     {
         [Parameter] public DateTime? MealDate { get; set; } = null;
         [Parameter] public MealTypeEnum MealTypeFilter { get; set; } = default!;
+        [Parameter] public EventCallback<int> OnRecipeSelected { get; set; }
+
         public string? MealName { get; set; } = "";
         public string? MealType { get; set; } = "";
         private bool IsLoaded { get; set; } = false;
-
+        private int CurrentRecipeId;
         [Inject] public MealService MealService { get; set; } = default!;
-
-        // protected override async Task OnInitializedAsync()
-        // {
-        //     await DisplayMeal();
-        // }
 
         protected override async Task OnParametersSetAsync()
         {
@@ -33,12 +30,15 @@ namespace Fao.Front_End.Components.Meal
                 switch (MealTypeFilter)
                 {
                     case MealTypeEnum.Breakfast:
+                        CurrentRecipeId = MealDay?.BreakfastId ?? 0;
                         await LoadMeal(MealDay?.BreakfastId);
                         break;
                     case MealTypeEnum.Lunch:
+                        CurrentRecipeId = MealDay?.LunchId ?? 0;
                         await LoadMeal(MealDay?.LunchId);
                         break;
                     case MealTypeEnum.Dinner:
+                        CurrentRecipeId = MealDay?.DinnerId ?? 0;
                         await LoadMeal(MealDay?.DinnerId);
                         break;
                     default:
@@ -78,6 +78,11 @@ namespace Fao.Front_End.Components.Meal
                 await MealService.RemoveRecipeFromMealDayAsync(mealDate.Value, mealType);
                 await DisplayMeal();
             }
+        }
+
+        public async Task ShowRecipeDetails()
+        {
+            await OnRecipeSelected.InvokeAsync(CurrentRecipeId);
         }
 
 

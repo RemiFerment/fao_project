@@ -9,6 +9,7 @@ public partial class RecipeCard : ComponentBase
     [Parameter] public string Title { get; set; } = string.Empty;
     [Parameter] public string CategoryName { get; set; } = string.Empty;
     [Parameter] public int RecipeId { get; set; }
+    [Parameter] public EventCallback<int> OnRecipeSelected { get; set; }
     [Inject] private MealService MealService { get; set; } = null!;
     [Inject] private NavigationManager NavigationManager { get; set; } = null!;
     private string mealType = string.Empty;
@@ -47,5 +48,10 @@ public partial class RecipeCard : ComponentBase
         {
             mealType = typeValue.ToString();
         }
+    }
+
+    private async Task ShowRecipeDetails()
+    {
+        await OnRecipeSelected.InvokeAsync(RecipeId);
     }
 }

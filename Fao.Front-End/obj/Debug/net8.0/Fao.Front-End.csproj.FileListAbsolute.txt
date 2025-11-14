@@ -1076,3 +1076,5 @@ C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\obj\Debug\net8.
 C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\obj\Debug\net8.0\webcil\Microsoft.Net.Http.Headers.wasm
 C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\obj\Debug\net8.0\compressed\ps7c5x3kvb.gz
 C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\obj\Debug\net8.0\compressed\kttju8sgfg.gz
+C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\obj\Debug\net8.0\scopedcss\Components\Meal\MealOverview.razor.rz.scp.css
+C:\Users\FERMENT_Remi\Documents\Projet\fao_project\Fao.Front-End\obj\Debug\net8.0\scopedcss\Components\Partials\RecipeModal.razor.rz.scp.css

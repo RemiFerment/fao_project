@@ -4,6 +4,7 @@ using Fao.Front_End.Models;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 public class MealService
@@ -117,4 +118,22 @@ public class MealService
         var response = await _httpClient.SendAsync(requestMessage);
         return response.IsSuccessStatusCode;
     }
+
+    public async Task<FullRecipeDTO?> GetFullRecipeAsync(int recipeId)
+    {
+        var uuid = await _authService.GetUUIDFromToken();
+        if (uuid == null) return null;
+
+        var request = new HttpRequestMessage(HttpMethod.Get, $"api/Recipes/{recipeId}");
+
+        var token = await _authService.GetToken();
+        request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+        var response = await _httpClient.SendAsync(request);
+        if (!response.IsSuccessStatusCode) return null;
+
+        var result = await response.Content.ReadFromJsonAsync<FullRecipeDTO>();
+        return result;
+    }
+
 }

@@ -49,6 +49,10 @@
       "PackagePath": "staticwebassets\\index.html"
     },
     {
+      "Id": "C:\\Users\\FERMENT_Remi\\Documents\\Projet\\fao_project\\Fao.Front-End\\wwwroot\\js\\modalHelper.js",
+      "PackagePath": "staticwebassets\\js\\modalHelper.js"
+    },
+    {
       "Id": "C:\\Users\\FERMENT_Remi\\Documents\\Projet\\fao_project\\Fao.Front-End\\wwwroot\\manifest.webmanifest",
       "PackagePath": "staticwebassets\\manifest.webmanifest"
     },

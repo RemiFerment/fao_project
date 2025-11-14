@@ -1,14 +1,17 @@
 @page "/planning/meal"
 @attribute [Authorize]
+@using Fao.Front_End.Components.Partials
 @using Fao.Front_End.Models
 @using Fao.Front_End.Components.Meal
 @using Microsoft.AspNetCore.Authorization
+
+<RecipeModal Recipe="@SelectedRecipe" Steps="@StepsList" />
 
 <div class="card">
     <div class="card-head text-center py-3">
         <h4>Ajouter une recette </h4>
     </div>
-    <div class="body p-5 ">
+    <div class="body p-2 ">
         <form @onsubmit="OnSearch">
             <input @bind=@searchTerm class="form-control" placeholder="Rechercher une recette..." />
         </form>
@@ -31,7 +34,8 @@
 
                     @foreach (RecipeOverviewDTO recipe in Recipes)
                     {
-                        <RecipeCard Title=@recipe.Title RecipeId=recipe.Id CategoryName=@recipe.CategoryName />
+                        <RecipeCard Title=@recipe.Title RecipeId=recipe.Id CategoryName=@recipe.CategoryName
+                            OnRecipeSelected="HandleRecipeSelected" />
                     }
                 </div>
             }
