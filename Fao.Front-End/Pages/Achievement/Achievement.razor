@@ -1,5 +1,29 @@
 @page "/achievements"
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize]
 
-<h3>Progrès</h3>
-<h6>En cours de construction</h6>
+<div class="card mb-3">
+    <div class="card-header">
+        <h1 class="text-center fs-3 fw-semibold">Progrès</h1>
+    </div>
+    <div class="card-body text-center p-3 d-flex flex-wrap justify-content-center align-items-center gap-4">
+        @* <p>
+            Aucun progrès n'a encore été ajouté.
+        </p> *@
+        <div class="progress-card position-relative">
+            <i class="bi bi-trash-fill fs-2 text-danger position-absolute "></i>
+            <h1 class="fs-5 fw-semibold text-center">Mesure du poids</h1>
+            <main>
+                <p>56.4kg</p>
+            </main>
+            <footer>
+                <span class="text-muted">Le 12 Juin 2024</span>
+            </footer>
+        </div>
+    </div>
 
+</div>
+<button class="btn btn-success d-flex justify-content-center align-items-center fs-3 gap-2 plus-button" s>
+    <i class="bi bi-plus-square fs-2"></i>
+    <span class="d-md-block d-none">Ajouter un progrès</span>
+</button>
