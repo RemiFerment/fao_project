@@ -36,18 +36,20 @@
                             <i class="bi bi-basket"></i>
                             Ingrédients
                         </h5>
-                        <div class="d-flex align-items-center gap-2">
-                            <h6 class="fw-semibold mb-3 d-flex align-items-center gap-2">
+                        <div class="d-flex align-items-center gap-2 mb-3">
+                            <h6 class="fw-semibold mb-0 d-flex align-items-center gap-2">
                                 <i class="bi bi-people-fill"></i>
                                 Nombre de personne :
                             </h6>
-                            <button class="btn btn-sm btn-outline-secondary" @onclick="DecreasePersonCount">
-                                <i class="bi bi-dash-lg"></i>
-                            </button>
-                            <span class="fw-semibold">@personCount</span>
-                            <button class="btn btn-sm btn-outline-secondary" @onclick="IncreasePersonCount">
-                                <i class="bi bi-plus-lg"></i>
-                            </button>
+                            <div>
+                                <button class="btn btn-sm btn-outline-secondary" @onclick="DecreasePersonCount">
+                                    <i class="bi bi-dash-lg"></i>
+                                </button>
+                                <span class="fw-semibold">@personCount</span>
+                                <button class="btn btn-sm btn-outline-secondary" @onclick="IncreasePersonCount">
+                                    <i class="bi bi-plus-lg"></i>
+                                </button>
+                            </div>
                         </div>
 
                         <ul class="list-group">
