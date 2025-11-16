@@ -1,0 +1,58 @@
+// using NutriLink.API.Data;
+// using NutriLink.API.Models;
+// using NutriLink.API.Models.DTOs.Achievement;
+// using NutriLink.API.Services;
+
+// public class AchievementService
+// {
+//     private readonly AppDbContext _context;
+//     private readonly UserService _userService;
+
+//     public AchievementService(AppDbContext context, UserService userService)
+//     {
+//         _context = context;
+//         _userService = userService;
+//     }
+
+//     public async Task<AchievementResultDTO?> CreateMeasurementAchievementAsync(string uuid, AchievementMeasurementDTO dto)
+//     {
+//         var user = await _userService.GetByUuidAsync(uuid);
+//         if (user == null) return null;
+
+//         var type = new AchievementTypeMeasurement
+//         {
+//             Name = "Measurement",
+//             Hips = dto.HipsMeasurement,
+//             Waist = dto.WaistMeasurement
+//         };
+
+//         _context.AchievementTypeMeasurements.Add(type);
+//         await _context.SaveChangesAsync();
+
+//         var achievement = new Achievement
+//         {
+//             DateAchieved = dto.DateAchieved,
+//             Description = dto.Description,
+//             UserId = user.Id,
+//             AchievementTypeId = type.Id
+//         };
+
+//         _context.Achievements.Add(achievement);
+//         await _context.SaveChangesAsync();
+
+//         return new AchievementResultDTO
+//         {
+//             Id = achievement.Id,
+//             Description = achievement.Description,
+//             DateAchieved = achievement.DateAchieved,
+//             Type = "Measurement",
+//             Data = new Measurement
+//             {
+//                 Hips = type.Hips,
+//                 Waist = type.Waist
+//             }
+//         };
+//     }
+
+//     // same pattern for Weight, Photo, FreeComment
+// }

@@ -41,14 +41,14 @@ namespace NutriLink.API.Controllers
 
 
         [HttpPost("register")]
-        [Authorize(Roles = "ROLE_COACH")]
+        // [Authorize(Roles = "ROLE_COACH")]
         public async Task<ActionResult> Register([FromBody] RegisterDTO dto)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
             if (string.IsNullOrWhiteSpace(dto.PlainPassword)) return BadRequest(new { message = "Password is required." });
 
             var passwordHasher = new PasswordHasher<User>();
-            var role = await _db.Roles.FirstOrDefaultAsync(r => r.Id == 1);
+            var role = await _db.Roles.FirstOrDefaultAsync(r => r.Id == 3);
             if (role == null) return BadRequest("Role don't exist.");
             var existingUser = await _db.Users.FirstOrDefaultAsync(u => u.Email == dto.Email);
             if (existingUser != null) return Conflict(new { message = "Email is already in use." });

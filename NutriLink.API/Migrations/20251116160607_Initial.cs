@@ -6,27 +6,27 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace NutriLink.API.Migrations
 {
     /// <inheritdoc />
-    public partial class FixedOnDeleteBehaviorAndCascadeIssue : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "AchievementType",
+                name: "AchievementTypes",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Discriminator = table.Column<string>(type: "nvarchar(34)", maxLength: 34, nullable: false),
+                    Discriminator = table.Column<string>(type: "nvarchar(21)", maxLength: 21, nullable: false),
                     Waist = table.Column<int>(type: "int", nullable: true),
                     Hips = table.Column<int>(type: "int", nullable: true),
                     Photo = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
-                    TargetWeight = table.Column<int>(type: "int", nullable: true)
+                    Weight = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AchievementType", x => x.Id);
+                    table.PrimaryKey("PK_AchievementTypes", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -173,16 +173,16 @@ namespace NutriLink.API.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     DateAchieved = table.Column<DateOnly>(type: "date", nullable: false),
                     UserId = table.Column<int>(type: "int", nullable: false),
-                    AchievementTypeId = table.Column<int>(type: "int", nullable: false),
+                    AchievementTypeId = table.Column<int>(type: "int", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Achievements", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Achievements_AchievementType_AchievementTypeId",
+                        name: "FK_Achievements_AchievementTypes_AchievementTypeId",
                         column: x => x.AchievementTypeId,
-                        principalTable: "AchievementType",
+                        principalTable: "AchievementTypes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -270,6 +270,7 @@ namespace NutriLink.API.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    Date = table.Column<DateOnly>(type: "date", nullable: false),
                     UserId = table.Column<int>(type: "int", nullable: false),
                     SnackId = table.Column<int>(type: "int", nullable: false)
                 },
@@ -291,7 +292,9 @@ namespace NutriLink.API.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Achievements_AchievementTypeId",
                 table: "Achievements",
-                column: "AchievementTypeId");
+                column: "AchievementTypeId",
+                unique: true,
+                filter: "[AchievementTypeId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Achievements_UserId",
@@ -383,7 +386,7 @@ namespace NutriLink.API.Migrations
                 name: "SnackDays");
 
             migrationBuilder.DropTable(
-                name: "AchievementType");
+                name: "AchievementTypes");
 
             migrationBuilder.DropTable(
                 name: "Ingredients");

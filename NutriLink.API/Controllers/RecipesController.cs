@@ -64,6 +64,46 @@ namespace NutriLink.API.Controllers
             return Ok(recipeDTO);
         }
 
+        [HttpGet("search")]
+        [Authorize]
+        public async Task<ActionResult<IEnumerable<FullRecipeDTO>>> SearchByKeyword([FromQuery] string keyword)
+        {
+            if (string.IsNullOrWhiteSpace(keyword))
+                return BadRequest(new { message = "Keyword is required." });
+
+            // Decode URL encoded keyword (e.g. %20 -> space)
+            keyword = System.Net.WebUtility.UrlDecode(keyword).Trim();
+            var recipes = await _db.Recipes
+                .Where(r => r.Title.Contains(keyword))
+                .Include(r => r.Category)
+                .ToListAsync();
+
+            if (recipes == null || recipes.Count == 0)
+            {
+                return NotFound(new { message = "No recipes found matching the keyword." });
+            }
+
+            var recipeDTOs = recipes.Select(r => new FullRecipeDTO
+            {
+                Id = r.Id,
+                Title = r.Title,
+                Steps = r.Steps,
+                CategoryName = r.Category.Name,
+                Ingredients = _db.Set<RecipeIngredient>()
+                    .Where(ri => ri.RecipeId == r.Id)
+                    .Include(ri => ri.Ingredient)
+                    .Select(ri => new FullRecipeIngredientDTO
+                    {
+                        IngredientId = ri.IngredientId,
+                        IngredientName = ri.Ingredient.Name,
+                        Quantity = ri.Quantity,
+                        Unit = ri.Unit
+                    }).ToList()
+            }).ToList();
+
+            return Ok(recipeDTOs);
+        }
+
         [HttpPost]
         [Authorize(Roles = "ROLE_COACH")]
         public async Task<ActionResult<RecipeSendDTO>> Create([FromBody] RecipeSendDTO recipe)

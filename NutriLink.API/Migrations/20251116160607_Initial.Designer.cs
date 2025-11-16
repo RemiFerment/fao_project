@@ -12,8 +12,8 @@ using NutriLink.API.Data;
 namespace NutriLink.API.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20251106204441_Finalize_Migrations")]
-    partial class Finalize_Migrations
+    [Migration("20251116160607_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -48,7 +48,9 @@ namespace NutriLink.API.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AchievementTypeId");
+                    b.HasIndex("AchievementTypeId")
+                        .IsUnique()
+                        .HasFilter("[AchievementTypeId] IS NOT NULL");
 
                     b.HasIndex("UserId");
 
@@ -65,8 +67,8 @@ namespace NutriLink.API.Migrations
 
                     b.Property<string>("Discriminator")
                         .IsRequired()
-                        .HasMaxLength(34)
-                        .HasColumnType("nvarchar(34)");
+                        .HasMaxLength(21)
+                        .HasColumnType("nvarchar(21)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -74,7 +76,7 @@ namespace NutriLink.API.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("AchievementType");
+                    b.ToTable("AchievementTypes");
 
                     b.HasDiscriminator<string>("Discriminator").HasValue("AchievementType");
 
@@ -263,6 +265,9 @@ namespace NutriLink.API.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<DateOnly>("Date")
+                        .HasColumnType("date");
+
                     b.Property<int>("SnackId")
                         .HasColumnType("int");
 
@@ -368,7 +373,7 @@ namespace NutriLink.API.Migrations
                     b.Property<int>("Waist")
                         .HasColumnType("int");
 
-                    b.HasDiscriminator().HasValue("AchievementTypeMeasurement");
+                    b.HasDiscriminator().HasValue("measurement");
                 });
 
             modelBuilder.Entity("NutriLink.API.Models.AchievementTypePhoto", b =>
@@ -379,7 +384,7 @@ namespace NutriLink.API.Migrations
                         .IsRequired()
                         .HasColumnType("varbinary(max)");
 
-                    b.HasDiscriminator().HasValue("AchievementTypePhoto");
+                    b.HasDiscriminator().HasValue("photo");
                 });
 
             modelBuilder.Entity("NutriLink.API.Models.AchievementTypeWeight", b =>
@@ -389,14 +394,14 @@ namespace NutriLink.API.Migrations
                     b.Property<int>("Weight")
                         .HasColumnType("int");
 
-                    b.HasDiscriminator().HasValue("AchievementTypeWeight");
+                    b.HasDiscriminator().HasValue("weight");
                 });
 
             modelBuilder.Entity("NutriLink.API.Models.Achievement", b =>
                 {
                     b.HasOne("NutriLink.API.Models.AchievementType", "AchievementType")
-                        .WithMany()
-                        .HasForeignKey("AchievementTypeId")
+                        .WithOne()
+                        .HasForeignKey("NutriLink.API.Models.Achievement", "AchievementTypeId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("NutriLink.API.Models.User", "User")

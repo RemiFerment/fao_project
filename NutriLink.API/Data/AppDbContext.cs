@@ -13,10 +13,13 @@ public class AppDbContext : DbContext
     public DbSet<Ingredient> Ingredients => Set<Ingredient>();
     public DbSet<Role> Roles => Set<Role>();
     public DbSet<RecipeIngredient> RecipeIngredients => Set<RecipeIngredient>();
+
+    public DbSet<AchievementType> AchievementTypes => Set<AchievementType>();
     public DbSet<AchievementTypeMeasurement> AchievementTypeMeasurements => Set<AchievementTypeMeasurement>();
     public DbSet<AchievementTypePhoto> AchievementTypePhotos => Set<AchievementTypePhoto>();
     public DbSet<AchievementTypeWeight> AchievementTypeWeights => Set<AchievementTypeWeight>();
     public DbSet<Achievement> Achievements => Set<Achievement>();
+
     public DbSet<MealDay> MealDays => Set<MealDay>();
     public DbSet<SnackDay> SnackDays => Set<SnackDay>();
     public DbSet<Message> Messages => Set<Message>();
@@ -104,12 +107,17 @@ public class AppDbContext : DbContext
             .WithMany()
             .HasForeignKey(a => a.UserId)
             .OnDelete(DeleteBehavior.Cascade);
+
         modelBuilder.Entity<Achievement>()
             .HasOne(a => a.AchievementType)
-            .WithMany()
-            .HasForeignKey(a => a.AchievementTypeId)
+            .WithOne(t => t.Achievement)
+            .HasForeignKey<Achievement>(a => a.AchievementTypeId)
             .OnDelete(DeleteBehavior.Cascade);
-
-
+            
+        modelBuilder.Entity<AchievementType>()
+            .HasDiscriminator<string>("Discriminator")
+            .HasValue<AchievementTypeMeasurement>("measurement")
+            .HasValue<AchievementTypePhoto>("photo")
+            .HasValue<AchievementTypeWeight>("weight");
     }
 }

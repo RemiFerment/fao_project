@@ -1,9 +1,9 @@
 namespace NutriLink.API.Models.DTOs.Achievement;
 
-public class AchievementMeasurementDTO
+public class AchievementDTO
 {
+    public int Id { get; set; }
     public DateOnly DateAchieved { get; set; }
     public string Description { get; set; } = "";
-    public int WaistMeasurement { get; set; }
-    public int HipsMeasurement { get; set; }
+    public AchievementTypeDTO? AchievementType { get; set; }
 }
