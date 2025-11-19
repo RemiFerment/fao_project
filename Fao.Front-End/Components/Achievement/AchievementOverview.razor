@@ -1,0 +1,67 @@
+<div class="progress-card type-@Achievement.Type position-relative">
+      <i class="bi bi-trash-fill fs-2 text-danger position-absolute"
+            @onclick="() => DeleteAchievement(Achievement.Id)"></i>
+      <div @onclick="SelectAchievement">
+            <h1 class="fs-5 fw-semibold text-center">@Achievement.Name</h1>
+            <main>
+                  @switch (Achievement.Type)
+                  {
+                        case "weight":
+
+                              <p>
+                                    <span class="fw-semibold">Poids :
+                                    </span>
+                                    @ConvertedWeight() kg
+                              </p>
+                              break;
+
+                        case "measurement":
+
+                              <p>
+                                    <span class="fw-semibold">Tour de taille :
+                                    </span>
+                                    @ConvertedMeasure(Achievement.Waist) cm
+                              </p>
+                              <p>
+                                    <span class="fw-semibold">Tour de hanches :
+                                    </span>
+                                    @ConvertedMeasure(Achievement.Hips) cm
+                              </p>
+                              break;
+
+                        case "photo":
+
+                              <p>
+                                    @PhotoFragment
+                              </p>
+                              break;
+
+                        default:
+
+                              <p>
+                                    <span class="fw-semibold">Description :
+                                    </span>
+                                    @TruncateDescription()
+                              </p>
+                              break;
+
+                  }
+            </main>
+            <footer>
+                  <span class="text-muted">Le @Achievement.Date</span>
+            </footer>
+      </div>
+</div>
+@code {
+
+
+      private RenderFragment PhotoFragment =>
+      @<div>
+                  <p>@Achievement.Description</p>
+                  <p><span class="fw-semibold">Nouvelle photo de progression ajoutée.</span></p>
+            @* <img src="@RenderPhoto()" alt="Photo ajoutée" class="img-fluid rounded mt-2" /> *@
+      </div>;
+
+
+
+}

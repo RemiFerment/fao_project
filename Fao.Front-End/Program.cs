@@ -9,11 +9,12 @@ builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 builder.Services.AddScoped(sp => new HttpClient
 {
-    BaseAddress = new Uri("http://192.168.1.5:5156/")
+    BaseAddress = new Uri("http://localhost:5156/")
 });
 
 builder.Services.AddScoped<AuthService>();
 builder.Services.AddScoped<MealService>();
+builder.Services.AddScoped<AchievementService>();
 builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthStateProvider>();
 builder.Services.AddScoped<CustomAuthStateProvider>();
 

@@ -25,8 +25,7 @@ public class MealService
 
         if (mealDate.HasValue)
         {
-            var requestMessage = new HttpRequestMessage(HttpMethod.Get,
-    $"api/Meal/{uuid}/meal-days?date={mealDate.Value:yyyy-MM-dd}");
+            var requestMessage = new HttpRequestMessage(HttpMethod.Get, $"api/Meal/{uuid}/meal-days?date={mealDate.Value:yyyy-MM-dd}");
 
             var token = await _authService.GetToken();
             requestMessage.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);

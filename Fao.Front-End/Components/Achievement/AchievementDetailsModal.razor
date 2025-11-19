@@ -1,0 +1,128 @@
+@using Fao.Front_End.Models
+@using Fao.Front_End.Services
+@using System.Threading.Tasks
+<div class="modal fade" id="achievementDetailModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content p-1">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">
+                    @Achievement!.Name - @Achievement?.Date
+                </h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <main class="modal-body d-flex flex-column gap-3">
+                @switch (Achievement?.Type)
+                {
+                    case "weight":
+
+                        <div>
+                            <span class="fw-semibold">Description :</span>
+                            <p class="border rounded p-3 mt-2">
+                                @Achievement.Description
+                            </p>
+                            <span class="fw-semibold">Poids :
+                            </span>
+                            <p class="border rounded p-3 mt-2">
+                                @ConvertedWeight() kg
+                            </p>
+                        </div>
+                        break;
+
+                    case "measurement":
+
+                        <div>
+                            <span class="fw-semibold">Description :</span>
+                            <p class="border rounded p-3 mt-2">
+                                @Achievement.Description
+                            </p>
+                            <p>
+                                <span class="fw-semibold">Tour de taille :
+                                </span>
+                            <p class="border rounded p-3 mt-2">
+                                @ConvertedMeasure(Achievement?.Waist) cm
+                            </p>
+                            </p>
+                        </div>
+                        <div>
+                            <p>
+                                <span class="fw-semibold">Tour de hanches :
+                                </span>
+                            <p class="border rounded p-3 mt-2">
+                                @ConvertedMeasure(Achievement?.Hips) cm
+                            </p>
+                            </p>
+                        </div>
+                        break;
+
+                    case "photo":
+
+                        <div>
+                            @PhotoFragment
+                        </div>
+                        break;
+
+                    default:
+
+                        <div>
+                            <span class="fw-semibold">Description :</span>
+                            <p class="border rounded p-3 mt-2">
+                                @Achievement?.Description
+                            </p>
+                        </div>
+                        break;
+
+                }
+            </main>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter] public AchievementDTO? Achievement { get; set; }
+    [Inject] private AuthService AuthService { get; set; } = default!;
+    private string? uuid = "";
+    private string? photoUrl = "";
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (Achievement != null)
+        {
+            uuid = await AuthService.GetUUIDFromToken();
+            @* I need to add header here *@
+            
+            photoUrl = $"http://localhost:5156/api/Achievement/{uuid}/achievements/{Achievement.Id}/getPhoto";
+        }
+    }
+    private string ConvertedWeight()
+    {
+        //Add a comma after the third digit from the right
+        string? weight = Achievement?.Weight.ToString();
+        if (weight != null && weight.Length >= 3)
+        {
+            weight = weight.Insert(weight.Length - 1, ",");
+        }
+        return weight!;
+    }
+    private string ConvertedMeasure(int? measurement)
+    {
+        //Add a comma after the third digit from the right
+        string? measure = measurement.ToString();
+        if (measure != null && measure.Length >= 3)
+        {
+            measure = measure.Insert(measure.Length - 1, ",");
+        }
+        return measure!;
+    }
+
+    private RenderFragment PhotoFragment =>
+    @<div>
+            <span class="fw-semibold">Description :</span>
+            <p class="border rounded p-3 mt-2">
+                @Achievement?.Description
+            </p>
+            <p><span class="fw-semibold">Nouvelle photo de progression ajoutée.</span></p>
+            <img src="@photoUrl" alt="Photo ajoutée" class="img-fluid rounded mt-2 img-achievement-photo" />
+    </div>;
+
+}
