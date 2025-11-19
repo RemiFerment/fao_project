@@ -1,3 +1,4 @@
+using Fao.Front_End.Helpers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -14,6 +15,7 @@ public class AchievementController : ControllerBase
 {
     private readonly AppDbContext _context;
     private readonly UserService _userService;
+    private readonly ImageHelper _imageHelper = new ImageHelper();
 
     public AchievementController(AppDbContext context, UserService userService)
     {
@@ -21,9 +23,6 @@ public class AchievementController : ControllerBase
         _userService = userService;
     }
 
-    // --------------------------
-    // GET ALL ACHIEVEMENTS
-    // --------------------------
     [HttpGet("{uuid}/achievements")]
     [Authorize(Policy = "SameUser")]
     public async Task<ActionResult> GetUserAchievements(string uuid)
@@ -44,9 +43,26 @@ public class AchievementController : ControllerBase
         return Ok(dto);
     }
 
-    // --------------------------
-    // GET ONE ACHIEVEMENT
-    // --------------------------
+    [HttpGet("{uuid}/achievements/{id}/getPhoto")]
+    [AllowAnonymous]
+    public async Task<ActionResult> GetAchievementPhoto(string uuid, int id)
+    {
+        var user = await _userService.GetByUuidAsync(uuid);
+        if (user == null) return NotFound(new { message = "User not found." });
+
+        var achievement = await _context.Achievements
+            .Include(a => a.AchievementType)
+            .FirstOrDefaultAsync(a => a.UserId == user.Id && a.Id == id);
+
+        if (achievement == null)
+            return NotFound(new { message = "Achievement not found." });
+
+        if (achievement.AchievementType is not AchievementTypePhoto photoType)
+            return BadRequest(new { message = "Achievement is not of type photo." });
+
+        return File(photoType.Photo, "image/webp");
+    }
+
     [HttpGet("{uuid}/achievements/{id}")]
     [Authorize(Policy = "SameUser")]
     public async Task<ActionResult> GetUserAchievement(string uuid, int id)
@@ -64,9 +80,6 @@ public class AchievementController : ControllerBase
         return Ok(MapToDTO(achievement));
     }
 
-    // --------------------------
-    // CREATE MEASUREMENT
-    // --------------------------
     [HttpPost("{uuid}/achievements/measurement")]
     [Authorize(Policy = "SameUser")]
     public async Task<ActionResult> CreateMeasurement(string uuid, [FromBody] AchievementMeasurementDTO dto)
@@ -76,7 +89,7 @@ public class AchievementController : ControllerBase
 
         var type = new AchievementTypeMeasurement
         {
-            Name = "Measurement",
+            Name = "Mensuration",
             Waist = dto.WaistMeasurement,
             Hips = dto.HipsMeasurement
         };
@@ -98,20 +111,40 @@ public class AchievementController : ControllerBase
         return Created("", MapToDTO(achievement));
     }
 
-    // --------------------------
-    // CREATE PHOTO
-    // --------------------------
     [HttpPost("{uuid}/achievements/photo")]
     [Authorize(Policy = "SameUser")]
-    public async Task<ActionResult> CreatePhoto(string uuid, [FromBody] AchievementPhotoDTO dto)
+    public async Task<ActionResult> CreatePhoto(
+        string uuid,
+        [FromForm] string Description,
+        [FromForm] string DateAchieved,
+        [FromForm] IFormFile Photo
+    )
     {
         var user = await _userService.GetByUuidAsync(uuid);
-        if (user == null) return NotFound();
+        if (user == null)
+            return NotFound("User not found.");
+
+        if (Photo == null || Photo.Length == 0)
+            return BadRequest("No photo received.");
+
+        if (Photo.Length > 6_000_000)
+            return BadRequest("The file is too large (limit 10MB).");
+        byte[] originalBytes;
+        using (var ms = new MemoryStream())
+        {
+            await Photo.CopyToAsync(ms);
+            originalBytes = ms.ToArray();
+        }
+
+        var compressedBytes = _imageHelper.CompressImage(originalBytes, 900, 75);
+
+        if (compressedBytes == null || compressedBytes.Length == 0)
+            return BadRequest("Image compression failed.");
 
         var type = new AchievementTypePhoto
         {
             Name = "Photo",
-            Photo = dto.PhotoData
+            Photo = compressedBytes
         };
 
         _context.AchievementTypePhotos.Add(type);
@@ -120,8 +153,8 @@ public class AchievementController : ControllerBase
         var achievement = new Achievement
         {
             UserId = user.Id,
-            DateAchieved = dto.DateAchieved,
-            Description = dto.Description,
+            DateAchieved = DateOnly.Parse(DateAchieved),
+            Description = Description,
             AchievementTypeId = type.Id
         };
 
@@ -131,9 +164,6 @@ public class AchievementController : ControllerBase
         return Created("", MapToDTO(achievement));
     }
 
-    // --------------------------
-    // CREATE WEIGHT
-    // --------------------------
     [HttpPost("{uuid}/achievements/weight")]
     [Authorize(Policy = "SameUser")]
     public async Task<ActionResult> CreateWeight(string uuid, [FromBody] AchievementWeightDTO dto)
@@ -143,7 +173,7 @@ public class AchievementController : ControllerBase
 
         var type = new AchievementTypeWeight
         {
-            Name = "Weight",
+            Name = "Poids",
             Weight = dto.Weight
         };
 
@@ -164,9 +194,6 @@ public class AchievementController : ControllerBase
         return Created("", MapToDTO(achievement));
     }
 
-    // --------------------------
-    // FREE COMMENT
-    // --------------------------
     [HttpPost("{uuid}/achievements/free-comment")]
     [Authorize(Policy = "SameUser")]
     public async Task<ActionResult> CreateComment(string uuid, [FromBody] AchievementFreeCommentDTO dto)
@@ -188,9 +215,6 @@ public class AchievementController : ControllerBase
         return Created("", MapToDTO(achievement));
     }
 
-    // --------------------------
-    // DELETE
-    // --------------------------
     [HttpDelete("{uuid}/achievements/{id}")]
     [Authorize(Policy = "SameUser")]
     public async Task<ActionResult> Delete(string uuid, int id)
@@ -199,23 +223,25 @@ public class AchievementController : ControllerBase
         if (user == null) return NotFound();
 
         var achievement = await _context.Achievements
+        .Include(a => a.AchievementType)
             .FirstOrDefaultAsync(a => a.Id == id && a.UserId == user.Id);
 
         if (achievement == null)
             return NotFound(new { message = "Achievement not found." });
 
+        if (achievement.AchievementType != null)
+            _context.AchievementTypes.Remove(achievement.AchievementType);
+
         _context.Achievements.Remove(achievement);
+
         await _context.SaveChangesAsync();
 
         return NoContent();
     }
 
-    // --------------------------
-    // MAPPING METHOD
-    // --------------------------
-    private static AchievementDTO MapToDTO(Achievement a)
+    private static AchievementOverviewDTO MapToDTO(Achievement a)
     {
-        var dto = new AchievementDTO
+        var dto = new AchievementOverviewDTO
         {
             Id = a.Id,
             DateAchieved = a.DateAchieved,
@@ -228,7 +254,7 @@ public class AchievementController : ControllerBase
             return dto;
         }
 
-        var typeDto = new AchievementTypeDTO
+        var typeDto = new AchievementTypeOverviewDTO
         {
             Id = a.AchievementType.Id,
             Name = a.AchievementType.Name
@@ -244,7 +270,6 @@ public class AchievementController : ControllerBase
 
             case AchievementTypePhoto p:
                 typeDto.Type = "photo";
-                typeDto.Photo = p.Photo;
                 break;
 
             case AchievementTypeWeight w:

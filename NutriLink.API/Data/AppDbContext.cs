@@ -113,7 +113,7 @@ public class AppDbContext : DbContext
             .WithOne(t => t.Achievement)
             .HasForeignKey<Achievement>(a => a.AchievementTypeId)
             .OnDelete(DeleteBehavior.Cascade);
-            
+
         modelBuilder.Entity<AchievementType>()
             .HasDiscriminator<string>("Discriminator")
             .HasValue<AchievementTypeMeasurement>("measurement")
