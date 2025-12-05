@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 
-[Authorize]
+[Authorize(Roles = "ROLE_USER,ROLE_ADMIN")]
 public partial class Achievement : ComponentBase
 {
     [Inject] public AchievementService AchievementService { get; set; } = null!;

@@ -124,3 +124,22 @@ code {
     margin: auto;
     padding-top: 50px;
 }
+
+.navButton {
+    color: var(--bs-secondary);
+    transition: background-color 0.3s ease;
+    border-radius: 10px;
+}
+
+.navButton:hover {
+    background-color: #dfdfdf;
+    color: rgb(58, 58, 58);
+    cursor: pointer;
+}
+
+.navButtonActive {
+    border-radius: 10px;
+    background-color: #dfdfdf;
+    color: rgb(58, 58, 58);
+    cursor: initial;
+}

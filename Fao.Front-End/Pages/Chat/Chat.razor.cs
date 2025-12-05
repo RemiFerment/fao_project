@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Fao.Front_End.Models;
 using Fao.Front_End.Services;
 
-[Authorize]
+[Authorize(Roles = "ROLE_USER,ROLE_ADMIN")]
 public partial class Chat : ComponentBase
 {
     public List<ChatMessageDTO> Messages = new List<ChatMessageDTO>();

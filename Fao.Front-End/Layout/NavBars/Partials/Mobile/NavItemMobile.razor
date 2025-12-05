@@ -1,0 +1,6 @@
+@using Fao.Front_End.Components.Nav
+@inherits NavLinkBase
+<a class="nav-link text-secondary p-0 px-2 d-flex flex-column align-items-center @(GetNavLinkClass())" href="@Link">
+    <i class="@IconClass fs-3"></i>
+    @Label
+</a>

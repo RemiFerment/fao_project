@@ -1,0 +1,8 @@
+<div class="d-block d-md-none fixed-bottom bg-light border-top shadow-sm">
+    <nav class="nav justify-content-around py-2">
+        @ChildContent
+    </nav>
+</div>
+@code {
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+}

@@ -1,72 +1,17 @@
 ﻿@inherits LayoutComponentBase
 @inject NavigationManager NavigationManager
+@using Fao.Front_End.Layout.NavBars.User
 @using Microsoft.AspNetCore.Components.Authorization
 
-<AuthorizeView>
+<AuthorizeView Roles="ROLE_USER">
     <Authorized>
-        <!-- Mobile bottom navbar -->
-        <div class="d-block d-md-none fixed-bottom bg-light border-top shadow-sm">
-            <nav class="nav justify-content-around py-2">
-                <a class="nav-link text-secondary p-0 px-2 d-flex flex-column align-items-center @(GetNavLinkClass(planningLink))"
-                    href="@planningLink">
-                    <i class="bi bi-calendar2-week fs-3"></i>
-                    Planning
-                </a>
-                <a class="nav-link text-secondary p-0 px-2 d-flex flex-column align-items-center @(GetNavLinkClass(achievementsLink))"
-                    href="@achievementsLink">
-                    <i class="bi bi-trophy fs-3"></i>
-                    Progrès
-                </a>
-
-                <a class="nav-link text-secondary p-0 px-2 d-flex flex-column align-items-center @(GetNavLinkClass(ChatLink))"
-                    href="@ChatLink">
-                    <i class="bi bi-chat-left-dots fs-3"></i>
-                    Ma coach
-                </a>
-            </nav>
-        </div>
-
-        <!-- Sidebar for desktop -->
-        <div class="sidebar d-none d-md-flex flex-grow-1 flex-column bg-light border-end vh-100 sticky-fixed top-0 start-0 p-3"
-            style="width: 220px; z-index: 1030;">
-            <nav class="nav d-flex flex-column text-start h-100">
-                <div>
-                    <a class="nav-link my-3 d-flex align-items-center navButton @(GetNavLinkClass(planningLink))"
-                        href="@planningLink">
-                        <i class="bi bi-calendar2-week fs-4"></i>
-                        <span class="ms-2">Planning</span>
-                    </a>
-                    <a class="nav-link my-3 d-flex align-items-center navButton @(GetNavLinkClass(achievementsLink))"
-                        href="@achievementsLink">
-                        <i class="bi bi-trophy fs-4"></i>
-                        <span class="ms-2">Progrès</span>
-                    </a>
-                    <a class="nav-link my-3 d-flex align-items-center navButton @(GetNavLinkClass(ChatLink))"
-                        href="@ChatLink">
-                        <i class="bi bi-chat-left-dots fs-4"></i>
-                        <span class="ms-2">Ma coach</span>
-                    </a>
-                </div>
-
-                <div class="mt-auto">
-                    <a class="nav-link my-3 d-flex align-items-center navButton @(GetNavLinkClass(logoutLink))"
-                        href="@logoutLink">
-                        <i class="bi bi-box-arrow-right fs-4"></i>
-                        <span class="ms-2">Se déconnecter</span>
-                    </a>
-                </div>
-            </nav>
-        </div>
+        <NavBarUser />
     </Authorized>
     <NotAuthorized>
     </NotAuthorized>
 </AuthorizeView>
 
 @code {
-    private string planningLink = "/planning";
-    private string achievementsLink = "/achievements";
-    private string ChatLink = "/chat";
-    private string logoutLink = "/logout";
 
     protected override void OnInitialized()
     {

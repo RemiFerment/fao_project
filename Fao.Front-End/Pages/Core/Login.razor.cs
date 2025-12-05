@@ -26,7 +26,7 @@ public partial class Login : ComponentBase
             if (!string.IsNullOrEmpty(token))
             {
                 await AuthStateProvider.MarkUserAsAuthenticatedAsync(token);
-                Nav.NavigateTo("/planning", true);
+                Nav.NavigateTo("/", true);
             }
             else
             {
@@ -35,7 +35,7 @@ public partial class Login : ComponentBase
         }
         catch (Exception ex)
         {
-            ErrorMessage = $"Erreur de connexion : {ex.Message}";
+            ErrorMessage = $"Erreur de connexion : {ex.Message}, si le problème persiste, contactez un administrateur.";
         }
 
         IsLoading = false;
