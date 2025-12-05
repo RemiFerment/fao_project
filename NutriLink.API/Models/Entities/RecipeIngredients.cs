@@ -15,7 +15,6 @@ namespace NutriLink.API.Models
         [ForeignKey(nameof(IngredientId))]
         public Ingredient Ingredient { get; set; } = default!;
 
-        // Extra fields
         public double Quantity { get; set; }
         public string Unit { get; set; } = "";
     }

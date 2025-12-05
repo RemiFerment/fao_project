@@ -22,7 +22,6 @@ public class MessageController : ControllerBase
     }
 
     [HttpGet("to/{receiverUuid}")]
-    [Authorize(Policy = "SameUser")]
     public async Task<ActionResult<IEnumerable<MessageDTO>>> GetMyMessages(string receiverUuid)
     {
         var uuid = _userService.GetUUIDByClaims(User);
@@ -56,7 +55,6 @@ public class MessageController : ControllerBase
 
 
     [HttpPost("send")]
-    [Authorize(Policy = "SameUser")]
     public async Task<ActionResult<MessageDTO>> SendMessage([FromBody] MessageSendDTO messageDto)
     {
         if (!ModelState.IsValid) return BadRequest(ModelState);

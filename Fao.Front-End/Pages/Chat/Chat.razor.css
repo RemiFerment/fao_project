@@ -1,0 +1,6 @@
+.chat-page {
+    height: calc(100vh - 90px);
+}
+.chat-input {
+    background: white;
+}

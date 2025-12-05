@@ -130,11 +130,7 @@ public class AchievementService
         return response.IsSuccessStatusCode;
     }
 
-    public async Task<bool> CreatePhotoAchievementAsync(
-    string description,
-    byte[] photo,
-    DateOnly dateAchieved
-)
+    public async Task<bool> CreatePhotoAchievementAsync(string description,byte[] photo,DateOnly dateAchieved)
     {
         var uuid = await _authService.GetUUIDFromToken();
         if (uuid == null) return false;

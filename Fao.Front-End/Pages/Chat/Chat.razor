@@ -1,4 +1,42 @@
 @page "/chat"
+@using Fao.Front_End.Components.Chat
+<PageTitle>Chat</PageTitle>
 
-<h3>Discussion</h3>
-<h6>En cours de construction</h6>
+<div class="d-flex flex-column chat-page">
+    <div class="flex-grow-1 d-flex flex-column">
+        <div id="chatBody" class="flex-grow-1 overflow-auto d-flex flex-column">
+            @foreach (var message in Messages)
+            {
+                if (IsSentByCurrentUser(message))
+                {
+                    <ChatRecieve Message="@message.Content" />
+                }
+                else
+                {
+                    <ChatSend Message="@message.Content" />
+                }
+
+            }
+            @if (Messages.Count == 0)
+            {
+                <div class="text-center text-muted mt-3">Aucune conversation entamée.</div>
+            }
+        </div>
+
+        <div class="p-3 border-top d-flex chat-input">
+            <input type="text" class="form-control" placeholder="Écrire un message..." @bind-value="@MessageContent" />
+            @if (isLoading)
+            {
+                <button class="btn btn-primary ms-2" disabled>
+                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                </button>
+            }
+            else
+            {
+                <button class="btn btn-primary ms-2" @onclick="SendMessage">
+                    <i class="bi bi-send-fill"></i>
+                </button>
+            }
+        </div>
+    </div>
+</div>

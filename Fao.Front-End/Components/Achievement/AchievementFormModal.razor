@@ -30,11 +30,25 @@
                 </main>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fermer</button>
-                    <button type="submit" class="btn btn-success">Ajouter le
-                        progrès</button>
+                    @if (isLoading)
+                    {
+                        <button class="btn btn-success" disabled>
+                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                            Ajout du progrès...
+                        </button>
+                    }
+                    else
+                    {
+                        <button type="submit" class="btn btn-success">Ajouter le
+                            progrès</button>
+                    }
                 </div>
             </EditForm>
         </div>
+        @if (!string.IsNullOrEmpty(ErrorMessage))
+        {
+            <div class="alert alert-danger mt-3">@ErrorMessage</div>
+        }
     </div>
 </div>
 
@@ -42,10 +56,12 @@
     [Inject] private AchievementService AchievementService { get; set; } = default!;
     [Inject] private IJSRuntime JS { get; set; } = default!;
     [Parameter] public EventCallback Display { get; set; }
-    private ImageHelper ImageHelper = new();
     private string SelectedType = "weight";
     private AchievementFormModel formData = new();
     private string Today = DateOnly.FromDateTime(DateTime.Now).ToString("yyyy-MM-dd");
+
+    public bool isLoading = false;
+    public string ErrorMessage = string.Empty;
 
     private IBrowserFile? currentFile;
     private RenderFragment RenderFormFields()
@@ -89,70 +105,79 @@
 
 private async Task HandleSubmit()
 {
-    var date = formData.DateAchieved;
-    switch (SelectedType)
+    isLoading = true;
+    ErrorMessage = string.Empty;
+    try
     {
-        case "weight":
-            await AchievementService.CreateWeightAchievementAsync(
-            formData.Description!,
-            formData.Weight!.Value,
-            date
-            );
-            break;
-        case "measurement":
-            await AchievementService.CreateMeasurementAchievementAsync(
-            formData.Description!,
-            formData.Hips!.Value,
-            formData.Waist!.Value,
-            date
-            );
-            break;
-        case "photo":
-            {
-                if (currentFile == null)
-                {
-                    Console.WriteLine("No file selected.");
-                    return;
-                }
-
-                // Read the file as byte[]
-                using var stream = currentFile.OpenReadStream(maxAllowedSize: 6_000_000); // 6MB
-                using var ms = new MemoryStream();
-                await stream.CopyToAsync(ms);
-
-                var imageBytes = ms.ToArray();
-
-                // Assign to formData
-                formData.Photo = imageBytes;
-
-                if (formData.Photo == null || formData.Photo.Length == 0)
-                {
-                    Console.WriteLine("Photo is empty.");
-                    return;
-                }
-
-                // Send to API (server will compress it)
-                await AchievementService.CreatePhotoAchievementAsync(
+        var date = formData.DateAchieved;
+        switch (SelectedType)
+        {
+            case "weight":
+                await AchievementService.CreateWeightAchievementAsync(
                 formData.Description!,
-                formData.Photo,
-                formData.DateAchieved
+                formData.Weight!.Value,
+                date
                 );
-
-                currentFile = null;
                 break;
-            }
-        case "free-comment":
-            await AchievementService.CreateFreeCommentAchievementAsync(
-            formData.Description!,
-            date
-            );
-            break;
+            case "measurement":
+                await AchievementService.CreateMeasurementAchievementAsync(
+                formData.Description!,
+                formData.Hips!.Value,
+                formData.Waist!.Value,
+                date
+                );
+                break;
+            case "photo":
+                {
+                    if (currentFile == null)
+                    {
+                        Console.WriteLine("No file selected.");
+                        return;
+                    }
+
+
+                    using var stream = currentFile.OpenReadStream(maxAllowedSize: 6_000_000);
+                    using var ms = new MemoryStream();
+                    await stream.CopyToAsync(ms);
+
+                    var imageBytes = ms.ToArray();
+
+                    formData.Photo = imageBytes;
+
+                    if (formData.Photo == null || formData.Photo.Length == 0)
+                    {
+                        Console.WriteLine("Photo is empty.");
+                        return;
+                    }
+
+                    await AchievementService.CreatePhotoAchievementAsync(
+                    formData.Description!,
+                    formData.Photo,
+                    formData.DateAchieved
+                    );
+
+                    currentFile = null;
+                    break;
+                }
+            case "free-comment":
+                await AchievementService.CreateFreeCommentAchievementAsync(
+                formData.Description!,
+                date
+                );
+                break;
 
 
 
+        }
+        await JS.InvokeVoidAsync("hideModal", "achievementModal");
+        await Display.InvokeAsync();
     }
-    await JS.InvokeVoidAsync("hideModal", "achievementModal");
-    await Display.InvokeAsync();
+    catch (Exception ex)
+    {
+        ErrorMessage = $"Erreur lors de l'ajout du progrès : {ex.Message}";
+    }
+    isLoading = false;
+    formData = new AchievementFormModel();
 }
 
 

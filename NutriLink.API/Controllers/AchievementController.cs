@@ -112,6 +112,7 @@ public class AchievementController : ControllerBase
     }
 
     [HttpPost("{uuid}/achievements/photo")]
+    [ApiExplorerSettings(IgnoreApi = true)]
     [Authorize(Policy = "SameUser")]
     public async Task<ActionResult> CreatePhoto(
         string uuid,
@@ -128,7 +129,7 @@ public class AchievementController : ControllerBase
             return BadRequest("No photo received.");
 
         if (Photo.Length > 6_000_000)
-            return BadRequest("The file is too large (limit 10MB).");
+            return BadRequest("The file is too large (limit 6MB).");
         byte[] originalBytes;
         using (var ms = new MemoryStream())
         {

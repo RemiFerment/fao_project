@@ -2,11 +2,11 @@
 @using Fao.Front_End.Services
 @inject CustomAuthStateProvider AuthStateProvider
 
-
 <PageTitle>Connexion</PageTitle>
 
-<div style="max-width: 400px; margin: auto; padding-top: 50px;">
-    <h2 class="text-center mb-4">Se connecter</h2>
+<div class="login-box" style="">
+    <h1 class="plaster-regular text-center mb-5">Fao</h1>
+    <h2 class="text-center mb-4 fs-4">Se connecter</h2>
 
     <EditForm Model="@loginData" OnValidSubmit="HandleLogin">
         <DataAnnotationsValidator />
@@ -24,7 +24,17 @@
         </div>
 
         <!-- Submit -->
-        <button type="submit" class="btn btn-primary btn-block mb-4">Se connecter</button>
+        @if (IsLoading)
+        {
+            <button class="btn btn-primary btn-block mb-4" disabled>
+                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                Connexion...
+            </button>
+        }
+        else
+        {
+            <button type="submit" class="btn btn-primary btn-block mb-4">Se connecter</button>
+        }
     </EditForm>
 
     @if (!string.IsNullOrEmpty(ErrorMessage))

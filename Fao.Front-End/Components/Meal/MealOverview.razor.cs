@@ -21,6 +21,10 @@ namespace Fao.Front_End.Components.Meal
         {
             await DisplayMeal();
         }
+        public async Task ShowRecipeDetails()
+        {
+            await OnRecipeSelected.InvokeAsync(CurrentRecipeId);
+        }
 
         private async Task DisplayMeal()
         {
@@ -80,10 +84,6 @@ namespace Fao.Front_End.Components.Meal
             }
         }
 
-        public async Task ShowRecipeDetails()
-        {
-            await OnRecipeSelected.InvokeAsync(CurrentRecipeId);
-        }
 
 
     }

@@ -13,6 +13,7 @@ builder.Services.AddScoped(sp => new HttpClient
 });
 
 builder.Services.AddScoped<AuthService>();
+builder.Services.AddScoped<ChatService>();
 builder.Services.AddScoped<MealService>();
 builder.Services.AddScoped<AchievementService>();
 builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthStateProvider>();

@@ -9,6 +9,7 @@ public partial class Login : ComponentBase
 {
     private LoginDTO loginData = new();
     public string? ErrorMessage { get; set; }
+    public bool IsLoading { get; set; } = false;
 
     [Inject] private AuthService AuthService { get; set; } = default!;
     [Inject] private NavigationManager Nav { get; set; } = default!;
@@ -16,6 +17,7 @@ public partial class Login : ComponentBase
     private async Task HandleLogin()
     {
         ErrorMessage = null;
+        IsLoading = true;
 
         try
         {
@@ -23,7 +25,6 @@ public partial class Login : ComponentBase
 
             if (!string.IsNullOrEmpty(token))
             {
-                Console.WriteLine($"✅ Token: {token}");
                 await AuthStateProvider.MarkUserAsAuthenticatedAsync(token);
                 Nav.NavigateTo("/planning", true);
             }
@@ -36,5 +37,7 @@ public partial class Login : ComponentBase
         {
             ErrorMessage = $"Erreur de connexion : {ex.Message}";
         }
+
+        IsLoading = false;
     }
 }

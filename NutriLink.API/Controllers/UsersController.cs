@@ -41,7 +41,7 @@ namespace NutriLink.API.Controllers
 
 
         [HttpPost("register")]
-        // [Authorize(Roles = "ROLE_COACH")]
+        [Authorize(Roles = "ROLE_COACH")]
         public async Task<ActionResult> Register([FromBody] RegisterDTO dto)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);

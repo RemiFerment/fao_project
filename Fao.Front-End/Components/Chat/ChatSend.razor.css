@@ -1,0 +1,10 @@
+.chat-send-box {
+    background-color: #2a34ff;
+    display: inline-block;
+    padding: 8px 12px;
+    border-radius: 10px 10px 0 10px;
+    margin: 5px 0;
+    max-width: 70%;
+    word-wrap: break-word;
+    color: white;
+}
