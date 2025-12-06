@@ -143,3 +143,12 @@ code {
     color: rgb(58, 58, 58);
     cursor: initial;
 }
+
+.cm-i-note {
+    width: 1.5em;
+    height: 1.5em;
+    mask: url("/imports/icons/note.svg") no-repeat center;
+    mask-size: contain;
+
+    background-color: currentColor;
+}

@@ -1,11 +1,19 @@
 ﻿@inherits LayoutComponentBase
 @inject NavigationManager NavigationManager
+@using Fao.Front_End.Layout.NavBars.Coach
 @using Fao.Front_End.Layout.NavBars.User
 @using Microsoft.AspNetCore.Components.Authorization
 
 <AuthorizeView Roles="ROLE_USER">
     <Authorized>
         <NavBarUser />
+    </Authorized>
+    <NotAuthorized>
+    </NotAuthorized>
+</AuthorizeView>
+<AuthorizeView Roles="ROLE_COACH">
+    <Authorized>
+        <NavBarCoach />
     </Authorized>
     <NotAuthorized>
     </NotAuthorized>

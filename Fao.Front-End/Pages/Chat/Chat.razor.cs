@@ -80,6 +80,7 @@ public partial class Chat : ComponentBase
 
     private bool IsSentByCurrentUser(ChatMessageDTO message)
     {
+        Console.WriteLine($"Comparing message sender ID '{message.SenderId}' with current user ID '{senderId}'");
         return message.SenderId == senderId;
     }
 

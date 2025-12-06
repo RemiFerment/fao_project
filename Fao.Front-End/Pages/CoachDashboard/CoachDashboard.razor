@@ -1,0 +1,8 @@
+@page "/coach-dashboard"
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize(Roles = "ROLE_COACH")]
+
+<h3>Coach Dashboard</h3>
+<p>Welcome to the Coach Dashboard! Here you can manage your coaching sessions, view your clients, and track progress.
+</p>
+<!-- Additional dashboard content can be added here -->

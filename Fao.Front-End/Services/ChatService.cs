@@ -48,8 +48,8 @@ public partial class ChatService
             var message = new ChatMessageDTO
             {
                 Id = element.SafeInt("id") ?? 0,
-                RecieverId = element.SafeString("receiverId")!,
-                SenderId = element.SafeString("senderId")!,
+                RecieverId = element.SafeString("receiverUuid")!,
+                SenderId = element.SafeString("senderUuid")!,
                 Content = element.SafeString("content")!,
                 Timestamp = element.GetProperty("dateTime").GetDateTime()
             };
