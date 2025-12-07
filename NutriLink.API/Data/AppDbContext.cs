@@ -40,6 +40,11 @@ public class AppDbContext : DbContext
             .HasOne(u => u.Role)
             .WithMany()
             .HasForeignKey(u => u.RoleId);
+        modelBuilder.Entity<User>()
+            .HasOne(u => u.Coach)
+            .WithMany()
+            .HasForeignKey(u => u.CoachId)
+            .OnDelete(DeleteBehavior.Restrict);
 
         modelBuilder.Entity<RecipeIngredient>()
             .HasKey(ri => new { ri.RecipeId, ri.IngredientId });

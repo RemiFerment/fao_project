@@ -1,0 +1,17 @@
+.dashboard-card {
+    background: #3F5EFB;
+    background: linear-gradient(29deg, rgba(63, 94, 251, 1) 0%, rgba(0, 176, 155, 1) 100%);
+    color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.20);
+    padding: 16px;
+    text-align: center;
+    transition: all 0.3s ease;
+    min-width: 300px;
+    min-height: 300px;
+}
+
+.dashboard-card:hover {
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.10);
+    transform: translateY(-3px);
+}

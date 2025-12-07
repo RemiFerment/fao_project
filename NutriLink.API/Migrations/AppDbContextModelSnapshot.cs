@@ -291,6 +291,9 @@ namespace NutriLink.API.Migrations
                     b.Property<DateOnly>("BirthDate")
                         .HasColumnType("date");
 
+                    b.Property<int?>("CoachId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -322,6 +325,8 @@ namespace NutriLink.API.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CoachId");
 
                     b.HasIndex("RoleId");
 
@@ -518,6 +523,11 @@ namespace NutriLink.API.Migrations
 
             modelBuilder.Entity("NutriLink.API.Models.User", b =>
                 {
+                    b.HasOne("NutriLink.API.Models.User", "Coach")
+                        .WithMany()
+                        .HasForeignKey("CoachId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.HasOne("NutriLink.API.Models.Role", "Role")
                         .WithMany()
                         .HasForeignKey("RoleId")
@@ -528,6 +538,8 @@ namespace NutriLink.API.Migrations
                         .WithMany()
                         .HasForeignKey("UserProfileId")
                         .OnDelete(DeleteBehavior.Cascade);
+
+                    b.Navigation("Coach");
 
                     b.Navigation("Role");
 

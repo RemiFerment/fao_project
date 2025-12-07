@@ -145,9 +145,18 @@ code {
 }
 
 .cm-i-note {
-    width: 1.5em;
-    height: 1.5em;
+    width: 1em;
+    height: 1em;
     mask: url("/imports/icons/note.svg") no-repeat center;
+    mask-size: contain;
+
+    background-color: currentColor;
+}
+
+.cm-i-ingredient {
+    width: 1em;
+    height: 1em;
+    mask: url("/imports/icons/ingredients.svg") no-repeat center;
     mask-size: contain;
 
     background-color: currentColor;

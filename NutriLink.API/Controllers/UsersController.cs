@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Identity.Client;
 using NutriLink.API.Data;
 using NutriLink.API.Models;
 using NutriLink.API.Services;
@@ -21,8 +22,8 @@ namespace NutriLink.API.Controllers
         }
 
         [HttpGet("{uuid}")]
-        [Authorize(Roles = "ROLE_COACH")]
-        public async Task<ActionResult> GetById(Guid uuid)
+        [Authorize(Policy = "SameUser")]
+        public async Task<ActionResult<ReadUserDTO>> GetById(string uuid)
         {
             var user = await _db.Users.FirstOrDefaultAsync(u => u.UUID == uuid.ToString());
             if (user == null) return NotFound();
@@ -33,10 +34,45 @@ namespace NutriLink.API.Controllers
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 Gender = user.Gender,
-                RoleName = (await _db.Roles.FindAsync(user.RoleId))?.Name ?? string.Empty
+                RoleName = (await _db.Roles.FindAsync(user.RoleId))?.Name ?? string.Empty,
+                BirthDate = user.BirthDate,
+                CoachUuid = user.CoachId != null ? (await _db.Users.FindAsync(user.CoachId))?.UUID : null
             };
 
             return Ok(dto);
+        }
+
+        [HttpGet("{uuid}/coach-user")]
+        [Authorize(Policy = "SameUser")]
+        public async Task<ActionResult<UuidDTO>> GetCoachOfUser(string uuid)
+        {
+            var user = await _db.Users.FirstOrDefaultAsync(u => u.UUID == uuid.ToString());
+            if (user == null) return NotFound(new { message = "User not found." });
+            if (user.CoachId == null) return NotFound(new { message = "This user has no coach assigned." });
+
+            var coach = await _db.Users.FindAsync(user.CoachId);
+            if (coach == null) return NotFound(new { message = "Coach not found." });
+
+            var coachDto = new UuidDTO
+            {
+                Uuid = coach.UUID
+            };
+            return Ok(coachDto);
+        }
+
+        [HttpGet("{uuid}/customers")]
+        [Authorize(Roles = "ROLE_COACH", Policy = "SameUser")]
+        public async Task<ActionResult<IEnumerable<UuidDTO>>> GetAllCustomers(string uuid)
+        {
+            var coach = await _db.Users.FirstOrDefaultAsync(u => u.UUID == uuid.ToString());
+            if (coach == null) return NotFound(new { message = "Coach not found." });
+
+            var customers = await _db.Users
+                .Where(u => u.CoachId == coach.Id)
+                .Select(u => new UuidDTO { Uuid = u.UUID })
+                .ToListAsync();
+
+            return Ok(customers);
         }
 
 
@@ -46,6 +82,8 @@ namespace NutriLink.API.Controllers
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
             if (string.IsNullOrWhiteSpace(dto.PlainPassword)) return BadRequest(new { message = "Password is required." });
+
+            var coachUser = await _userService.GetByUuidAsync(_userService.GetUUIDByClaims(User));
 
             var passwordHasher = new PasswordHasher<User>();
             var role = await _db.Roles.FirstOrDefaultAsync(r => r.Id == 3);
@@ -61,7 +99,9 @@ namespace NutriLink.API.Controllers
                 Gender = dto.Gender,
                 BirthDate = dto.BirthDate,
                 RoleId = 1,
-                Role = role
+                Role = role,
+                CoachId = coachUser?.Id,
+                Coach = coachUser
             };
             user.PasswordHash = passwordHasher.HashPassword(user, dto.PlainPassword);
 
@@ -74,10 +114,15 @@ namespace NutriLink.API.Controllers
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 Gender = user.Gender,
-                RoleName = role.Name
+                RoleName = role.Name,
+                BirthDate = user.BirthDate,
+                CoachUuid = coachUser?.UUID
             };
 
-            return CreatedAtAction(nameof(GetById), new { uuid = user.UUID.ToString() }, ReadUser);
+            return CreatedAtAction(nameof(GetById), new
+            {
+                uuid = user.UUID.ToString()
+            }, ReadUser);
         }
 
         [HttpGet("{uuid}/profile")]
@@ -155,7 +200,9 @@ namespace NutriLink.API.Controllers
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 Gender = user.Gender,
-                RoleName = (await _db.Roles.FindAsync(user.RoleId))?.Name ?? string.Empty
+                RoleName = (await _db.Roles.FindAsync(user.RoleId))?.Name ?? string.Empty,
+                BirthDate = user.BirthDate,
+                CoachUuid = user.Coach?.UUID
             };
 
             await _db.SaveChangesAsync();

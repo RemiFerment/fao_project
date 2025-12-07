@@ -18,4 +18,7 @@ public class User
     public int RoleId { get; set; }
     [ForeignKey(nameof(RoleId))]
     public Role Role { get; set; } = default!;
+    public int? CoachId { get; set; }
+    [ForeignKey(nameof(CoachId))]
+    public User? Coach { get; set; } = default!;
 }

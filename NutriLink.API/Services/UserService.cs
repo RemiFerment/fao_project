@@ -18,6 +18,14 @@ namespace NutriLink.API.Services
             return await _context.Users.FirstOrDefaultAsync(u => u.UUID == uuid);
         }
 
+        public async Task<string?> GetUUIDByIdAsync(int id)
+        {
+            return await _context.Users
+                .Where(u => u.Id == id)
+                .Select(u => u.UUID)
+                .FirstOrDefaultAsync();
+        }
+
         public async Task<bool> ExistsAsync(string uuid)
         {
             return await _context.Users.AnyAsync(u => u.UUID == uuid);

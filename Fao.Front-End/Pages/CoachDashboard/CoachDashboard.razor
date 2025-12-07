@@ -1,8 +1,65 @@
 @page "/coach-dashboard"
+@using Fao.Front_End.Components.Dashboard
 @using Microsoft.AspNetCore.Authorization
 @attribute [Authorize(Roles = "ROLE_COACH")]
 
-<h3>Coach Dashboard</h3>
-<p>Welcome to the Coach Dashboard! Here you can manage your coaching sessions, view your clients, and track progress.
-</p>
-<!-- Additional dashboard content can be added here -->
+<div class="d-flex flex-wrap gap-4 justify-content-center mb-4">
+    <DashboardCard>
+        <h1 class="mb-0 fs-5 fw-bold d-flex align-items-center text-start gap-2">
+            <i class="bi bi-person-fill-gear fs-2" />
+            Mes clients
+        </h1>
+        <hr>
+        <ul class="list-unstyled fs-5 ms-0 me-2">
+            <li class="dashboard-item">
+                <i class="bi bi-envelope-fill" />
+                Messagerie
+            </li>
+            <li class="dashboard-item">
+                <i class="bi bi-list-ul" />
+                Liste des clients
+            </li>
+            <li class="dashboard-item">
+                <i class="bi bi-plus-circle-dotted" />
+                Ajouter un client
+            </li>
+        </ul>
+    </DashboardCard>
+    <DashboardCard>
+        <h1 class="mb-0 fs-5 fw-bold text-start d-flex align-items-center text-start gap-2">
+            <i class="cm-i-note fs-2" />
+            Gérer les recettes
+        </h1>
+        <hr>
+        <ul class="list-unstyled fs-5 ms-0 me-2">
+            <li class="dashboard-item"><i class="bi bi-list-ol" />Listes des recettes</li>
+            <li class="dashboard-item">
+                <i class="bi bi-plus-circle-dotted" />
+                Ajouter une recette
+            </li>
+        </ul>
+    </DashboardCard>
+    <DashboardCard>
+        <h1 class="mb-0 fs-5 fw-bold text-start d-flex align-items-center text-start gap-2">
+            <i class="cm-i-ingredient fs-2" />
+            Gérer les ingrédients
+        </h1>
+        <hr>
+        <ul class="list-unstyled fs-5 ms-0 me-2">
+            <li class="dashboard-item"> <i class="bi bi-card-list" />Listes des ingrédients</li>
+            <li class="dashboard-item"><i class="bi bi-plus-circle-dotted" />Ajouter un ingrédient</li>
+        </ul>
+    </DashboardCard>
+    <DashboardCard>
+        <h1 class="mb-0 fs-5 fw-bold text-start d-flex align-items-center text-start gap-2">
+            <i class="bi bi-tag-fill fs-2" />
+            Gérer les Catégories
+        </h1>
+        <hr>
+        <ul class="list-unstyled fs-5 ms-0 me-2">
+            <li class="dashboard-item"><i class="bi bi-list-stars" />Listes des catégories</li>
+            <li class="dashboard-item"><i class="bi bi-plus-circle-dotted" /> Ajouter une catégories
+            </li>
+        </ul>
+    </DashboardCard>
+</div>

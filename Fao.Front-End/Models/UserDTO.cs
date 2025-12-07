@@ -1,6 +1,6 @@
-namespace NutriLink.API.Models;
+namespace Fao.Front_End.Models;
 
-public class ReadUserDTO
+public class UserDTO
 {
     public string Email { get; set; } = string.Empty;
     public string FirstName { get; set; } = string.Empty;
