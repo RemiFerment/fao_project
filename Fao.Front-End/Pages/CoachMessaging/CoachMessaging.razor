@@ -1,0 +1,91 @@
+@page "/messaging"
+@using Fao.Front_End.Components.Chat
+@using Fao.Front_End.Components.Messaging
+<div class="row g-0 vh-100">
+    <div class="col-auto border-end my-5">
+        <div class="w-100">
+            <h1 class="fs-3 fw-bold text-start px-4 py-2">Messagerie</h1>
+            <div class="d-flex flex-column">
+                @if (loadUser)
+                {
+                    <div class="spinner-border text-primary align-self-center mt-4" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                }
+                else
+                {
+                    @if (Customers != null)
+                    {
+                        @foreach (var c in Customers)
+                        {
+                            <MessagingCard UserName=@c.FullName LastMessage="..." LastMessageDate=test uuid=@c.Uuid
+                                SelectUser="@SelectReceiver" />
+                        }
+                    }
+                    else
+                    {
+                        <div class="text-center text-muted mt-3">Vous n'avez aucun client.</div>
+                    }
+                }
+
+            </div>
+        </div>
+    </div>
+    <div class="col w-100">
+        <div class="d-flex flex-column chat-page mt-5">
+            <div class="flex-grow-1 d-flex flex-column min-h-0">
+                <div id="chatBody" class="flex-grow-1 overflow-auto d-flex flex-column">
+                    @if (Messages != null)
+                    {
+                        @if (loadMessages)
+                        {
+                            <div class="spinner-border text-primary align-self-center mt-4" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        }
+                        else
+                        {
+                            @foreach (var message in Messages)
+                            {
+                                if (!IsSentByCurrentUser(message))
+                                {
+                                    <ChatRecieve Message="@message.Content" />
+                                }
+                                else
+                                {
+                                    <ChatSend Message="@message.Content" />
+                                }
+
+                            }
+                            @if (Messages.Count == 0)
+                            {
+                                <div class="text-center text-muted mt-3">Aucune conversation entamée.</div>
+                            }
+                        }
+                    }
+                    else
+                    {
+                        <div class="text-center text-muted mt-3">Aucune conversation à afficher.</div>
+                    }
+                </div>
+
+                <div class="p-3 border-top d-flex chat-input">
+                    <input type="text" class="form-control" placeholder="Écrire un message..."
+                        @bind-value="@MessageContent" />
+                    @if (isLoading)
+                    {
+                        <button class="btn btn-primary ms-2" disabled>
+                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        </button>
+                    }
+                    else
+                    {
+                        <button class="btn btn-primary ms-2" @onclick="SendMessage">
+                            <i class="bi bi-send-fill"></i>
+                        </button>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

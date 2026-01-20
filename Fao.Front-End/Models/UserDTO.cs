@@ -9,4 +9,33 @@ public class UserDTO
     public string RoleName { get; set; } = string.Empty;
     public DateOnly BirthDate { get; set; }
     public string? CoachUuid { get; set; }
+
+    public string GetIdentity()
+    {
+        return $"{FirstName} {LastName}";
+    }
+    public string GetGenderShort()
+    {
+        return Gender.ToLower() switch
+        {
+            "male" => "M",
+            "female" => "F",
+            _ => "O"
+        };
+    }
+    public string GetFormattedBirthDate()
+    {
+        return BirthDate.ToString("d MMM yyyy");
+    }
+
+    public string GetAge()
+    {
+        var today = DateOnly.FromDateTime(DateTime.Today);
+        var age = today.Year - BirthDate.Year;
+        if (today < BirthDate.AddYears(age))
+        {
+            age--;
+        }
+        return age.ToString();
+    }
 }

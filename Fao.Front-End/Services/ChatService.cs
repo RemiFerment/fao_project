@@ -74,13 +74,39 @@ public partial class ChatService
                 new AuthenticationHeaderValue("Bearer", token);
         }
 
+        if (string.IsNullOrWhiteSpace(content))
+            return false;
+
         var messageData = new
         {
-            receiverUuid = receiverUuid,
-            content = content
+            receiverUuid,
+            content
         };
 
         var response = await _httpClient.PostAsJsonAsync("/api/Message/send", messageData);
         return response.EnsureSuccessStatusCode() != null;
+    }
+
+    public async Task<IEnumerable<UuidDTO>> GetAllUserFromCoach()
+    {
+        var token = await _authService.GetToken();
+        var uuid = await _authService.GetUUIDFromToken();
+
+        if (!_httpClient.DefaultRequestHeaders.Contains("Authorization"))
+        {
+            _httpClient.DefaultRequestHeaders.Authorization =
+                new AuthenticationHeaderValue("Bearer", token);
+        }
+
+        var response = await _httpClient.GetAsync($"/api/Users/{uuid}]/customers");
+        response.EnsureSuccessStatusCode();
+
+        var users = await response.Content.ReadFromJsonAsync<IEnumerable<UuidDTO>>();
+        if (users == null)
+        {
+            throw new InvalidOperationException("Failed to retrieve users.");
+        }
+
+        return users;
     }
 }

@@ -1,9 +1,10 @@
 @page "/coach-dashboard"
 @using Fao.Front_End.Components.Dashboard
+@inject NavigationManager NavigationManager
 @using Microsoft.AspNetCore.Authorization
 @attribute [Authorize(Roles = "ROLE_COACH")]
 
-<div class="d-flex flex-wrap gap-4 justify-content-center mb-4">
+<div class="d-flex flex-wrap gap-4 justify-content-center mb-4 mt-5">
     <DashboardCard>
         <h1 class="mb-0 fs-5 fw-bold d-flex align-items-center text-start gap-2">
             <i class="bi bi-person-fill-gear fs-2" />
@@ -11,12 +12,12 @@
         </h1>
         <hr>
         <ul class="list-unstyled fs-5 ms-0 me-2">
-            <li class="dashboard-item">
+            <li class="dashboard-item" @onclick='() => NavigateTo("/messaging")'>
                 <i class="bi bi-envelope-fill" />
                 Messagerie
             </li>
-            <li class="dashboard-item">
-                <i class="bi bi-list-ul" />
+            <li class="dashboard-item"  @onclick='() => NavigateTo("/customers")'>
+                <i class="bi bi-list-ul"/>
                 Liste des clients
             </li>
             <li class="dashboard-item">
@@ -63,3 +64,10 @@
         </ul>
     </DashboardCard>
 </div>
+
+@code {
+    private void NavigateTo(string url)
+    {
+        NavigationManager.NavigateTo(url);
+    }
+}

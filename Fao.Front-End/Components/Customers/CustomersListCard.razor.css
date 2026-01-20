@@ -1,0 +1,62 @@
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.customers-card {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 16px;
+    margin-bottom: 16px;
+    background-color: #f6fffc;
+    transition: all 0.3s ease-in-out;
+}
+
+.customers-card:hover {
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.customers-card h1 {
+    font-weight: bold;
+    color: #0099FF;
+}
+.customers-card h1:hover {
+    color: rgb(118, 200, 255);
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.customers-card h2 {
+    color: #95DBF1;
+    font-weight: bold;
+}
+
+.customers-card button {
+    border-radius: 8px;
+    padding: 16px;
+    background-color: #B5E8F6;
+    color: #0099FF;
+    font-weight: bold;
+    width: 48px;
+    height: 48px;
+    font-size: 32px;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.customers-card .trash-icon {
+    background-color: #FFB3B3;
+    color: #FF4C4C;
+}
+
+.customers-card button:hover {
+    background-color: #0099FF;
+    color: #FFFFFF;
+}
+
+.customers-card .trash-icon:hover {
+    background-color: #FF4C4C;
+    color: #FFFFFF;
+}

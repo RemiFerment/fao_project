@@ -1,0 +1,32 @@
+@page "/customers"
+@inherits Fao.Front_End.Components.Pages.Customers.CustomersList
+@using Fao.Front_End.Components.Customers
+@using Fao.Front_End.Models
+@using Fao.Front_End.Services
+
+<input type="text" class="form-control my-3" name="" id="" placeholder="Rechercher le client par nom ou prénom">
+<div class="row g-3">
+    <div class="col-12">
+        @if (IsLoading)
+        {
+            <div class="text-center my-5">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+        }
+        else if (ListCustomers.Count == 0)
+        {
+            <div class="alert alert-info" role="alert">
+                Aucun client trouvé.
+            </div>
+        }
+        else
+        {
+            @foreach (var customers in ListCustomers)
+            {
+                <CustomersListCard User="customers" />
+            }
+        }
+    </div>
+</div>

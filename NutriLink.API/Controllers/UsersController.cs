@@ -55,13 +55,15 @@ namespace NutriLink.API.Controllers
 
             var coachDto = new UuidDTO
             {
-                Uuid = coach.UUID
+                Uuid = coach.UUID,
+                FirstName = coach.FirstName,
+                LastName = coach.LastName
             };
             return Ok(coachDto);
         }
 
         [HttpGet("{uuid}/customers")]
-        [Authorize(Roles = "ROLE_COACH", Policy = "SameUser")]
+        [Authorize(Policy = "SameCoach")]
         public async Task<ActionResult<IEnumerable<UuidDTO>>> GetAllCustomers(string uuid)
         {
             var coach = await _db.Users.FirstOrDefaultAsync(u => u.UUID == uuid.ToString());
@@ -69,7 +71,7 @@ namespace NutriLink.API.Controllers
 
             var customers = await _db.Users
                 .Where(u => u.CoachId == coach.Id)
-                .Select(u => new UuidDTO { Uuid = u.UUID })
+                .Select(u => new UuidDTO { Uuid = u.UUID, FirstName = u.FirstName, LastName = u.LastName })
                 .ToListAsync();
 
             return Ok(customers);

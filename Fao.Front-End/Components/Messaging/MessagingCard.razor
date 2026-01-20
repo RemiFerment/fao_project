@@ -1,0 +1,36 @@
+@using Microsoft.AspNetCore.Components
+
+<div class="p-4 px-4 d-flex flex-column messaging-card" @onclick=OnClick>
+    <h2 class="fs-6 fw-bold">@UserName<span
+            class="ms-4 fw-bold text-muted">@GetLastMessageDateFormatted(LastMessageDate)</span></h2>
+    <p class="mb-0 fs-6">@GetLastMessageFormatted(LastMessage)
+    </p>
+</div>
+
+@code {
+    [Parameter] public string UserName { get; set; } = "Utilisateur";
+    [Parameter] public string LastMessage { get; set; } = "Dernier message...";
+    [Parameter] public DateOnly LastMessageDate { get; set; } = DateOnly.FromDateTime(DateTime.Now);
+    [Parameter] public string uuid { get; set; } = "";
+    [Parameter] public EventCallback<string> SelectUser { get; set; }
+
+    public string GetLastMessageFormatted(string message)
+    {
+        if (message.Length > 30)
+        {
+            return message.Substring(0, 30) + "...";
+        }
+        return message;
+    }
+
+    public string GetLastMessageDateFormatted(DateOnly date)
+    {
+        return date.ToString("MMM d");
+    }
+
+    public async Task OnClick()
+    {
+        await SelectUser.InvokeAsync(uuid);
+    }
+
+}

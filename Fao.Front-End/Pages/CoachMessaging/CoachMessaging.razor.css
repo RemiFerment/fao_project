@@ -1,0 +1,14 @@
+.chat-page {
+    height: calc(100vh - 150px);
+}
+
+.chat-input {
+    background: white;
+}
+.min-h-0 {
+    min-height: 0;
+}
+
+.border-end {
+    border-right: 1px solid #dee2e6;
+}

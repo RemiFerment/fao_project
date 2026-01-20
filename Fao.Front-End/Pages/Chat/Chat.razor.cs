@@ -18,6 +18,7 @@ public partial class Chat : ComponentBase
     private string errorMessage = string.Empty;
     [Inject] public IJSRuntime JS { get; set; } = default!;
     [Inject] public ChatService ChatService { get; set; } = default!;
+    [Inject] public UserServices UserServices { get; set; } = default!;
 
     [Inject] public AuthService AuthService { get; set; } = default!;
     private async Task SendMessage()
@@ -38,7 +39,7 @@ public partial class Chat : ComponentBase
         {
             senderId = currentUserId;
         }
-        recieverUuid = "1e555a55-3f6c-4638-8f68-cd0afe2c83b9";
+        recieverUuid = (await UserServices.GetCoachUuidAsync()).Uuid;
 
         _ = Task.Run(async () =>
     {

@@ -97,6 +97,17 @@ builder.Services.AddAuthorization(options =>
 
             return role == "ROLE_COACH" || role == "ROLE_ADMIN" || userUuid == routeUuid;
         }));
+    options.AddPolicy("SameCoach", policy =>
+        policy.RequireAssertion(context =>
+        {
+            var userUuid = context.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var role = context.User.FindFirstValue(ClaimTypes.Role);
+
+            var routeUuid = (context.Resource as HttpContext)
+                ?.Request.RouteValues["uuid"]?.ToString();
+
+            return role == "ROLE_ADMIN" || userUuid == routeUuid && role == "ROLE_COACH";
+        }));
 });
 
 builder.Services.AddSingleton<IAuthorizationHandler, AdminBypassHandler>();

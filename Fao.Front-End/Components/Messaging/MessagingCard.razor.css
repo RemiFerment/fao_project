@@ -1,0 +1,8 @@
+.messaging-card {
+    cursor: pointer;
+    background-color: rgb(255, 255, 255);
+}
+
+.messaging-card:hover {
+    background-color: rgb(216, 231, 226);
+}
