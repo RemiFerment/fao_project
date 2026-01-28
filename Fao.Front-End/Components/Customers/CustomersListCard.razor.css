@@ -5,8 +5,6 @@ a {
 
 .customers-card {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 16px;
-    margin-bottom: 16px;
     background-color: #f6fffc;
     transition: all 0.3s ease-in-out;
 }
@@ -15,11 +13,11 @@ a {
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
-.customers-card h1 {
+.customers-card a {
     font-weight: bold;
     color: #0099FF;
 }
-.customers-card h1:hover {
+.customers-card a:hover {
     color: rgb(118, 200, 255);
     text-decoration: underline;
     cursor: pointer;

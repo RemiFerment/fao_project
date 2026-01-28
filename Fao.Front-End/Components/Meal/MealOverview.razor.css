@@ -2,12 +2,31 @@
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     transition: 0.3s ease-in-out;
     border-radius: 5px;
-
+    background-color: #F7F2FA;
     padding: 16px;
 }
 
 .meal-card:hover {
-    transform: scale(1.05);
-    background-color: #f9f9f9;
+    background-color: #EADDFF;
     cursor: pointer;
+}
+
+.meal-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+    border: 2px dashed #EADDFF;
+    border-radius: 10px;
+    margin-top: 20px;
+    background: #F7F2FA;
+
+    .btn-add-recipe {
+        border: none;
+        background-color: #EADDFF;
+        border-radius: 8px;
+        font-size: 24px;
+        color: #645789;
+        cursor: pointer;
+    }
 }

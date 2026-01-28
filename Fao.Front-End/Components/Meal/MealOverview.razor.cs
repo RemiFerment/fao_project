@@ -91,6 +91,7 @@ namespace Fao.Front_End.Components.Meal
     {
         Breakfast,
         Lunch,
-        Dinner
+        Dinner,
+        Snack
     }
 }

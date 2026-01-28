@@ -1,0 +1,57 @@
+@page "/customer-profile/{CustomerUuid:guid}"
+@namespace Fao.Front_End.Pages.Customers
+@using Fao.Front_End.Models
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize(Roles = "ROLE_COACH")]
+<PageTitle>Profil du client</PageTitle>
+
+@if (CustomerProfileData != null)
+{
+    <EditForm Model="@CustomerProfileData" OnValidSubmit="HandleValidSubmit" method="POST">
+
+        <DataAnnotationsValidator />
+
+        <div class="login-box my-5 d-flex gap-2 flex-column position-relative">
+
+            <i class="bi bi-arrow-left fs-2 position-absolute" style="top:0.5rem; left:0.5rem; cursor:pointer;"
+                @onclick="@NavigateBack"></i>
+            <h1 class="text-center mb-4 fs-4">Personnalisation du profil du client</h1>
+
+            <label for="Size">Taille (cm) :</label>
+            <InputNumber placeholder="180" class="form-control" @bind-Value="CustomerProfileData!.Size" />
+
+            <label for="Weight">Poids (kg) :</label>
+            <InputNumber placeholder="75" class="form-control" @bind-Value="CustomerProfileData!.Weight" />
+
+            <label for="PhysicalActivity">Niveau d'activité physique :</label>
+            <InputText placeholder="Modéré" class="form-control" @bind-Value="CustomerProfileData!.PhysicalActivity" />
+
+            <label for="Job">Profession :</label>
+            <InputText placeholder="Ingénieur" class="form-control" @bind-Value="CustomerProfileData!.Job" />
+
+            <label for="EnergyRequirement">Besoins énergétiques (kcal) :</label>
+            <div class="d-flex gap-2">
+                <InputNumber placeholder="2500" class="form-control" @bind-Value="CustomerProfileData!.EnergyRequirement" />
+                <button type="button" class="btn btn-primary" @onclick="CalculateEnergyNeeds"><i
+                        class="bi bi-calculator"></i></button>
+            </div>
+
+
+            <p class="text-danger">@ErrorMessage</p>
+            <p class="text-danger">
+                <ValidationSummary />
+            </p>
+            <button type="submit" disabled="@IsLoading" class="btn btn-success mt-3">
+                @(IsLoading ? "Enregistrement..." : "Enregistrer les modifications")
+            </button>
+        </div>
+    </EditForm>
+}
+else
+{
+    <div class="d-flex justify-content-center align-items-center" style="height: 400px;">
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Chargement...</span>
+        </div>
+    </div>
+}

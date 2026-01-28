@@ -1,0 +1,53 @@
+<div class="modal fade" tabindex="-1" id="confirmModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">@Title</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body">
+                <p>@Message</p>
+            </div>
+
+            <div class="modal-footer justify-content-around">
+                <button class="btn btn-secondary" data-bs-dismiss="modal">
+                    Retour
+                </button>
+
+                <button class="btn btn-danger" @onclick="Confirm">
+                    Confirmer
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter] public string? Title { get; set; }
+    [Parameter] public string? Message { get; set; }
+    [Parameter] public EventCallback OnConfirm { get; set; }
+
+    [Inject] private IJSRuntime JS { get; set; } = default!;
+
+    public virtual async Task Display(
+    EventCallback onConfirm,
+    string title,
+    string message)
+    {
+        Title = title;
+        Message = message;
+        OnConfirm = onConfirm;
+
+        StateHasChanged();
+        await JS.InvokeVoidAsync("showConfirmModal");
+    }
+
+    private async Task Confirm()
+    {
+        if (OnConfirm.HasDelegate)
+            await OnConfirm.InvokeAsync();
+
+        await JS.InvokeVoidAsync("hideModal", "confirmModal");
+    }
+}

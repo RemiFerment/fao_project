@@ -3,40 +3,49 @@
 @inject NavigationManager NavigationManager
 @inject HttpClient Http
 
-<div class="d-flex justify-content-around m-2">
-    <button class="btn btn-sm btn-outline-secondary me-2"
-        @onclick="@(() => { currentWeekStart = currentWeekStart.AddDays(-7); selectedDay = currentWeekStart; })">
-        &laquo;
-    </button>
-
-    <div class="text-center">
-        <strong>@currentWeekStart.ToString("dd MMM yyyy")</strong>
-        <span class="small">au @currentWeekStart.AddDays(6).ToString("dd MMM yyyy")</span>
-    </div>
-
-    <button class="btn btn-sm btn-outline-secondary ms-2"
-        @onclick="@(() => { currentWeekStart = currentWeekStart.AddDays(7); selectedDay = selectedDay.AddDays(7); })">
-        &raquo;
-    </button>
-</div>
-
-<div
-    class="d-flex justify-content-md-around justify-content-center p-2 flex-wrap gap-2 align-items-center border rounded bg-white shadow-sm">
-    @for (int i = 0; i < 7; i++)
-    {
-        var day = currentWeekStart.AddDays(i);
-        <div class="d-flex flex-column align-items-center">
-            @day.ToString("ddd")
-            <button
-                class="btn @(day == selectedDay ? "btn-primary" : (day == DateTime.Today ? "btn-secondary" : "btn-outline-secondary")) day-button"
-                style="max-width: 80px; border-radius: 100px;" @onclick="@(() => SelectDay(day))">
-                @day.ToString("dd")
+<div class="planning">
+    <div class="d-flex align-items-center justify-content-between m-2 mt-4">
+        <div class="text-center">
+            <p class="m-1 fs-3 fw-bold">
+                @if (selectedDay == DateTime.Today)
+                {
+                    <span>Aujourd'hui</span>
+                }
+                else
+                {
+                    @selectedDay.ToString("dd MMMM yyyy")
+                }
+            </p>
+        </div>
+        <div class="d-flex">
+            <button class="btn fw-bold" @onclick="@(() => { currentWeekStart = currentWeekStart.AddDays(-7); })">
+                <i class="bi bi-chevron-left fs-6"></i>
+            </button>
+            <button class="btn fw-bold" @onclick="@(() => { currentWeekStart = currentWeekStart.AddDays(7); })">
+                <i class="bi bi-chevron-right fs-6"></i>
             </button>
         </div>
-    }
+    </div>
+
+    <div class="day-selector">
+        @for (int i = 0; i < 7; i++)
+        {
+            var day = currentWeekStart.AddDays(i);
+            <div class="d-flex flex-column gap-2 align-items-center">
+                @GetFirstLetterUpper(day)
+                <button
+                    class="@(day == selectedDay ? "btn-day-selected" : (day == DateTime.Today ? "btn-today" : "btn-day"))"
+                    @onclick="@(() => SelectDay(day))">
+                    @day.ToString("dd")
+                </button>
+            </div>
+        }
+    </div>
 </div>
 
-<div class="mt-4">
+<hr>
+
+<div class="mt-1">
     <PlanningDay DayDate="selectedDay" />
 </div>
 
@@ -83,5 +92,13 @@
         catch { }
 
         return DateTime.Today;
+    }
+    private string GetFirstLetterUpper(DateTime input)
+    {
+        var inputString = input.ToString("ddd");
+        if (string.IsNullOrEmpty(inputString))
+            return inputString;
+
+        return char.ToUpper(inputString[0]).ToString();
     }
 }

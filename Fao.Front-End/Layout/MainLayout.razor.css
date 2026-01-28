@@ -6,7 +6,7 @@ html, body {
     position: relative;
     display: flex;
     flex-direction: column;
-    min-height: 100vh; /* IMPORTANT */
+    min-height: 100vh; 
 }
 
 main {
@@ -19,8 +19,7 @@ article.content {
     flex: 1;
     display: flex;
     flex-direction: column;
-    overflow-y: auto;     /* scrolling works */
-    padding-bottom: 100px;
+    overflow-y: auto;     
 }
 
 .top-row {
@@ -47,6 +46,10 @@ article.content {
 .top-row ::deep a:first-child {
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+.blank{
+    height: 500px;
 }
 
 @media (max-width: 640.98px) {

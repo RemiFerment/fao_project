@@ -12,7 +12,7 @@
         <h4>Ajouter une recette </h4>
     </div>
     <div class="body p-2 ">
-        <form @onsubmit="OnSearch">
+        <form @oninput="OnSearch">
             <input @bind=@searchTerm class="form-control" placeholder="Rechercher une recette..." />
         </form>
 

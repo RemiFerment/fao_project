@@ -37,7 +37,7 @@ public class MealController : ControllerBase
             .Include(md => md.Dinner)
             .FirstOrDefaultAsync(md => md.UserId == user.Id && md.Date == date);
 
-        if (mealDay == null) return NotFound("Meal not found for the specified date.");
+        if (mealDay == null) return NoContent();
 
         var mealDayDTO = new MealReadDTO
         {

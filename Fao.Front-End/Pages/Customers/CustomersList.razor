@@ -3,8 +3,11 @@
 @using Fao.Front_End.Components.Customers
 @using Fao.Front_End.Models
 @using Fao.Front_End.Services
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize(Roles = "ROLE_COACH")]
 
-<input type="text" class="form-control my-3" name="" id="" placeholder="Rechercher le client par nom ou prénom">
+<input type="text" class="form-control my-3" placeholder="Rechercher le client par nom ou prénom"
+    @bind-value="SearchTerm" @bind-value:event="oninput" />
 <div class="row g-3">
     <div class="col-12">
         @if (IsLoading)
@@ -15,15 +18,15 @@
                 </div>
             </div>
         }
-        else if (ListCustomers.Count == 0)
+        else if (FilteredCustomers.Count() == 0)
         {
             <div class="alert alert-info" role="alert">
-                Aucun client trouvé.
+                Aucun client à afficher.
             </div>
         }
         else
         {
-            @foreach (var customers in ListCustomers)
+            @foreach (UserDTO customers in FilteredCustomers)
             {
                 <CustomersListCard User="customers" />
             }

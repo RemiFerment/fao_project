@@ -1,10 +1,10 @@
 namespace Fao.Front_End.Services;
 
 using Fao.Front_End.Models;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
-using System.Text.Json;
 using System.Threading.Tasks;
 
 public class MealService
@@ -31,7 +31,7 @@ public class MealService
             requestMessage.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
             var response = await _httpClient.SendAsync(requestMessage);
-            if (!response.IsSuccessStatusCode) return null;
+            if (response.StatusCode == HttpStatusCode.NoContent) return null;
 
             var mealOverview = await response.Content.ReadFromJsonAsync<MealOverviewDTO>();
             return mealOverview;
@@ -52,7 +52,7 @@ public class MealService
         requestMessage.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
         var response = await _httpClient.SendAsync(requestMessage);
-        if (!response.IsSuccessStatusCode) return null;
+        if (response.StatusCode == HttpStatusCode.NotFound) return null;
 
         var recipeOverview = await response.Content.ReadFromJsonAsync<RecipeOverviewDTO>();
         return recipeOverview;

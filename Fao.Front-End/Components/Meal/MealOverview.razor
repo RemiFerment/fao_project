@@ -37,10 +37,10 @@ else if (MealName != null && MealType != null)
 }
 else
 {
-    <button class="btn btn-outline-success d-flex align-items-center gap-2" @onclick="NavigateToMealSelector">
-        <i class="bi bi-plus-square fs-2"></i>
-        <span>
-            Ajouter un repas
-        </span>
-    </button>
+
+    <div class="meal-container">
+        <button class="btn-add-recipe" @onclick="NavigateToMealSelector">
+            <i class="bi bi-plus fs-1"></i>
+        </button>
+    </div>
 }

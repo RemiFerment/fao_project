@@ -81,7 +81,6 @@ namespace Fao.Front_End.Pages.CoachMessaging
         {
             while (!token.IsCancellationRequested)
             {
-                Console.WriteLine("Refreshing messages...");
                 if (CurrentReceiverUuid != null)
                 {
                     await LoadMessages();
@@ -98,7 +97,6 @@ namespace Fao.Front_End.Pages.CoachMessaging
 
         public void Dispose()
         {
-            Console.WriteLine("Disposing CoachMessaging component...");
             _refreshTokenSource?.Cancel();
             CurrentReceiverUuid = null;
         }

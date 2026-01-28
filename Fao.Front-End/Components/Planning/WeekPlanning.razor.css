@@ -1,0 +1,51 @@
+* {
+    color: #1D1B20
+}
+
+.day-selector {
+    display: flex;
+    justify-content: space-around;
+
+    div {
+        button {
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: transparent;
+            border: none;
+        }
+
+        .btn-day-selected {
+            background-color: #6750A4 !important;
+            color: white;
+        }
+
+        .btn-day-selected:hover {
+            background-color: #5e4693 !important;
+            color: white;
+        }
+
+        .btn-day {
+            background-color: #ffffff !important;
+            color: black;
+        }
+
+        .btn-day:hover {
+            background-color: #e0e0e0 !important;
+            color: black;
+        }
+
+        .btn-today {
+            background-color: #EADDFF !important;
+            color: black;
+        }
+    }
+}
+
+hr {
+    margin: 0;
+    margin-top: 1.5rem;
+}

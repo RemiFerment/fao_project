@@ -1,0 +1,47 @@
+@page "/customer/create"
+@namespace Fao.Front_End.Components.Pages.Customers
+@using Fao.Front_End.Models
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize(Roles = "ROLE_COACH")]
+
+<PageTitle>Créer un client</PageTitle>
+
+<EditForm Model="@Customer" OnValidSubmit="@HandleValidSubmit" method="POST">
+
+    <DataAnnotationsValidator />
+
+    <div class="login-box my-5 d-flex gap-2 flex-column">
+        <h1 class="text-center mb-4 fs-4">Créer un nouveau client</h1>
+
+        <label for="@Customer.Email">Adresse E-mail :</label>
+        <InputText type="email" placeholder="adresse@mail.fr" class="form-control" @bind-Value="Customer.Email" />
+
+        <label for="@Customer.FirstName">Nom :</label>
+        <InputText placeholder="Dupont" class="form-control" @bind-Value="Customer.LastName" />
+
+        <label for="@Customer.FirstName">Prénom :</label>
+        <InputText placeholder="Jean" class="form-control" @bind-Value="Customer.FirstName" />
+
+        <label for="@Customer.FirstName">Date de naissance :</label>
+        <InputDate min="1900-01-01" max="2020-12-31" class="form-control" @bind-Value="Customer.BirthDate" />
+
+        <label for="@Customer.FirstName">Genre de naissance :</label>
+        <InputSelect class="form-control" @bind-Value="Customer.Gender">
+            <option value="male">Homme</option>
+            <option value="female">Femme</option>
+        </InputSelect>
+
+        <label for="@Customer.PlainPassword">Mot de passe :</label>
+        <InputText type="password" class="form-control" @bind-Value="Customer.PlainPassword" />
+        <label for="@PasswordConfirmation">Confirmer le mot de passe :</label>
+        <InputText type="password" class="form-control" @bind-Value="PasswordConfirmation" />
+
+        <p class="text-danger">@ErrorMessage</p>
+        <p class="text-danger">
+            <ValidationSummary />
+        </p>
+        <button type="submit" disabled="@IsLoading" class="btn btn-success mt-3">
+            @(IsLoading ? "Enregistrement..." : "Créer")
+        </button>
+    </div>
+</EditForm>

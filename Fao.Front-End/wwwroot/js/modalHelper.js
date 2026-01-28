@@ -19,3 +19,12 @@ window.showAchievementModal = () => {
     const modal = new bootstrap.Modal(modalEl);
     modal.show();
 };
+window.showConfirmModal = () => {
+    const confirmElement = document.getElementById("confirmModal")
+    if (!confirmElement) {
+        console.error("Confirm Modal DOM element not found");
+        return;
+    }
+    const modal = new bootstrap.Modal(confirmElement);
+    modal.show();
+}

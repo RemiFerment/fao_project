@@ -6,6 +6,7 @@ using Microsoft.JSInterop;
 using System.Threading.Tasks;
 using Fao.Front_End.Models;
 using Fao.Front_End.Services;
+using Microsoft.AspNetCore.Components.Web;
 
 [Authorize(Roles = "ROLE_USER,ROLE_ADMIN")]
 public partial class Chat : ComponentBase
@@ -23,6 +24,8 @@ public partial class Chat : ComponentBase
     [Inject] public AuthService AuthService { get; set; } = default!;
     private async Task SendMessage()
     {
+        if (string.IsNullOrWhiteSpace(MessageContent))
+            return;
         isLoading = true;
         await ChatService.SendMessageAsync(recieverUuid, MessageContent);
         var newMessages = await ChatService.GetChatMessagesAsync(recieverUuid);
@@ -39,7 +42,12 @@ public partial class Chat : ComponentBase
         {
             senderId = currentUserId;
         }
-        recieverUuid = (await UserServices.GetCoachUuidAsync()).Uuid;
+        recieverUuid = (await UserServices.GetCoachUuidAsync())!.Uuid;
+        if (string.IsNullOrEmpty(recieverUuid))
+        {
+            errorMessage = "No coach assigned to this user.";
+            return;
+        }
 
         _ = Task.Run(async () =>
     {
@@ -78,10 +86,14 @@ public partial class Chat : ComponentBase
         StateHasChanged();
     }
 
+    private async Task OnKeyDown(KeyboardEventArgs e)
+    {
+        if (e.Key == "Enter")
+            await SendMessage();
+    }
 
     private bool IsSentByCurrentUser(ChatMessageDTO message)
     {
-        Console.WriteLine($"Comparing message sender ID '{message.SenderId}' with current user ID '{senderId}'");
         return message.SenderId == senderId;
     }
 

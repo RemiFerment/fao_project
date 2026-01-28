@@ -3,33 +3,18 @@
 @using Fao.Front_End.Components.Partials
 <RecipeModal Recipe="@SelectedRecipe" Steps="@StepsList" />
 
-<div class="d-flex flex-column gap-4">
-    <div class="card">
-        <div class="card-header">
-            <h5>Petit déjeuner</h5>
-        </div>
-        <div class="card-body">
-            <MealOverview MealDate=DayDate MealTypeFilter=MealTypeEnum.Breakfast
-                OnRecipeSelected="HandleRecipeSelected" />
-        </div>
-    </div>
+<div id="meal-container">
 
-    <div class="card">
-        <div class="card-header">
-            <h5>Déjeuner</h5>
-        </div>
-        <div class="card-body">
-            <MealOverview MealDate=DayDate MealTypeFilter=MealTypeEnum.Lunch OnRecipeSelected="HandleRecipeSelected" />
-        </div>
-    </div>
+    <h3>Petit déjeuner</h3>
+    <MealOverview MealDate=DayDate MealTypeFilter=MealTypeEnum.Breakfast OnRecipeSelected="HandleRecipeSelected" />
 
-    <div class="card">
-        <div class="card-header">
-            <h5>Dîner</h5>
-        </div>
-        <div class="card-body">
-            <MealOverview MealDate=DayDate MealTypeFilter=MealTypeEnum.Dinner OnRecipeSelected="HandleRecipeSelected" />
-        </div>
-    </div>
+    <h3>Déjeuner</h3>
+    <MealOverview MealDate=DayDate MealTypeFilter=MealTypeEnum.Lunch OnRecipeSelected="HandleRecipeSelected" />
+
+    <h3>Dîner</h3>
+    <MealOverview MealDate=DayDate MealTypeFilter=MealTypeEnum.Dinner OnRecipeSelected="HandleRecipeSelected" />
+
+    <h3 class="mb-3">Snack</h3>
+    <h4>WIP...</h4>
 
 </div>

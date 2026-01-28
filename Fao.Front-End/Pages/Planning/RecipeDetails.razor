@@ -53,18 +53,14 @@
         }
 
         if (recipeId == 0)
-        {
-            Console.WriteLine("Invalid or missing recipeId query parameter.");
             return;
-        }
+
 
         Recipe = await MealService.GetFullRecipeAsync(recipeId);
 
         if (Recipe == null)
-        {
-            Console.WriteLine($"No recipe found for ID {recipeId}");
             return;
-        }
+
 
         if (!string.IsNullOrWhiteSpace(Recipe.Steps))
         {

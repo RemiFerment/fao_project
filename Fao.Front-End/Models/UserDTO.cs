@@ -2,6 +2,7 @@ namespace Fao.Front_End.Models;
 
 public class UserDTO
 {
+    public string Uuid { get; set; } = string.Empty;
     public string Email { get; set; } = string.Empty;
     public string FirstName { get; set; } = string.Empty;
     public string LastName { get; set; } = string.Empty;
@@ -37,5 +38,16 @@ public class UserDTO
             age--;
         }
         return age.ToString();
+    }
+
+    public int GetAgeInt()
+    {
+        var today = DateOnly.FromDateTime(DateTime.Today);
+        var age = today.Year - BirthDate.Year;
+        if (today < BirthDate.AddYears(age))
+        {
+            age--;
+        }
+        return age;
     }
 }

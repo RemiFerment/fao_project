@@ -36,7 +36,7 @@ public class AchievementController : ControllerBase
             .ToListAsync();
 
         if (achievements.Count == 0)
-            return NotFound(new { message = "No achievements found for this user." });
+            return NoContent();
 
         var dto = achievements.Select(MapToDTO).ToList();
 
@@ -55,7 +55,7 @@ public class AchievementController : ControllerBase
             .FirstOrDefaultAsync(a => a.UserId == user.Id && a.Id == id);
 
         if (achievement == null)
-            return NotFound(new { message = "Achievement not found." });
+            return NoContent();
 
         if (achievement.AchievementType is not AchievementTypePhoto photoType)
             return BadRequest(new { message = "Achievement is not of type photo." });
@@ -75,7 +75,7 @@ public class AchievementController : ControllerBase
             .FirstOrDefaultAsync(a => a.UserId == user.Id && a.Id == id);
 
         if (achievement == null)
-            return NotFound(new { message = "Achievement not found." });
+            return NoContent();
 
         return Ok(MapToDTO(achievement));
     }

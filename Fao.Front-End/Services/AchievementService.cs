@@ -2,6 +2,7 @@ namespace Fao.Front_End.Services;
 
 using Fao.Front_End.Helpers;
 using Fao.Front_End.Models;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
@@ -36,9 +37,9 @@ public class AchievementService
         }
 
         var response = await _httpClient.GetAsync($"api/Achievement/{uuid}/achievements");
-        if (!response.IsSuccessStatusCode)
-            return achievements;
-        response.EnsureSuccessStatusCode();
+
+        if (response.StatusCode == HttpStatusCode.NoContent)
+            return new List<AchievementDTO?>();
 
         var jsonString = await response.Content.ReadAsStringAsync();
         var json = JsonDocument.Parse(jsonString).RootElement;
@@ -130,7 +131,7 @@ public class AchievementService
         return response.IsSuccessStatusCode;
     }
 
-    public async Task<bool> CreatePhotoAchievementAsync(string description,byte[] photo,DateOnly dateAchieved)
+    public async Task<bool> CreatePhotoAchievementAsync(string description, byte[] photo, DateOnly dateAchieved)
     {
         var uuid = await _authService.GetUUIDFromToken();
         if (uuid == null) return false;
