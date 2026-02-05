@@ -161,3 +161,7 @@ code {
 
     background-color: currentColor;
 }
+
+.cursor-pointer {
+    cursor: pointer;
+}

@@ -3,10 +3,6 @@
 @using Microsoft.AspNetCore.Components.Authorization
 @attribute [Authorize(Roles = "ROLE_COACH")]
 
-<div class="d-flex gap-4  my-4">
-    <i class="bi bi-arrow-left-circle fs-1 text-danger" @onclick="@NavigateBack"></i>
-    <h1>Détail du client</h1>
-</div>
 @if (IsLoading)
 {
     <div class="text-center my-5">
@@ -17,16 +13,30 @@
 }
 else if (Customer == null)
 {
+    <div class="d-flex gap-4 justify-content-center my-4">
+        <i class="bi bi-arrow-left-circle fs-1 text-danger cursor-pointer" @onclick="@NavigateBack"></i>
+    </div>
     <div class="alert alert-danger" role="alert">
         Un problème est survenu lors du chargement des informations du client. Vérifier le lien ou réessayer plus tard.
     </div>
 }
 else
 {
-    <div class="card">
+    <i class="bi bi-arrow-left-circle fs-1 text-danger cursor-pointer d-block" @onclick="@NavigateBack"></i>
+    <div class="card mx-auto my-4" style="max-width: 800px;">
+        <div class="d-flex gap-4 justify-content-center my-2">
+            <h1 class="fs-2 fw-bold">Fiche client de @Customer.FirstName @Customer.LastName</h1>
+        </div>
         <div class="card-body">
-            <h3 class="card-title mb-3">@Customer.FirstName @Customer.LastName</h3>
             <div class="row g-3">
+                <div class="col-12 col-md-6">
+                    <p class="mb-2"><strong>Nom de famille:</strong></p>
+                    <p class="text-muted">@Customer.LastName</p>
+                </div>
+                <div class="col-12 col-md-6">
+                    <p class="mb-2"><strong>Prénom:</strong></p>
+                    <p class="text-muted">@Customer.FirstName</p>
+                </div>
                 <div class="col-12 col-md-6">
                     <p class="mb-2"><strong>Email:</strong></p>
                     <p class="text-muted">@Customer.Email</p>
@@ -57,8 +67,7 @@ else
                 </div>
                 <div class="d-flex gap-3">
                     <button class="btn btn-primary fs-2"><i class="bi bi-pencil-square"></i></button>
-                    <button class="btn btn-danger fs-2" @onclick="@DeletebButton"><i
-                            class="bi bi-trash"></i></button>
+                    <button class="btn btn-danger fs-2" @onclick="@DeletebButton"><i class="bi bi-trash"></i></button>
                 </div>
             </div>
         </div>

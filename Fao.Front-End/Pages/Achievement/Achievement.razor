@@ -2,41 +2,39 @@
 @using Fao.Front_End.Components.Achievement
 <PageTitle>Progrès</PageTitle>
 
-<div class="card mb-3">
-    <div class="card-header">
-        <h1 class="text-center fs-3 fw-semibold">Progrès</h1>
-    </div>
-    <div class="card-body text-center p-3 d-flex flex-wrap justify-content-center align-items-center gap-4">
-        @if (!isLoading)
+
+<h1 class="fs-3 fw-semibold">Progrès</h1>
+
+<div class="card-body text-center p-3 d-flex flex-wrap justify-content-center align-items-center gap-4">
+    @if (!isLoading)
+    {
+        <div class="d-flex justify-content-center align-items-center w-100" style="height: 200px;">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+    }
+    else
+    {
+        @if (Achievements.Count == 0 || Achievements is null)
         {
-            <div class="d-flex justify-content-center align-items-center w-100" style="height: 200px;">
-                <div class="spinner-border text-primary" role="status">
-                    <span class="visually-hidden">Loading...</span>
-                </div>
+            <div class="d-flex flex-column justify-content-center align-items-center w-100" style="height: 200px;">
+                <i class="bi bi-emoji-frown fs-1 mb-3"></i>
+                <h2 class="fs-4">Aucun progrès enregistré</h2>
             </div>
         }
         else
         {
-            @if (Achievements.Count == 0 || Achievements is null)
+            @foreach (var achievement in Achievements)
             {
-                <div class="d-flex flex-column justify-content-center align-items-center w-100" style="height: 200px;">
-                    <i class="bi bi-emoji-frown fs-1 mb-3"></i>
-                    <h2 class="fs-4">Aucun progrès enregistré</h2>
-                </div>
-            }
-            else
-            {
-                @foreach (var achievement in Achievements)
-                {
-                    <AchievementOverview Achievement="achievement" Display="DisplayAchievements"
-                        OnAchievementSelected="GetSelectedAchievement" />
-                }
+                <AchievementOverview Achievement="achievement" Display="DisplayAchievements"
+                    OnAchievementSelected="GetSelectedAchievement" />
             }
         }
-
-    </div>
+    }
 
 </div>
+
 <button class="btn btn-success d-flex justify-content-center align-items-center fs-3 gap-2 plus-button"
     data-bs-toggle="modal" data-bs-target="#achievementModal">
     <i class="bi bi-plus-square fs-2"></i>
