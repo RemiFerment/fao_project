@@ -1,5 +1,3 @@
-using System.Threading.Tasks;
-using Fao.Front_End.Models;
 using Fao.Front_End.Services;
 using Microsoft.AspNetCore.Components;
 
@@ -7,16 +5,28 @@ namespace Fao.Front_End.Components.Meal
 {
     public partial class MealOverview : ComponentBase
     {
+        #region Parameters and Properties
         [Parameter] public DateTime? MealDate { get; set; } = null;
         [Parameter] public MealTypeEnum MealTypeFilter { get; set; } = default!;
         [Parameter] public EventCallback<int> OnRecipeSelected { get; set; }
+        public string Uuid { get; set; } = "";
 
         public string? MealName { get; set; } = "";
         public string? MealType { get; set; } = "";
+        public string? ErrorMessage { get; set; } = null;
         private bool IsLoaded { get; set; } = false;
         private int CurrentRecipeId;
         [Inject] public MealService MealService { get; set; } = default!;
+        [Inject] public UserServices UserServices { get; set; } = default!;
+        [Inject] public UriHelperService UriHelperService { get; set; } = default!;
 
+        #endregion
+
+        #region Lifecycle Methods
+        protected override async Task OnInitializedAsync()
+        {
+            Uuid = UriHelperService.GetUuidFromUri();
+        }
         protected override async Task OnParametersSetAsync()
         {
             await DisplayMeal();
@@ -28,9 +38,10 @@ namespace Fao.Front_End.Components.Meal
 
         private async Task DisplayMeal()
         {
+            ErrorMessage = null;
             try
             {
-                var MealDay = await MealService.GetMealOverviewAsync(MealDate);
+                var MealDay = await MealService.GetMealOverviewAsync(MealDate, Uuid);
                 switch (MealTypeFilter)
                 {
                     case MealTypeEnum.Breakfast:
@@ -57,6 +68,7 @@ namespace Fao.Front_End.Components.Meal
                 MealName = null;
                 MealType = null;
                 IsLoaded = false;
+                ErrorMessage = "Erreur lors du chargement du repas, si le problème persiste, contactez un administrateur.";
             }
             return;
         }
@@ -71,7 +83,7 @@ namespace Fao.Front_End.Components.Meal
         {
             if (MealDate.HasValue)
             {
-                NavigationManager.NavigateTo($"/planning/meal?date={MealDate.Value:yyyy-MM-dd}&type={MealTypeFilter}");
+                NavigationManager.NavigateTo($"/planning/{Uuid}/meal?date={MealDate.Value:yyyy-MM-dd}&type={MealTypeFilter}");
             }
         }
 
@@ -79,12 +91,11 @@ namespace Fao.Front_End.Components.Meal
         {
             if (mealDate.HasValue)
             {
-                await MealService.RemoveRecipeFromMealDayAsync(mealDate.Value, mealType);
+                await MealService.RemoveRecipeFromMealDayAsync(mealDate.Value, mealType, Uuid);
                 await DisplayMeal();
             }
         }
-
-
+        #endregion
 
     }
     public enum MealTypeEnum

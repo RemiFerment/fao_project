@@ -1,4 +1,7 @@
 ﻿@using Fao.Front_End.Components.Partials
+@using Fao.Front_End.Layout.NavBars.Coach
+@using Fao.Front_End.Models
+@using Fao.Front_End.Services
 @inherits LayoutComponentBase
 <div class="page">
     <nav>
@@ -17,6 +20,9 @@
 
 @code {
     private ConfirmModal? _confirmModal;
+    private UserDTO? _currentUser;
+    [Inject] public UserServices UserServices { get; set; } = default!;
+    [Inject] public NavigationManager NavigationManager { get; set; } = default!;
 
     public async Task ShowConfirm(
     EventCallback onConfirm,
@@ -27,5 +33,10 @@
         {
             await _confirmModal.Display(onConfirm, title, message);
         }
+    }
+    protected override async Task OnInitializedAsync()
+    {
+        if (!NavigationManager.Uri.Contains("login"))
+            _currentUser = await UserServices.GetUserInfoAsync();
     }
 }

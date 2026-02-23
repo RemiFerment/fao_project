@@ -1,13 +1,31 @@
 @using Fao.Front_End.Layout.NavBars.Partials.Desktop
 @using Fao.Front_End.Layout.NavBars.Partials.Mobile
+@using Fao.Front_End.Services
 <NavMobile>
-    <NavItemMobile Link="/planning" Label="Planning" IconClass="bi bi-calendar2-week" />
+    <NavItemMobile Link="@($"/planning/{Uuid}")" Label="Planning" IconClass="bi bi-calendar2-week" />
     <NavItemMobile Link="/achievements" Label="Progrès" IconClass="bi bi-trophy" />
     <NavItemMobile Link="/chat" Label="Ma coach" IconClass="bi bi-chat-left-dots" />
 </NavMobile>
 <NavDesktop>
-    <NavItemDesktop Link="/planning" Label="Planning" IconClass="bi bi-calendar2-week" />
+    <NavItemDesktop Link="@($"/planning/{Uuid}")" Label="Planning" IconClass="bi bi-calendar2-week" />
     <NavItemDesktop Link="/achievements" Label="Progrès" IconClass="bi bi-trophy" />
     <NavItemDesktop Link="/chat" Label="Ma coach" IconClass="bi bi-chat-left-dots" />
     <NavItemDesktop Link="/logout" Label="Se déconnecter" IconClass="bi bi-box-arrow-right" />
 </NavDesktop>
+
+@code {
+    public string Uuid { get; set; } = "";
+    [Inject]
+    public AuthService AuthService { get; set; } = default!;
+    [Inject]
+    public NavigationManager NavigationManager { get; set; } = default!;
+    protected override async Task OnInitializedAsync()
+    {
+        Uuid = await AuthService.GetUUIDFromToken() ?? "";
+        if (string.IsNullOrEmpty(Uuid))
+        {
+            NavigationManager.NavigateTo("/login");
+        }
+    }
+
+}

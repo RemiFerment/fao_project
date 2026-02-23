@@ -16,6 +16,7 @@ builder.Services.AddScoped<AuthService>();
 builder.Services.AddScoped<ChatService>();
 builder.Services.AddScoped<MealService>();
 builder.Services.AddScoped<UserServices>();
+builder.Services.AddScoped<UriHelperService>();
 builder.Services.AddScoped<AchievementService>();
 builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthStateProvider>();
 builder.Services.AddScoped<CustomAuthStateProvider>();

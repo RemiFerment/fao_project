@@ -25,7 +25,7 @@ else if (MealName != null && MealType != null)
         </div>
         <div class="class">
             <button class="btn btn-outline-danger d-flex align-items-center gap-2"
-                @onclick="() => DeleteMeal(MealDate, MealTypeFilter.ToString())">
+                    @onclick="() => DeleteMeal(MealDate, MealTypeFilter.ToString())">
                 <i class="bi bi-trash fs-2"></i>
                 <span class="d-md-block d-none">
                     Supprimer le repas
@@ -35,9 +35,14 @@ else if (MealName != null && MealType != null)
     </div>
 
 }
+else if (ErrorMessage != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @ErrorMessage
+    </div>
+}
 else
 {
-
     <div class="meal-container">
         <button class="btn-add-recipe" @onclick="NavigateToMealSelector">
             <i class="bi bi-plus fs-1"></i>

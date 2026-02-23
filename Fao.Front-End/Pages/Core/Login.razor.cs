@@ -6,13 +6,18 @@ namespace Fao.Front_End.Pages.Core;
 
 public partial class Login : ComponentBase
 {
+    #region Properties
     private LoginDTO loginData = new();
     public string? ErrorMessage { get; set; }
     public bool IsLoading { get; set; } = false;
+    #endregion
 
+    #region Injections
     [Inject] private AuthService AuthService { get; set; } = default!;
     [Inject] private NavigationManager Nav { get; set; } = default!;
+    #endregion
 
+    #region Methods
     private async Task HandleLogin()
     {
         ErrorMessage = null;
@@ -39,4 +44,5 @@ public partial class Login : ComponentBase
 
         IsLoading = false;
     }
+    #endregion
 }

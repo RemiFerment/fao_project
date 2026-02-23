@@ -18,11 +18,8 @@ public class MealService
         _authService = authService;
     }
 
-    public async Task<MealOverviewDTO?> GetMealOverviewAsync(DateTime? mealDate)
+    public async Task<MealOverviewDTO?> GetMealOverviewAsync(DateTime? mealDate, string uuid)
     {
-        var uuid = await _authService.GetUUIDFromToken();
-        if (uuid == null) return null;
-
         if (mealDate.HasValue)
         {
             var requestMessage = new HttpRequestMessage(HttpMethod.Get, $"api/Meal/{uuid}/meal-days?date={mealDate.Value:yyyy-MM-dd}");
@@ -43,8 +40,6 @@ public class MealService
     public async Task<RecipeOverviewDTO?> GetRecipeOverviewAsync(int? recipeId)
     {
         if (recipeId == null) return null;
-        var uuid = await _authService.GetUUIDFromToken();
-        if (uuid == null) return null;
 
         var requestMessage = new HttpRequestMessage(HttpMethod.Get, $"api/Recipes/{recipeId}");
 
@@ -60,9 +55,6 @@ public class MealService
 
     public async Task<IEnumerable<RecipeOverviewDTO>?> SearchRecipesAsync(string searchTerm)
     {
-        var uuid = await _authService.GetUUIDFromToken();
-        if (uuid == null) return null;
-
         var requestMessage = new HttpRequestMessage(HttpMethod.Get,
             $"api/Recipes/search?keyword={Uri.EscapeDataString(searchTerm)}");
 
@@ -76,11 +68,8 @@ public class MealService
         return recipes;
     }
 
-    public async Task<bool> AssignRecipeToMealDayAsync(DateOnly mealDate, int recipeId, string mealType)
+    public async Task<bool> AssignRecipeToMealDayAsync(DateOnly mealDate, int recipeId, string mealType, string uuid)
     {
-        var uuid = await _authService.GetUUIDFromToken();
-        if (uuid == null) return false;
-
         mealType = mealType.ToLower();
         string date = mealDate.ToString("yyyy-MM-dd");
 
@@ -101,11 +90,8 @@ public class MealService
         return response.IsSuccessStatusCode;
     }
 
-    public async Task<bool> RemoveRecipeFromMealDayAsync(DateTime mealDate, string mealType)
+    public async Task<bool> RemoveRecipeFromMealDayAsync(DateTime mealDate, string mealType, string uuid)
     {
-        var uuid = await _authService.GetUUIDFromToken();
-        if (uuid == null) return false;
-
         mealType = mealType.ToLower();
         string date = mealDate.ToString("yyyy-MM-dd");
 
@@ -120,9 +106,6 @@ public class MealService
 
     public async Task<FullRecipeDTO?> GetFullRecipeAsync(int recipeId)
     {
-        var uuid = await _authService.GetUUIDFromToken();
-        if (uuid == null) return null;
-
         var request = new HttpRequestMessage(HttpMethod.Get, $"api/Recipes/{recipeId}");
 
         var token = await _authService.GetToken();

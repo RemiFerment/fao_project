@@ -2,22 +2,30 @@ using Fao.Front_End.Models;
 using Microsoft.AspNetCore.Components;
 using Fao.Front_End.Services;
 using Microsoft.JSInterop;
+using Fao.Front_End.Pages.Interfaces;
+using System.Threading.Tasks;
 
 namespace Fao.Front_End.Pages.Planning;
 
-public partial class MealSelector : ComponentBase
+public partial class MealSelector : ComponentBase, IMealSelector
 {
+    #region Parameters and Properties
+    [Parameter]
+    public string Uuid { get; set; } = string.Empty;
     private DateTime MealDate { get; set; }
     private string searchTerm = string.Empty;
     private bool isLoading = false;
     private bool isSubmit = false;
-    [Inject] private MealService MealService { get; set; } = null!;
-    [Inject] private NavigationManager NavigationManager { get; set; } = null!;
     private IEnumerable<RecipeOverviewDTO> Recipes = Enumerable.Empty<RecipeOverviewDTO>();
     public FullRecipeDTO? SelectedRecipe { get; set; } = null;
     public List<string>? StepsList { get; set; } = null;
+    [Inject] private MealService MealService { get; set; } = null!;
+    [Inject] private UserServices UserServices { get; set; } = null!;
+    [Inject] private NavigationManager NavigationManager { get; set; } = null!;
     [Inject] public IJSRuntime JS { get; set; } = default!;
+    #endregion
 
+    #region Methods
     public async Task OnSearch()
     {
         Recipes = Enumerable.Empty<RecipeOverviewDTO>();
@@ -35,8 +43,10 @@ public partial class MealSelector : ComponentBase
         Recipes = result;
     }
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
+
+
         var uri = new Uri(NavigationManager.Uri);
         var query = uri.Query.TrimStart('?');
         var dateValue = query
@@ -45,6 +55,7 @@ public partial class MealSelector : ComponentBase
             .Where(p => p.Length == 2 && p[0].Equals("date", StringComparison.OrdinalIgnoreCase))
             .Select(p => Uri.UnescapeDataString(p[1]))
             .FirstOrDefault();
+        await UserServices.RouteGuardAsync(Uuid, $"/planning/{Uuid}/meal?date={dateValue}");
 
         if (!string.IsNullOrEmpty(dateValue) && DateTime.TryParse(dateValue, out var parsed))
         {
@@ -76,4 +87,5 @@ public partial class MealSelector : ComponentBase
             await JS.InvokeVoidAsync("showRecipeModal");
         });
     }
+    #endregion
 }

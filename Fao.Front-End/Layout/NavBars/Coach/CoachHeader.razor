@@ -1,0 +1,39 @@
+@namespace Fao.Front_End.Layout.NavBars.Coach
+@using Fao.Front_End.Models
+@using Fao.Front_End.Services
+@inherits LayoutComponentBase
+<div class="bg-light rounded-bottom shadow-sm">
+
+    <div class="d-flex flex-column py-3">
+
+        <div class="d-flex my-3 align-items-center justify-content-center position-relative">
+
+            <div class="position-absolute start-0 px-3">
+                <button class="btn btn-outline-danger" @onclick="GoBack">
+                    <i class="fs-4 bi bi-chevron-left"></i>
+                </button>
+            </div>
+            <div class="text-center">
+                <h1 class="fs-3">Modification de planning</h1>
+                <h5 class="mb-0"><b>Nom :</b> @UserInfo?.FirstName </h5>
+                <h5><b>Prénom:</b> @UserInfo?.LastName</h5>
+            </div>
+
+        </div>
+
+        <div class="text-center">
+            <button class="btn fs-4 btn-outline-primary"><i class="bi bi-trophy"></i></button>
+        </div>
+    </div>
+</div>
+<hr>
+@code {
+    [Parameter] public UserDTO? UserInfo { get; set; }
+    [Inject] public UserServices UserServices { get; set; } = default!;
+    [Inject] public NavigationManager NavigationManager { get; set; } = default!;
+    [Inject] public UriHelperService UriHelperService { get; set; } = default!;
+    private void GoBack()
+    {
+        NavigationManager.NavigateTo(uri: $"customer/{UserInfo?.Uuid}");
+    }
+}

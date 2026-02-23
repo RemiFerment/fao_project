@@ -3,19 +3,26 @@ namespace Fao.Front_End.Services;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using Fao.Front_End.Models;
+using Microsoft.AspNetCore.Components;
 
 public class UserServices
 {
+    #region Fields
     private readonly HttpClient _httpClient;
     private readonly AuthService _authService;
+    private readonly NavigationManager _nav;
+    #endregion
 
-    public UserServices(HttpClient httpClient, AuthService authService)
+    #region Constructor
+    public UserServices(HttpClient httpClient, AuthService authService, NavigationManager nav)
     {
         _httpClient = httpClient;
         _authService = authService;
+        _nav = nav;
     }
+    #endregion
 
-    // =================Current User Methods===============
+    #region Current User Methods
 
     /// <summary>
     /// Get information about the currently authenticated user.
@@ -42,6 +49,7 @@ public class UserServices
 
         return userInfo;
     }
+
 
     /// <summary>
     /// Get a list of customers associated with the currently authenticated user.
@@ -89,8 +97,9 @@ public class UserServices
 
         return customersUuids;
     }
+    #endregion
 
-    // =================Individual User Methods===============
+    #region User Management Methods
 
     /// <summary>
     /// Get user information by UUID.
@@ -184,7 +193,10 @@ public class UserServices
         var response = await _httpClient.SendAsync(request);
         response.EnsureSuccessStatusCode();
     }
-    // ===============User Profile Methods===============
+
+    #endregion
+
+    #region User Profile Methods
 
     /// <summary>
     /// Get the user profile by UUID.
@@ -258,4 +270,65 @@ public class UserServices
         var response = await _httpClient.SendAsync(request);
         response.EnsureSuccessStatusCode();
     }
+    #endregion
+
+    #region User Helper Methods
+    /// <summary>
+    /// Route guard to protect pages based on user role and UUID.
+    /// 
+    /// This method checks the user's role and UUID from the token and redirects them to the appropriate page if they are not authorized to access the current page.
+    /// 
+    /// For example, if a user with the role "ROLE_USER" tries to access a page that requires a different UUID, they will be redirected to the login page. If a user with the role "ROLE_COACH" tries to access a page that requires a UUID that is not associated with their customers, they will be redirected to the coach dashboard.
+    /// </summary>
+    /// <param name="uuid"></param>
+    /// <returns></returns>
+    public async Task<string> RouteGuardAsync(string uuid, string redirectUri)
+    {
+        var tokenRole = await _authService.GetRoleFromToken();
+        var tokenUuid = await _authService.GetUUIDFromToken();
+
+        if (string.IsNullOrWhiteSpace(tokenRole) || string.IsNullOrWhiteSpace(tokenUuid))
+        {
+            _nav.NavigateTo("/login", forceLoad: false);
+            return string.Empty;
+        }
+
+        switch (tokenRole)
+        {
+            case "ROLE_USER":
+                {
+                    var targetUuid = tokenUuid;
+                    var targetUri = redirectUri;
+                    Console.Write(targetUri);
+
+                    if (!_nav.Uri.EndsWith(targetUri, StringComparison.OrdinalIgnoreCase))
+                        _nav.NavigateTo(targetUri);
+
+                    return tokenUuid;
+                }
+
+            case "ROLE_COACH":
+                {
+                    if (string.IsNullOrWhiteSpace(uuid) || uuid == tokenUuid)
+                    {
+                        _nav.NavigateTo("/coach-dashboard");
+                        return string.Empty;
+                    }
+
+                    var usersUuid = await GetCustomersUuidsAsync();
+                    if (usersUuid == null || !usersUuid.Any(u => u.Uuid == uuid))
+                    {
+                        _nav.NavigateTo("/coach-dashboard");
+                        return string.Empty;
+                    }
+
+                    return uuid;
+                }
+
+            default:
+                _nav.NavigateTo("/login");
+                return string.Empty;
+        }
+    }
+    #endregion
 }

@@ -1,13 +1,16 @@
 @page "/"
 @inject NavigationManager Nav
+@inject AuthService AuthService
 @inject Microsoft.AspNetCore.Components.Authorization.AuthenticationStateProvider AuthStateProvider
 @namespace Fao.Front_End.Pages.Core
+@using Fao.Front_End.Services
 
 @code {
     protected override async Task OnInitializedAsync()
     {
         var authState = await AuthStateProvider.GetAuthenticationStateAsync();
         var user = authState.User;
+        var uuid = await AuthService.GetUUIDFromToken();
 
         if (user?.Identity?.IsAuthenticated == true)
         {
@@ -18,7 +21,7 @@
                     Nav.NavigateTo("/coach-dashboard");
                     return;
                 case var _ when user.IsInRole("ROLE_USER"):
-                    Nav.NavigateTo("/planning");
+                    Nav.NavigateTo($"/planning/{uuid}");
                     return;
                 case var _ when user.IsInRole("ROLE_ADMIN"):
                     Nav.NavigateTo("/admin-dashboard");

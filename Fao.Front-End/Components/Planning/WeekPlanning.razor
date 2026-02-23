@@ -1,11 +1,10 @@
 @using Fao.Front_End.Services
 @using Microsoft.AspNetCore.WebUtilities
 @inject NavigationManager NavigationManager
-@inject HttpClient Http
 
 <div class="planning">
     <div class="d-flex align-items-center justify-content-between m-2 mt-4">
-        <div class="text-center">
+        <div class="d-flex flex-column">
             <p class="m-1 fs-3 fw-bold">
                 @if (selectedDay == DateTime.Today)
                 {
@@ -15,6 +14,14 @@
                 {
                     @selectedDay.ToString("dd MMMM yyyy")
                 }
+            </p>
+            <p class="m-1 fs-6 text-muted fw-bold">
+                @{
+                    string? year = currentWeekStart.ToString("yyyy");
+                    string? monthName = currentWeekStart.ToString("MMMM", new System.Globalization.CultureInfo("fr-FR"));
+                    string? capitalizedMonth = char.ToUpper(monthName[0]) + monthName.Substring(1) + " " + year;
+                }
+                @capitalizedMonth
             </p>
         </div>
         <div class="d-flex">
@@ -31,7 +38,7 @@
         @for (int i = 0; i < 7; i++)
         {
             var day = currentWeekStart.AddDays(i);
-            <div class="d-flex flex-column gap-2 align-items-center">
+            <div class="d-flex flex-column gap-2 align-items-center text-muted">
                 @GetFirstLetterUpper(day)
                 <button
                     class="@(day == selectedDay ? "btn-day-selected" : (day == DateTime.Today ? "btn-today" : "btn-day"))"

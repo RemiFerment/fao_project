@@ -33,6 +33,10 @@ namespace Fao.Front_End.Pages.Customers
         {
             NavigationManager.NavigateTo($"/customer-profile/{CustomerUUID}");
         }
+        private void NavigateToPlanning()
+        {
+            NavigationManager.NavigateTo($"/planning/{CustomerUUID}");
+        }
 
         private async Task DeletebButton()
         {

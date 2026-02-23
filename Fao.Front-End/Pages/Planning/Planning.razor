@@ -1,6 +1,42 @@
-@page "/planning"
+@page "/planning/{uuid}"
+@using Fao.Front_End.Layout.NavBars.Coach
+@using Fao.Front_End.Models
+@using Fao.Front_End.Services
 @using Microsoft.AspNetCore.Authorization
-@attribute [Authorize(Roles = "ROLE_USER")]
 @using Fao.Front_End.Components.Planning
+@using System.Runtime.InteropServices
 <PageTitle>Planning de recette</PageTitle>
+
+@if (_coachUser?.RoleName == "ROLE_COACH" || _coachUser?.RoleName == "ROLE_ADMIN")
+{
+    <CoachHeader UserInfo="_selectedUser" />
+    Console.WriteLine($"Current user role: {_selectedUser?.RoleName}");
+}
 <WeekPlanning />
+
+@code {
+
+    [Parameter]
+    public string Uuid { get; set; } = "";
+    [Inject]
+    public UserServices UserServices { get; set; } = default!;
+    [Inject]
+    public NavigationManager NavigationManager { get; set; } = default!;
+    [Inject] public UriHelperService UriHelperService { get; set; } = default!;
+    private UserDTO? _selectedUser;
+    private UserDTO? _coachUser;
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (string.IsNullOrEmpty(Uuid))
+        {
+            NavigationManager.NavigateTo("/login");
+            return;
+        }
+
+        await UserServices.RouteGuardAsync(Uuid, redirectUri: $"/planning/{Uuid}");
+        _selectedUser = await UserServices.GetUserByUuidAsync(Uuid);
+        _coachUser = await UserServices.GetUserInfoAsync();
+
+    }
+}

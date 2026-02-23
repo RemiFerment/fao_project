@@ -41,6 +41,12 @@ public class AuthService
 
         return JWTUtilService.GetClaim(token!, ClaimTypes.NameIdentifier);
     }
+    public async Task<string?> GetRoleFromToken()
+    {
+        var token = await GetToken();
+
+        return JWTUtilService.GetClaim(token!, ClaimTypes.Role);
+    }
 
     public async Task LogoutAsync()
     {
@@ -80,4 +86,12 @@ public class AuthService
         return token;
     }
 
+    public async Task<bool> RouteGuardAsync(string requiredRole)
+    {
+        var token = await GetToken();
+        if (token == null) return false;
+
+        var role = JWTUtilService.GetClaim(token, ClaimTypes.Role);
+        return role == requiredRole;
+    }
 }

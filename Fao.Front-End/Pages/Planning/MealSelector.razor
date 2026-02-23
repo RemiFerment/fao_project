@@ -1,4 +1,4 @@
-@page "/planning/meal"
+@page "/planning/{uuid}/meal"
 @attribute [Authorize]
 @using Fao.Front_End.Components.Partials
 @using Fao.Front_End.Models
@@ -35,7 +35,7 @@
                     @foreach (RecipeOverviewDTO recipe in Recipes)
                     {
                         <RecipeCard Title=@recipe.Title RecipeId=recipe.Id CategoryName=@recipe.CategoryName
-                            OnRecipeSelected="HandleRecipeSelected" />
+                                    OnRecipeSelected="HandleRecipeSelected" />
                     }
                 </div>
             }

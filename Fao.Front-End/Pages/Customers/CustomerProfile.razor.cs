@@ -20,7 +20,12 @@ namespace Fao.Front_End.Pages.Customers
 
         protected override async Task OnInitializedAsync()
         {
-            Customer = await UserServices.GetUserByUuidAsync(CustomerUuid.ToString());
+            var customer = await UserServices.GetUserByUuidAsync(CustomerUuid.ToString());
+            if (customer == null)
+            {
+                NavigationManager.NavigateTo("/customers");
+                return;
+            }
             CustomerProfileData = await UserServices.GetUserProfileAsync(CustomerUuid.ToString());
             if (CustomerProfileData == null)
             {

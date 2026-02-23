@@ -2,12 +2,13 @@ namespace Fao.Front_End.Services;
 
 using Fao.Front_End.Helpers;
 using Fao.Front_End.Models;
+using Fao.Front_End.Pages.Interfaces;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Text.Json;
 
-public partial class ChatService
+public class ChatService : IChatService
 {
     private readonly HttpClient _httpClient;
     private readonly AuthService _authService;

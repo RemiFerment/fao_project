@@ -1,6 +1,5 @@
 using Fao.Front_End.Services;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Authorization;
 
 namespace Fao.Front_End.Pages.Core;
 
@@ -13,6 +12,4 @@ public partial class Logout : ComponentBase
         await Task.Delay(500);
         await AuthService.LogoutAsync();
     }
-
-
 }
