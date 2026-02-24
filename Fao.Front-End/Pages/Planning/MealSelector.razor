@@ -11,27 +11,26 @@
     <div class="card-head text-center py-3">
         <h4>Ajouter une recette </h4>
     </div>
-    <div class="body p-2 ">
-        <form @oninput="OnSearch">
-            <input @bind=@searchTerm class="form-control" placeholder="Rechercher une recette..." />
+    <div class="body p-2">
+        <form @onsubmit="@OnSearch" class="mb-3">
+            <input @bind="@searchTerm" class="form-control" placeholder="Rechercher une recette..." />
         </form>
 
         <div class="item">
-            @if (isSubmit && isLoading)
+            @if (isLoading)
             {
                 <div class="spinner-border text-secondary justify-self-center mt-3" role="status">
                     <span class="visually-hidden">Loading...</span>
                 </div>
             }
-            @if (!isLoading && !Recipes.Any() && isSubmit && !string.IsNullOrWhiteSpace(searchTerm))
+            @if (!isLoading && !Recipes.Any() && !string.IsNullOrWhiteSpace(searchTerm))
             {
                 <p class="text-center fs-5 mt-5">Aucune recette trouvée pour "@searchTerm".</p>
             }
-            @if (!isLoading && Recipes.Any() && isSubmit)
+            @if (!isLoading && Recipes.Any() && !string.IsNullOrWhiteSpace(searchTerm))
             {
                 <p class="text-center fs-5 mt-5">Recherche pour : "@searchTerm"</p>
                 <div class="d-flex justify-content-center flex-column w-100">
-
                     @foreach (RecipeOverviewDTO recipe in Recipes)
                     {
                         <RecipeCard Title=@recipe.Title RecipeId=recipe.Id CategoryName=@recipe.CategoryName

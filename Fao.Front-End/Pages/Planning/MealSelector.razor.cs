@@ -4,18 +4,17 @@ using Fao.Front_End.Services;
 using Microsoft.JSInterop;
 using Fao.Front_End.Pages.Interfaces;
 using System.Threading.Tasks;
+using Fao.Front_End.Components.Meal;
 
 namespace Fao.Front_End.Pages.Planning;
 
 public partial class MealSelector : ComponentBase, IMealSelector
 {
     #region Parameters and Properties
-    [Parameter]
-    public string Uuid { get; set; } = string.Empty;
+    [Parameter] public string Uuid { get; set; } = string.Empty;
     private DateTime MealDate { get; set; }
     private string searchTerm = string.Empty;
     private bool isLoading = false;
-    private bool isSubmit = false;
     private IEnumerable<RecipeOverviewDTO> Recipes = Enumerable.Empty<RecipeOverviewDTO>();
     public FullRecipeDTO? SelectedRecipe { get; set; } = null;
     public List<string>? StepsList { get; set; } = null;
@@ -23,6 +22,7 @@ public partial class MealSelector : ComponentBase, IMealSelector
     [Inject] private UserServices UserServices { get; set; } = null!;
     [Inject] private NavigationManager NavigationManager { get; set; } = null!;
     [Inject] public IJSRuntime JS { get; set; } = default!;
+    public MealTypeEnum MealType { get; set; } = default!;
     #endregion
 
     #region Methods
@@ -30,23 +30,18 @@ public partial class MealSelector : ComponentBase, IMealSelector
     {
         Recipes = Enumerable.Empty<RecipeOverviewDTO>();
         isLoading = true;
-
         var result = await MealService.SearchRecipesAsync(searchTerm);
         if (result == null || !result.Any())
         {
             isLoading = false;
-            isSubmit = true;
             return;
         }
-        isSubmit = true;
         isLoading = false;
         Recipes = result;
     }
 
     protected override async Task OnInitializedAsync()
     {
-
-
         var uri = new Uri(NavigationManager.Uri);
         var query = uri.Query.TrimStart('?');
         var dateValue = query
@@ -55,7 +50,20 @@ public partial class MealSelector : ComponentBase, IMealSelector
             .Where(p => p.Length == 2 && p[0].Equals("date", StringComparison.OrdinalIgnoreCase))
             .Select(p => Uri.UnescapeDataString(p[1]))
             .FirstOrDefault();
-        await UserServices.RouteGuardAsync(Uuid, $"/planning/{Uuid}/meal?date={dateValue}");
+        var typeValue = query
+            .Split('&', StringSplitOptions.RemoveEmptyEntries)
+            .Select(p => p.Split('=', 2))
+            .Where(p => p.Length == 2 && p[0].Equals("type", StringComparison.OrdinalIgnoreCase))
+            .Select(p => Uri.UnescapeDataString(p[1]))
+            .FirstOrDefault();
+        if (!string.IsNullOrEmpty(typeValue))
+        {
+            if (Enum.TryParse(typeValue, out MealTypeEnum parsedMealType))
+            {
+                MealType = parsedMealType;
+            }
+        }
+        await UserServices.RouteGuardAsync(Uuid);
 
         if (!string.IsNullOrEmpty(dateValue) && DateTime.TryParse(dateValue, out var parsed))
         {

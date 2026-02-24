@@ -12,6 +12,7 @@ public partial class RecipeCard : ComponentBase
     [Parameter] public EventCallback<int> OnRecipeSelected { get; set; }
     [Inject] private MealService MealService { get; set; } = null!;
     [Inject] private NavigationManager NavigationManager { get; set; } = null!;
+    [Inject] private UriHelperService uriHelperService { get; set; } = null!;
     private string mealType = string.Empty;
     private DateOnly date;
     private string UuidPath = string.Empty;
@@ -19,13 +20,14 @@ public partial class RecipeCard : ComponentBase
     protected override void OnParametersSet()
     {
         LoadQueryParameters();
+        UuidPath = uriHelperService.GetUuidFromUri();
     }
     public async Task SelectRecipe(int Id)
     {
         try
         {
             await MealService.AssignRecipeToMealDayAsync(date, Id, mealType, UuidPath);
-            NavigationManager.NavigateTo($"/planning/{UuidPath}?date={date:yyyy-MM-dd}");
+            NavigationManager.NavigateTo($"planning/{UuidPath}?date={date:yyyy-MM-dd}");
 
         }
         catch (Exception ex)
@@ -50,7 +52,6 @@ public partial class RecipeCard : ComponentBase
             mealType = typeValue.ToString();
         }
         UuidPath = NavigationManager.ToBaseRelativePath(NavigationManager.Uri).Split('/').FirstOrDefault() ?? "";
-        // Ici, on va pouvoir récupérer l'uuid dans l'url !!!!
     }
 
     private async Task ShowRecipeDetails()

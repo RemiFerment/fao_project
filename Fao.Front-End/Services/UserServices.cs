@@ -282,10 +282,14 @@ public class UserServices
     /// </summary>
     /// <param name="uuid"></param>
     /// <returns></returns>
-    public async Task<string> RouteGuardAsync(string uuid, string redirectUri)
+    public async Task<string> RouteGuardAsync(string uuid, string redirectUri = "")
     {
         var tokenRole = await _authService.GetRoleFromToken();
         var tokenUuid = await _authService.GetUUIDFromToken();
+        if (string.IsNullOrWhiteSpace(redirectUri))
+        {
+            redirectUri = _nav.Uri;
+        }
 
         if (string.IsNullOrWhiteSpace(tokenRole) || string.IsNullOrWhiteSpace(tokenUuid))
         {
@@ -301,8 +305,8 @@ public class UserServices
                     var targetUri = redirectUri;
                     Console.Write(targetUri);
 
-                    if (!_nav.Uri.EndsWith(targetUri, StringComparison.OrdinalIgnoreCase))
-                        _nav.NavigateTo(targetUri);
+                    if (!string.IsNullOrWhiteSpace(uuid) && uuid != tokenUuid)
+                        _nav.NavigateTo($"/planning/{tokenUuid}", forceLoad: true);
 
                     return tokenUuid;
                 }
